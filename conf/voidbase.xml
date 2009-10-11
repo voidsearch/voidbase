@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!--
+
+VoidBase
+simple configuration
+(c) VoidSearch 2009
+
+-->
+
+<config>
+
+    <!-- global variables -->
+
+    <global>
+
+        <HttpRequestDispatcher>
+            <class>com.voidsearch.voidbase.http.HttpRequestDispatcher</class>
+            <port>8080</port>
+        </HttpRequestDispatcher>
+
+        <reservedResources>
+            <resource>/stats</resource>
+        </reservedResources>
+
+        <VoidBaseRequestQueue>
+            <maxRequests>32</maxRequests>
+        </VoidBaseRequestQueue>
+
+    </global>
+
+    <!--  module bootstrap configuration -->
+
+    <modules>
+
+        <ExampleVoidBaseModule>
+            <class>com.voidsearch.voidbase.apps.example.module.ExampleVoidBaseModule</class>
+            <status>active</status>
+            <resource>example</resource>
+         </ExampleVoidBaseModule>
+
+        <VoidBaseStatsModule>
+            <class>com.voidsearch.voidbase.apps.stats.VoidBaseStatsModule</class>
+            <status>active</status>
+            <resource>stats</resource>
+            <maxRequests>16</maxRequests>
+         </VoidBaseStatsModule>
+
+        <FileServerModule>
+            <class>com.voidsearch.voidbase.apps.fileserver.FileServerModule</class>
+            <status>active</status>
+            <resource>files</resource>
+
+            <contentRoot>src/webapp/web</contentRoot>
+            <directoryIndex>/index.html</directoryIndex>
+            <fileNotFoundResponse>/html/404.html</fileNotFoundResponse>
+         </FileServerModule>
+
+        <QueueTreeModule>
+            <class>com.voidsearch.voidbase.apps.queuetree.module.QueueTreeModule</class>
+            <status>active</status>
+            <resource>queuetree</resource>
+         </QueueTreeModule>
+
+        <FeedQModule>
+            <class>com.voidsearch.voidbase.apps.feedq.module.FeedQModule</class>
+            <status>active</status>
+            <resource>feedq</resource>
+         </FeedQModule>
+
+        <HelloWorldModule>
+            <class>com.voidsearch.voidbase.apps.helloworld.HelloWorldModule</class>
+            <status>active</status>
+            <resource>helloworld</resource>
+         </HelloWorldModule>
+
+        <WebAPIModule>
+            <class>com.voidsearch.voidbase.apps.webapi.WebAPIModule</class>
+            <status>active</status>
+            <resource>webapi</resource>
+         </WebAPIModule>
+
+        <Cache>
+            <class>com.voidsearch.voidbase.apps.cache.CacheModule</class>
+            <status>active</status>
+            <resource>cache</resource>
+         </Cache>
+
+    </modules>
+
+
+    <!-- module-specific configurations -->
+
+    <QueueTreeModule>
+
+        <request_hooks>
+            <operation name="PUT">put_hooks</operation>
+        </request_hooks>
+
+        <put_hooks>
+            <hook name="updateMinMaxMultipleDimensions"></hook>
+            <hook name="updateVarianceMultipleDimensions"></hook>
+            <hook name="updateStandardDeviationMultipleDimensions"></hook>
+            <hook name="updateCovariance"></hook>
+            <hook name="updateCorrelation"></hook>
+        </put_hooks>
+
+     </QueueTreeModule>
+
+    <FeedQModule>
+
+    </FeedQModule>
+
+
+    <CacheModule>
+        <default_handler>store</default_handler>
+
+        <handlers>
+            <store>com.voidsearch.voidbase.apps.cache.module.MessagePersistenceStore</store>
+        </handlers>
+    </CacheModule>
+
+    <!-- storage-specific configurations -->
+
+    <storage>
+
+        <JobPriorityQueue>
+            <!-- millisecond cleanup poll interval -->
+            <cleanupInterval>1000</cleanupInterval>
+        </JobPriorityQueue>
+
+    </storage>
+
+</config>    

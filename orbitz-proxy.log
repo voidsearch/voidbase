@@ -1,0 +1,18 @@
+1255142646525	0	/orbitzproxy?method=GET&orbitzid=32060&output=xml&available_from=2010-04-08&available_to=2010-04-19
+1255142646539	pinging cache
+1255142646592	got response from cache
+1255142646598	sending orbitz request
+1255142649479	dispatching new data only
+1255142649489	done
+1255142650182	1	/orbitzproxy?method=GET&orbitzid=32060&output=xml&available_from=2010-04-08&available_to=2010-04-19
+1255142650183	pinging cache
+1255142650186	got response from cache
+1255142650186	sending orbitz request
+1255142652471	dispatching new data only
+1255142652475	done
+1255142653178	2	/orbitzproxy?method=GET&orbitzid=32060&output=xml&available_from=2010-04-08&available_to=2010-04-19
+1255142653179	pinging cache
+1255142653181	got response from cache
+1255142653181	sending orbitz request
+1255142655299	dispatching new data only
+1255142655304	done

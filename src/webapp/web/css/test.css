@@ -1,0 +1,21 @@
+body{
+    font:normal 12px Arial,sans-serif;
+}
+
+#cssContent{
+    display:none;
+}
+
+#debug{
+    font-size:10px;
+}
+
+
+#result{
+
+    width:800px;
+    height:300px;
+    border:solid 1px #e1e1e1;
+    font-size:10px;
+    
+}

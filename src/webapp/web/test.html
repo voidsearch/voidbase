@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <style type="text/css">
+            table{
+                border-collapse:collapse;
+            }
+
+             table td{
+                border:solid 1px #cacaca;                
+            }
+
+        </style
+        <script type="text/javascript">
+
+         function generateTable(rows,columns,container){
+             var HTML='<table>';
+
+
+             for(var i=0;i<rows;i++){
+                HTML+='<tr>';
+
+                 for(var j=0;j<columns;j++){
+                    HTML+='<td>Colum: '+j+' Row:'+i+' </td>';
+                 }
+
+                 HTML+='<tr>';
+             }
+
+             document.getElementById(container).innerHTML=HTML;
+
+         }
+
+
+          window.onload=function(){
+
+              generateTable(4,4,'result');
+          }
+
+            
+        </script>
+    </head>
+    <body>
+        <div id="result"></div>
+
+    </body>
+
+</html>

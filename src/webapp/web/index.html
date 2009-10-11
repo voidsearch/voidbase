@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Welcome to VoidBase</title>
+    <link href="css/test.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/files/js/prototype.js"></script>
+    <script type="text/javascript" src="/files/js/test.js"></script>
+    <script type="text/javascript">
+        Event.observe(window,'load',function(){
+            $('result').innerHTML='getting ready';
+            var requestTester=new RequestTester();
+        });
+
+
+    </script>
+</head>
+<body>
+    <h1>WELCOME TO VoidBase</h1>
+
+
+    <h3>Requests test</h3>
+    <label>Resource to fetch</label><br />
+    <input type="text" id="resourceURL" value="/files/css/test.css">
+
+    <h4>Results</h4>
+    <textarea rows="10" cols="40" id="result"></textarea>
+
+    <h4>Debug:</h4>
+    <div id="debug">
+        <pre id="debugResults"></pre>    
+    </div>
+
+</body>
+</html>

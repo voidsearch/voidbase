@@ -1,0 +1,12 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tokyocabinet</groupId>
+	<artifactId>tokyocabinet</artifactId>
+	<packaging>jar</packaging>
+	<name>TOKYOCABINET</name>
+	<version>1.19</version>
+	<url>http://tokyocabinet.sourceforge.net</url>
+	<description>Tokyo Cabinet java interface</description>
+	<dependencies>
+	</dependencies>
+</project>
