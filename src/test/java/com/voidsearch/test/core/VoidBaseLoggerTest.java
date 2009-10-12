@@ -25,7 +25,7 @@ public class VoidBaseLoggerTest {
     @Test
     public void nullTest() {
         VoidBaseLogger logger = VoidBaseLogService.getLogger("random");
-        logger.log("HEYO");
+        logger.log("test");
     }
 
 }
