@@ -173,7 +173,22 @@ body{
 }
 
 #header{
-    margin:20px 0 0 0;
+    margin:0px 0 0 0;
+    background:#fff;
+    height:90px;
+    padding:20px 0 0 0;
+}
+
+#header h1{
+    margin:12px 0 0 0;
+    font-size:18px;
+    width:200px;
+    float:right;
+    display:inline;
+}
+
+#qtCanvas{
+    padding-top:20px;
 }
 
 /*
@@ -183,9 +198,8 @@ body{
 #control-bar{
 
     height:39px;
-    background:#fff;
     border-bottom:solid 1px #acacac;
-    margin-bottom:20px;
+    margin-bottom:60px;
 
 }
 
@@ -314,6 +328,12 @@ h1{
 h3{
     font-size:18px;
 }
+
+
+h4{
+    font-size:16px;
+     margin-bottom:1.5em;
+}
 .moduleTitle{
     background:#fff;
     border-bottom:solid 1px #d1d1d1;
@@ -365,4 +385,33 @@ ul.moduleSubMenu li a:hover{
 
     background:#f1f1f1;
     
+}
+
+ul.big-list{
+
+    width:100%;
+    margin:0;
+    padding:0;
+    
+}
+
+ul.big-list li{
+    padding:8px 0 2px 0;
+    margin:0;
+    height:20px;
+    border-bottom:solid 1px #f1f1f1;
+        
+}
+
+ul.big-list li:hover{
+    background:#ffffcc;
+}
+
+ul.big-list li a{
+    padding:0 0 0 12px;
+    margin:0;
+    text-decoration:none;
+
+    color:#313166;
+
 }

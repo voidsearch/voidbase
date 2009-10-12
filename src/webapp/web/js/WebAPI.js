@@ -239,10 +239,7 @@ APIModules.queuetree = {
         }
     },
 
-    _statsHandler:function() {
-        $('qtStats').innerHTML = 'test test test';
 
-    },
 
     view:function(params) {
         console.log(params);
@@ -250,8 +247,43 @@ APIModules.queuetree = {
 
     list:function() {
         if (this.API.requiresNode('qtCanvas', this)) {
-            $('qtCanvas').innerHTML = '<br /><p>QueTree queues list will be here ... :)</p>';
+            this._list();
         }
+    },
+
+    //
+    // HANDLERS
+    //
+
+
+    //
+    _statsHandler:function() {
+        $('qtStats').innerHTML = 'test test test';
+
+    },
+
+    // AJAX CALLS FOR LISTING QUEUES
+    _list:function(){
+        new Ajax.Request('/webapi/queuetree/?method=LIST', {
+            method: 'get',
+            onSuccess: function(transport) {
+                console.log('test1');
+                var resp=transport.responseJSON;
+                var qs=resp.queue.response.queueList.val;
+                var HTML='<h4>Queue List</h4>';
+                HTML+='<ul class="big-list">';
+                qs.each(function(elm){
+                    HTML+='<li><a href="#queuetree/view/'+elm+'">'+elm+'</a></li>';
+                });
+
+                HTML+='</ul>';
+
+                $('qtCanvas').innerHTML=HTML;
+
+
+            }
+        });
+
     },
 
 
