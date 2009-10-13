@@ -11,133 +11,132 @@ version: 2.8.0r4
  * @requires
  */
 html {
-	color: #000;
-	background: #FFF;
+    color: #000;
+    background: #FFF;
 }
 
 body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-button,
-textarea,
-p,
-blockquote,
-th,
-td {
-	margin: 0;
-	padding: 0;
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    form,
+    fieldset,
+    legend,
+    input,
+    button,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+    margin: 0;
+    padding: 0;
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 fieldset,
-img {
-	border: 0;
+    img {
+    border: 0;
 }
 
 address,
-caption,
-cite,
-code,
-dfn,
-em,
-strong,
-th,
-var,
-optgroup {
-	font-style: inherit;
-	font-weight: inherit;
+    caption,
+    cite,
+    code,
+    dfn,
+    em,
+    strong,
+    th,
+    var,
+    optgroup {
+    font-style: inherit;
+    font-weight: inherit;
 }
 
 del,
-ins {
-	text-decoration: none;
+    ins {
+    text-decoration: none;
 }
 
 li {
-	list-style: none;
+    list-style: none;
 }
 
 caption,
-th {
-	text-align: left;
+    th {
+    text-align: left;
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-size: 100%;
-	font-weight: normal;
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+    font-size: 100%;
+    font-weight: normal;
 }
 
 q:before,
-q:after {
-	content: '';
+    q:after {
+    content: '';
 }
 
 abbr,
-acronym {
-	border: 0;
-	font-variant: normal;
+    acronym {
+    border: 0;
+    font-variant: normal;
 }
 
 sup {
-	vertical-align: baseline;
+    vertical-align: baseline;
 }
 
 sub {
-	vertical-align: baseline;
+    vertical-align: baseline;
 }
 
 /*because legend doesn't inherit in IE */
 legend {
-	color: #000;
+    color: #000;
 }
 
 input,
-button,
-textarea,
-select,
-optgroup,
-option {
-	font-family: inherit;
-	font-size: inherit;
-	font-style: inherit;
-	font-weight: inherit;
+    button,
+    textarea,
+    select,
+    optgroup,
+    option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
 }
 
 /*@purpose To enable resizing for IE */
 /*@branch For IE6-Win, IE7-Win */
 input,
-button,
-textarea,
-select {
-	*font-size: 100%;
+    button,
+    textarea,
+    select {
+    *font-size: 100%;
 }
-
 
 /*
 #################################
@@ -147,271 +146,256 @@ END YUI CSS RESET
 ##################################
 */
 
-
-body{
-    font-family: Arial,sans-serif;
-    font-size:12px;
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
 }
-
 
 /*
 // STRUCTURE/CONTAINERS
 */
-#container{
-    width:960px;
-    margin:0px auto;
-    
-}
-
-#result{
-
-    width:800px;
-    height:300px;
-    border:solid 1px #e1e1e1;
-    font-size:10px;
+#container {
+    width: 960px;
+    margin: 0px auto;
 
 }
 
-#header{
-    margin:0px 0 0 0;
-    background:#fff;
-    height:90px;
-    padding:20px 0 0 0;
+#result {
+
+    width: 800px;
+    height: 300px;
+    border: solid 1px #e1e1e1;
+    font-size: 10px;
+
 }
 
-#header h1{
-    margin:12px 0 0 0;
-    font-size:18px;
-    width:200px;
-    float:right;
-    display:inline;
+#header {
+    margin: 0px 0 0 0;
+    background: #fff;
+    height: 90px;
+    padding: 20px 0 0 0;
 }
 
-#qtCanvas{
-    padding-top:20px;
+#header h1 {
+    margin: 12px 0 0 0;
+    font-size: 18px;
+    width: 200px;
+    float: right;
+    display: inline;
+}
+
+#qtCanvas {
+    padding-top: 20px;
 }
 
 /*
 // MENUS AND NAVIGATION
 */
 
-#control-bar{
+#control-bar {
 
-    height:39px;
-    border-bottom:solid 1px #acacac;
-    margin-bottom:60px;
-
-}
-
-#control-bar ul{
-
-    margin:0;
-    padding:0;
-    list-style:none;
-}
-
-#control-bar ul li{
-    margin:0;
-    padding:0;
-    float:left;
-    display:inline;
-    position:relative;
-}
-
-#control-bar ul li.v-bar{
-
-    margin:0 6px 0 4px;
-    padding:0;
-    float:left;
-    height:44px;
-    background:#cacaca;
-    width:1px;
-    display:inline;
-}
-
-
-#control-bar ul li a{
-
-    margin:0 3px 0 0;
-
-    float:left;
-    display:inline;
-    text-decoration:none;
-    color:#6767cc;
-    font-size:10px;
-    border:#6767cc;
-    background:#f1f1f1;
-    padding:13px 15px 13px 15px;
-}
-
-#control-bar ul li a.rec{
-    background:#ff3300;
-    color:#fff;
+    height: 39px;
+    border-bottom: solid 1px #acacac;
+    margin-bottom: 60px;
 
 }
 
-#control-bar ul li a:hover{
-    background:#414141;
-    color:white;
+#control-bar ul {
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#control-bar ul li {
+    margin: 0;
+    padding: 0;
+    float: left;
+    display: inline;
+    position: relative;
+}
+
+#control-bar ul li.v-bar {
+
+    margin: 0 6px 0 4px;
+    padding: 0;
+    float: left;
+    height: 44px;
+    background: #cacaca;
+    width: 1px;
+    display: inline;
+}
+
+#control-bar ul li a {
+
+    margin: 0 3px 0 0;
+
+    float: left;
+    display: inline;
+    text-decoration: none;
+    color: #6767cc;
+    font-size: 10px;
+    border: #6767cc;
+    background: #f1f1f1;
+    padding: 13px 15px 13px 15px;
+}
+
+#control-bar ul li a.rec {
+    background: #ff3300;
+    color: #fff;
 
 }
 
-
-#control-bar ul li ul{
-    display:none;
-
-}
-
-
-#control-bar ul li:hover ul{
-    display:block;
-    position:absolute;
-    top:39px;
-    left:5px;
-    padding-top:0;
-    z-index:99;
-    width:160px;
+#control-bar ul li a:hover {
+    background: #414141;
+    color: white;
 
 }
 
-#control-bar ul li:hover ul li{
-    margin:0;
-    padding:0;
-    z-index:99;
-    float:right;
-    height:30px;
-    background:#414141;
-    position:relative;
-    border-bottom:solid 1px #515151;
+#control-bar ul li ul {
+    display: none;
 
 }
 
-#control-bar ul li:hover ul li a{
-
-    width:160px;
-    line-height:16px;
-    background:#414141;
-    color:#f1f1f1;
-    padding:7px 0 7px 5px;
-    z-index:99;
-    float:right;
-    margin:0;
-    height:16px;
-    -moz-border-radius:0px;
-    -webkit-border-radius:0px;
-
-
+#control-bar ul li:hover ul {
+    display: block;
+    position: absolute;
+    top: 39px;
+    left: 5px;
+    padding-top: 0;
+    z-index: 99;
+    width: 160px;
 
 }
-#control-bar ul li:hover ul li a:hover{
 
-    background:#616161;
+#control-bar ul li:hover ul li {
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+    float: right;
+    height: 30px;
+    background: #414141;
+    position: relative;
+    border-bottom: solid 1px #515151;
+
 }
 
+#control-bar ul li:hover ul li a {
 
+    width: 160px;
+    line-height: 16px;
+    background: #414141;
+    color: #f1f1f1;
+    padding: 7px 0 7px 5px;
+    z-index: 99;
+    float: right;
+    margin: 0;
+    height: 16px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
 
+}
+
+#control-bar ul li:hover ul li a:hover {
+
+    background: #616161;
+}
 
 /*
 // FONTS AND COLORS
 */
 
-#debug{
-    font-size:10px;
+#debug {
+    font-size: 10px;
 }
 
-h1{
-    font-size:24px;
-    font-weight:bold;
-    margin-bottom:2em;
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 2em;
 }
 
-h3{
-    font-size:18px;
+h3 {
+    font-size: 18px;
 }
 
-
-h4{
-    font-size:16px;
-     margin-bottom:1.5em;
-}
-.moduleTitle{
-    background:#fff;
-    border-bottom:solid 1px #d1d1d1;
-    font-weight:normal;
-    padding:0.3em 0 0.3em 0;
-    margin-bottom:1.5em;    
+h4 {
+    font-size: 16px;
+    margin-bottom: 1.5em;
 }
 
-
-ul.moduleSubMenu{
-
-    margin:0;
-    padding:0;
-    list-style:none;
-    height:30px;
-    border-bottom:solid 1px #e5e5e5;
+.moduleTitle {
+    background: #fff;
+    border-bottom: solid 1px #d1d1d1;
+    font-weight: normal;
+    padding: 0.3em 0 0.3em 0;
+    margin-bottom: 1.5em;
 }
 
-ul.moduleSubMenu li{
+ul.moduleSubMenu {
 
-    margin:0;
-    height:30px;
-    padding:0;
-
-    float:left;
-    display:inline;
-
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 30px;
+    border-bottom: solid 1px #e5e5e5;
 }
 
+ul.moduleSubMenu li {
 
-ul.moduleSubMenu li a{
+    margin: 0;
+    height: 30px;
+    padding: 0;
 
-    margin:0 2px 0 0;
-    height:20px;
-    padding:10px 10px 0 10px;
-    border-top:solid 1px #e5e5e5;
-    border-left:solid 1px #e5e5e5;
-    border-right:solid 1px #e5e5e5;
-    float:left;
-    font-size:10px;
-    color:#414141;
-    text-decoration:none;
-    display:inline;
+    float: left;
+    display: inline;
 
 }
 
+ul.moduleSubMenu li a {
 
-ul.moduleSubMenu li a:hover{
+    margin: 0 2px 0 0;
+    height: 20px;
+    padding: 10px 10px 0 10px;
+    border-top: solid 1px #e5e5e5;
+    border-left: solid 1px #e5e5e5;
+    border-right: solid 1px #e5e5e5;
+    float: left;
+    font-size: 10px;
+    color: #414141;
+    text-decoration: none;
+    display: inline;
 
-    background:#f1f1f1;
-    
 }
 
-ul.big-list{
+ul.moduleSubMenu li a:hover {
 
-    width:100%;
-    margin:0;
-    padding:0;
-    
+    background: #f1f1f1;
+
 }
 
-ul.big-list li{
-    padding:8px 0 2px 0;
-    margin:0;
-    height:20px;
-    border-bottom:solid 1px #f1f1f1;
-        
+ul.big-list {
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-ul.big-list li:hover{
-    background:#ffffcc;
+ul.big-list li {
+    padding: 8px 0 2px 0;
+    margin: 0;
+    height: 20px;
+    border-bottom: solid 1px #f1f1f1;
+
 }
 
-ul.big-list li a{
-    padding:0 0 0 12px;
-    margin:0;
-    text-decoration:none;
+ul.big-list li:hover {
+    background: #ffffcc;
+}
 
-    color:#313166;
-
+ul.big-list li a {
+    padding: 0 0 0 12px;
+    margin: 0;
+    text-decoration: none;
+    color: #313166;
 }
