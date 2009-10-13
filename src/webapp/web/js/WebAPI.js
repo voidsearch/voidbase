@@ -37,6 +37,8 @@ var WebAPI = Class.create({
 
     },
 
+    // ID MODULE DISPATHCABLE
+    //  check if module and module handler method exists
     isModuleDispatchable:function() {
         var dispatchable = false;
         if (typeof(this.modules[this.app.module].API == undefined)) {
@@ -49,6 +51,7 @@ var WebAPI = Class.create({
         return dispatchable;
     },
 
+    // DISPATCH MODULE
     dispatchModule: function () {
 
         this.app.module = this.getModuleFromPath();
@@ -251,10 +254,11 @@ APIModules.queuetree = {
                     method: 'get',
                     onSuccess: function(transport) {
                         // create simple list html
-                        var HTML = '<h4>Queue "' + params.name + '" Dump</h4>';
+                        var HTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
+                        HTML+='<h4>Queue "' + params.name + '" Dump</h4>';
                         HTML += '<textarea rows="10" cols="120">';
                         HTML += transport.responseText;
-                        HTML += '</textarea><br/><br/><br/><div id="qtView"></div>';
+                        HTML += '</textarea><br/><br/><br/>';
                         $('qtCanvas').innerHTML = HTML;
                         // leave more advanced stuff to hanfler funciton
                         self._view(transport.responseJSON);
@@ -344,8 +348,7 @@ APIModules.queuetree = {
     },
 
     //  GET PROPERTY NAMES
-    //  return property names as array
-
+    //  return property names as array if que element is object
     _getPropertyNames:function(element) {
         var fields = [];
         for (var i in element) {
@@ -354,6 +357,8 @@ APIModules.queuetree = {
         return fields;
     },
 
+    //  DETECT TYPE
+    //  detect type of element in que
     _detectType:function(element) {
         var type = 'unknown';
 
@@ -398,7 +403,6 @@ APIModules.queuetree = {
                 if (numResults > 1) {
                     qs = qs[0];
                 }
-
                 //itterate array
                 qs.each(function(c) {
                     HTML += '<li><a href="#queuetree/view/?name=' + c + '">' + c + '</a></li>';
