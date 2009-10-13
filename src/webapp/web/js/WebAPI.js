@@ -162,11 +162,12 @@ var WebAPI = Class.create({
         var self = this;
         self._GM = this.app.module;
         self._GA = this.app.action;
+        self._GP = this.app.params;
         try {
             var elm = $(nodeId);
             if (elm == null) {
                 var timeoutFunc = function() {
-                    self.modules[self._GM][self._GA]();
+                    self.modules[self._GM][self._GA](self._GP);
                 };
 
                 //execute method requred to fetch nodeId
@@ -242,7 +243,22 @@ APIModules.queuetree = {
 
 
     view:function(params) {
-        console.log(params);
+        if (this.API.requiresNode('qtCanvas', this)) {
+            if (typeof(params.name) !== undefined) {
+                new Ajax.Request('/webapi/queuetree/?method=GET&queue='+params.name+'&size=100', {
+                    method: 'get',
+                    onSuccess: function(transport) {
+                        // create simple list html
+                        var HTML = '<h4>Queue "'+params.name+'" Dump</h4>';
+                        HTML += '<textarea rows="10" cols="120">';
+                        HTML += transport.responseText;
+                        HTML += '</textarea>';
+                        $('qtCanvas').innerHTML = HTML;
+                    }
+                });
+
+            }
+        }
     },
 
     list:function() {
@@ -263,24 +279,31 @@ APIModules.queuetree = {
     },
 
     // AJAX CALLS FOR LISTING QUEUES
-    _list:function(){
+    _list:function() {
+
         new Ajax.Request('/webapi/queuetree/?method=LIST', {
             method: 'get',
             onSuccess: function(transport) {
-                console.log('test1');
-                var resp=transport.responseJSON;
-                var qs=resp.queue.response.queueList.val;
-                var HTML='<h4>Queue List</h4>';
-                HTML+='<ul class="big-list">';
-                qs.each(function(elm){
-                    HTML+='<li><a href="#queuetree/view/'+elm+'">'+elm+'</a></li>';
+                var resp = transport.responseJSON;
+                var qs = [];
+                qs.push(resp.queue.response.queueList.val);
+                var numResults = resp.queue.header.results.totalResults;
+
+                // create simple list html
+                var HTML = '<h4>Queue List</h4>';
+                HTML += '<ul class="big-list">';
+
+                //deal with one element arrays
+                if (numResults > 1) {
+                    qs = qs[0];
+                }
+
+                //itterate array
+                qs.each(function(c) {
+                    HTML += '<li><a href="#queuetree/view/?name=' + c + '">' + c + '</a></li>';
                 });
-
-                HTML+='</ul>';
-
-                $('qtCanvas').innerHTML=HTML;
-
-
+                HTML += '</ul>';
+                $('qtCanvas').innerHTML = HTML;
             }
         });
 
@@ -322,17 +345,17 @@ APIModules.queuetree = {
             onSuccess: function(transport) {
                 TIMER.message("query data received");
                 var ret = transport.responseText.evalJSON();
-                var tmpArray=[];
-                ret.queue.response.queueElements.val.each(function(elm){
+                var tmpArray = [];
+                ret.queue.response.queueElements.val.each(function(elm) {
                     tmpArray.push(elm.evalJSON());
                 });
 
-                ret.queue.response.queueElements.val=tmpArray;
+                ret.queue.response.queueElements.val = tmpArray;
 
-                ret.queue.response.queueMetadata.max=ret.queue.response.queueMetadata.max.evalJSON();
-                ret.queue.response.queueMetadata.min=ret.queue.response.queueMetadata.min.evalJSON();
-                ret.error=false;
-               
+                ret.queue.response.queueMetadata.max = ret.queue.response.queueMetadata.max.evalJSON();
+                ret.queue.response.queueMetadata.min = ret.queue.response.queueMetadata.min.evalJSON();
+                ret.error = false;
+
                 TIMER.message("query data evaled to JSON");
                 self.drawScatter(ret);
             }
@@ -343,7 +366,7 @@ APIModules.queuetree = {
         console.log(apiData);
         if (apiData.error != true) {
             $('debug').innerHTML = '';
-            var a=new ChartEngine({
+            var a = new ChartEngine({
                 'canvasID':'graph-canvas',
                 'tooltip':'scatter-tooltip',
                 'type':'scatter',
@@ -360,7 +383,7 @@ APIModules.queuetree = {
             $('debug').innerHTML = 'Invalid Query';
         }
 
-        
+
     }
 }
 
