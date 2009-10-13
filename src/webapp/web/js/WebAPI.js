@@ -37,12 +37,11 @@ var WebAPI = Class.create({
 
     },
 
-    isModuleDispatchable:function(module, action) {
+    isModuleDispatchable:function() {
         var dispatchable = false;
         if (typeof(this.modules[this.app.module].API == undefined)) {
             this.modules[this.app.module]._init(this);
         }
-
 
         if (typeof(this.modules[this.app.module]) != 'undefined' && typeof(this.modules[this.app.module][this.app.action]) != 'undefined') {
             dispatchable = true;
@@ -213,8 +212,12 @@ APIModules.home = {
     }
 }
 
+
+
+//
 //
 // QueueTree module
+//
 //
 APIModules.queuetree = {
 
@@ -240,20 +243,21 @@ APIModules.queuetree = {
         }
     },
 
-
-
     view:function(params) {
+        var self = this;
         if (this.API.requiresNode('qtCanvas', this)) {
             if (typeof(params.name) !== undefined) {
-                new Ajax.Request('/webapi/queuetree/?method=GET&queue='+params.name+'&size=100', {
+                new Ajax.Request('/webapi/queuetree/?method=GET&queue=' + params.name + '&size=100', {
                     method: 'get',
                     onSuccess: function(transport) {
                         // create simple list html
-                        var HTML = '<h4>Queue "'+params.name+'" Dump</h4>';
+                        var HTML = '<h4>Queue "' + params.name + '" Dump</h4>';
                         HTML += '<textarea rows="10" cols="120">';
                         HTML += transport.responseText;
-                        HTML += '</textarea>';
+                        HTML += '</textarea><br/><br/><br/><div id="qtView"></div>';
                         $('qtCanvas').innerHTML = HTML;
+                        // leave more advanced stuff to hanfler funciton
+                        self._view(transport.responseJSON);
                     }
                 });
 
@@ -270,17 +274,114 @@ APIModules.queuetree = {
     //
     // HANDLERS
     //
-
-
-    //
     _statsHandler:function() {
         $('qtStats').innerHTML = 'test test test';
 
     },
 
+    _view:function(data) {
+
+        //get the first element of queue and try to resolve type
+        var firstElement = data.queue.response.queueElements.val[0];
+        var dataType = this._detectType(firstElement);
+        this._queueData = data.queue;
+
+        // hanfle according to type
+        if (dataType == 'object') {
+            this._viewObject();
+        }
+
+    },
+
+    _viewObject:function() {
+        var self = this;
+
+        //get first element to collect field names
+        var firstElement = this._queueData.response.queueElements.val[0];
+        var fieldNames = this._getPropertyNames(firstElement);
+
+        //construct select drop down with field names
+        var selectHTML = '<select id="qtViewSelectField">';
+        fieldNames.each(function(elm) {
+            selectHTML += '<option value="' + elm + '">' + elm + '</option>';
+        });
+        selectHTML += '</select><canvas id="graph-canvas" ></canvas>';
+        $('qtView').insert(selectHTML);
+
+        //attach event to select field change
+        $('qtViewSelectField').observe('change', function(event) {
+            self._selectFieldNameHandler();
+        });
+
+        //draw for first field
+        this._drawObjectGraph(fieldNames.first());
+
+    },
+
+    _drawObjectGraph:function(fieldName){
+        $('graph-canvas').width='960';
+        $('graph-canvas').height='260';
+
+        var data=[];
+        this._queueData.response.queueElements.val.each(function(element){
+            data.push(element[fieldName]);
+        });
+
+        new ChartEngine({
+            'canvasID':'graph-canvas',
+            'type':'line',
+            'xTitle':'x-title',
+            'yTitle':'y-title',
+            'chartData':data
+        });
+
+    },
+
+    _selectFieldNameHandler:function() {
+        var field=$('qtViewSelectField').value;
+        this._drawObjectGraph(field);
+        console.log(field);
+    },
+
+    //  GET PROPERTY NAMES
+    //  return property names as array
+
+    _getPropertyNames:function(element) {
+        var fields = [];
+        for (var i in element) {
+            fields.push(i);
+        }
+        return fields;
+    },
+
+    _detectType:function(element) {
+        var type = 'unknown';
+
+        if (typeof(element) == 'object') {
+            type = 'object';
+        }
+
+        if (Object.isArray(element)) {
+            type = 'array';
+        }
+        if (Object.isHash(element)) {
+            type = 'hash';
+        }
+
+        if (Object.isNumber(element)) {
+            type = 'number';
+        }
+
+        if (Object.isString(element)) {
+            type = 'string';
+        }
+
+        return type;
+
+    },
+
     // AJAX CALLS FOR LISTING QUEUES
     _list:function() {
-
         new Ajax.Request('/webapi/queuetree/?method=LIST', {
             method: 'get',
             onSuccess: function(transport) {
@@ -330,7 +431,7 @@ APIModules.queuetree = {
     _fastDebugSplatterHandler:function() {
         // @todo make java random data inserter
         // ATM, we use:
-        // /usr/bin/php /home/kodi/vast/analytics/bin/void_insertRandomData.php
+        // /bin/insertRandomData.php
 
         var self = window.APIModules.queuetree;
 
@@ -400,7 +501,6 @@ APIModules.modules = {
         this.API.includeTemplate($('main-ajax-content'), '/files/html/webapi/modulesTemplate.html');
     }
 }
-
 
 //
 //set defaultModule to home module

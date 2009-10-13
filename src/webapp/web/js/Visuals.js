@@ -152,11 +152,12 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
 
     var clr = 'rgba(' + colorRF + ',' + colorGF + ',' + colorBF + ',' + alpha + ')';
 
-    if (angle != 0) {
+    if (angle == 90) {
         this.ctx.save();
 
         this.ctx.rotate((Math.PI / 180) * angle);
-        this.ctx.translate(250, -280);
+        this.ctx.translate(y+20, -110);
+        console.log(x,y);
 
     }
     this.ctx.strokeStyle = clr;
@@ -217,19 +218,14 @@ function print_r(x, max, sep, l) {
     if (x === null) {
         r += "(null)" + nlc;
     } else if (t == 'object') {
-
         l++;
-
         for (i = 0; i < l; i++) {
             tab += sep;
         }
-
         if (x && x.length) {
             t = 'array';
         }
-
         r += '(' + t + ") :" + nlc;
-
         for (i in x) {
             try {
                 r += tab + '[' + i + '] : ' + print_r(x[i], max, sep, (l + 1));
@@ -237,19 +233,13 @@ function print_r(x, max, sep, l) {
                 return "[ERROR: " + e + "]" + nlc;
             }
         }
-
     } else {
-
         if (t == 'string') {
             if (x == '') {
                 x = '(empty)';
             }
         }
-
         r += '(' + t + ') ' + x + "" + nlc;
-
     }
-
     return r;
-
 };

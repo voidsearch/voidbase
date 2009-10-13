@@ -74,10 +74,12 @@ var ChartEngine = Class.create({
             case 'api-scatter':
                 this.drawAPIScatterGraph();
                 break;
-
             case 'scatter':
                 this.drawScatterGraph();
+                break;
 
+            case 'line':
+                this.drawLineGraph();
                 break;
         }
     },
@@ -168,6 +170,16 @@ var ChartEngine = Class.create({
         }
         this.timer = setTimeout(timeoutFunc, 10);
 
+    },
+
+    drawLineGraph:function(){
+        // X AXIS
+        this.xAxis.printTitle(this.options.xTitle);
+
+        
+        // Y AXIS
+        this.yAxis.printTitle(this.options.yTitle);
+        
     },
 
     drawScatterGraphData: function (start) {
