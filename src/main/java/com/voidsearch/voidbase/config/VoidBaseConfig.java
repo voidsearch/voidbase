@@ -296,7 +296,6 @@ public class VoidBaseConfig {
             }
         }
 
-        System.out.println("map: " + map.toString());
         return map;
     }
 
