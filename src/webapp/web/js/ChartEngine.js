@@ -204,7 +204,7 @@ var ChartEngine = Class.create({
 
 
             //console.log(x);
-            self.canvas.line(x, y, x, yZero, '#414166', 0.8);
+            self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
 
         });
 
