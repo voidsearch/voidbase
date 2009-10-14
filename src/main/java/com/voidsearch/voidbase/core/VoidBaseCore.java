@@ -106,6 +106,16 @@ public class VoidBaseCore implements VoidBaseModule {
                             }
                         }
 
+                        // preregister logger
+                        if (VoidBaseConfiguration.contains(Config.MODULES, module, Config.LOG_QUEUE)) {
+                            String logQueue = VoidBaseConfiguration.get(Config.MODULES, module, Config.LOG_QUEUE);
+                            try {
+                                logService.registerQueue(module,logQueue);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                         // invoke module-specific initialization
                         childModule.initialize(module);
                         childModule.run();

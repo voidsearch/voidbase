@@ -43,8 +43,9 @@ public class Config {
 
     // common variables
 
-    public static String PORT   = "port";
+    public static String PORT       = "port";
     public static String LOG_FILE   = "log_file";
+    public static String LOG_QUEUE  = "log_queue";
     
 
 }

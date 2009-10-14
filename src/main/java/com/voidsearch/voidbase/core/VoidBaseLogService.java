@@ -16,6 +16,8 @@
 
 package com.voidsearch.voidbase.core;
 
+import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
+
 import java.util.HashMap;
 import java.util.logging.Logger;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import java.io.IOException;
 public class VoidBaseLogService {
 
     private static String DEFAULT_LOGGER = "default";
+    private static int DEFAULT_QUEUE_SIZE = 1024;
 
     protected static Logger log = Logger.getLogger(VoidBaseLogService.class.getName());
     protected static HashMap<String, VoidBaseLogger> loggerMap = new HashMap<String, VoidBaseLogger>();
@@ -48,6 +51,19 @@ public class VoidBaseLogService {
     public void registerLogger(String name, String logFile) throws IOException {
         loggerMap.put(name,new VoidBaseLogger(name,logFile,this));
     }
+
+    public void registerQueue(String name, String logQueue) throws IOException {
+        if (loggerMap.containsKey(name)) {
+            try {
+                QueueTreeClient client = new QueueTreeClient(logQueue);
+                client.create(name,DEFAULT_QUEUE_SIZE);
+                (loggerMap.get(name)).setLogQueue(logQueue);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public static VoidBaseLogger getLogger(String name) {
         if (loggerMap.containsKey(name)) {

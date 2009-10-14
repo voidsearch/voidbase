@@ -16,6 +16,8 @@
 
 package com.voidsearch.voidbase.core;
 
+import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
+
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.Formatter;
@@ -28,8 +30,13 @@ public class VoidBaseLogger {
     private String name;
     private String logFile;
     private VoidBaseLogService logService;
+    private String logQueue = null;
 
     protected static Logger log = Logger.getLogger(VoidBaseLogger.class.getName());
+
+    public void setLogQueue(String logQueue) {
+        this.logQueue = logQueue;
+    }
 
     public VoidBaseLogger(String name, String logFile, VoidBaseLogService logService) throws IOException {
 
@@ -45,11 +52,22 @@ public class VoidBaseLogger {
     }
 
     public void log(String message) {
+
         if (logFile != null) {
             log.info(message);
         } else {
             logService.log(name, message);
         }
+
+        if (logQueue != null) {
+            try {
+                QueueTreeClient client = new QueueTreeClient(logQueue);
+                client.put(name,message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public class VoidBaseLogFormatter extends Formatter {
