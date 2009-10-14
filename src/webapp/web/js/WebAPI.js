@@ -407,13 +407,11 @@ APIModules.queuetree = {
     _selectFieldNameHandler:function() {
         var field = $('qtViewSelectField').value;
         this.fieldToDraw = field;
-        console.log(field);
     },
 
     _selectSizeChange:function() {
         var field = $('fetchSizeSelect').value;
         this.fetchSize = parseInt(field);
-        console.log(field);
     },
 
     //  GET PROPERTY NAMES
