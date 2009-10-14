@@ -14,18 +14,12 @@
  * the License.
  */
 
-package com.voidsearch.test.apps.feedq.apps.queuetree.client;
+package com.voidsearch.test.client;
 
 import org.testng.annotations.*;
 import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
 
-import java.util.Random;
-
-public class SimpleFeedqLoaderTest {
-
-    private int QUEUE_SIZE = 100;
-    private String TEST_QUEUE = "xml_test";
-    Random rnd = new Random();
+public class QueueTreeClientTest {
 
     @Test
     public void nullTest() {
@@ -34,24 +28,18 @@ public class SimpleFeedqLoaderTest {
 
         try {
 
-            client.create(TEST_QUEUE,QUEUE_SIZE);
+            client.create("test",10);
 
-            for (int i=0; i<QUEUE_SIZE; i++) {
-                StringBuilder sb = new StringBuilder();
+            client.put("test","----");
+            client.put("test","++++");
 
-                sb.append("<count>").append(i).append("</count>")
-                  .append("<random>").append(rnd.nextInt(1024)).append("</random>");
-
-                client.put(TEST_QUEUE,sb.toString());
-            }
-
-            System.out.println(client.get(TEST_QUEUE,QUEUE_SIZE));
+            System.out.println(client.get("test",5));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
+    
 
 }
