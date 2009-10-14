@@ -30,7 +30,7 @@ var ChartEngine = Class.create({
         this.canvas.reset();
 
         //prepare graph, and if ok draw data
-        console.log(this.options);
+
         if (this.prepareGraph()) {
 
             var self = this;
@@ -172,14 +172,69 @@ var ChartEngine = Class.create({
 
     },
 
-    drawLineGraph:function(){
+    // DRAW LINE GRAPH
+    // !! PLEASE !! provide array of integers in this.options.data
+    drawLineGraph:function() {
+        var self = this;
+
+        //get scope and min/max values
+
+        this.paddingFactor = 0.05;
+        this.getDataScope();
+        this.drawMinMaxLines = false;
+
         // X AXIS
         this.xAxis.printTitle(this.options.xTitle);
+        this.xAxis.drawLine(this.xMax, 'text', '6767cc', 0.4);
+        this.xAxis.drawLine(this.xMin, 'text', '6767cc', 0.4);
 
-        
         // Y AXIS
         this.yAxis.printTitle(this.options.yTitle);
-        
+        this.yAxis.drawLine(this.yMax, 'text', '6767cc', 0.4);
+        this.yAxis.drawLine(this.yMin, 'text', '6767cc', 0.4);
+
+
+        var x = 0;
+        var y = 0;
+        var yZero = this.scaleY(self.yMin);
+        this.options.chartData.reverse(false).each(function(elm, index) {
+
+            x = self.scaleX(index) + 0.5;
+            y = self.scaleY(elm);
+
+
+            //console.log(x);
+            self.canvas.line(x, y, x, yZero, '#414166', 0.8);
+
+        });
+
+
+    },
+
+
+    // GET DATA SCOPE
+    getDataScope:function() {
+
+        // get min and max values
+        this.xMin = 0;
+        this.yMin = this.options.chartData.min();
+
+
+        this.xMax = this.options.chartData.length;
+        this.yMax = this.options.chartData.max();
+
+        if (this.yMax == this.yMin && this.yMax != 0) {
+            this.yMin = 0;
+        }
+
+
+        this.xscope = this.xMax - this.xMin;
+        this.yscope = this.yMax - this.yMin;
+
+        this.yMin = Math.floor(this.yMin - ((this.yMax - this.yMin) * this.paddingFactor));
+
+        this.yscope = this.yMax - this.yMin;
+
     },
 
     drawScatterGraphData: function (start) {

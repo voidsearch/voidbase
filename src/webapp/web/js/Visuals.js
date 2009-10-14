@@ -157,7 +157,6 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
 
         this.ctx.rotate((Math.PI / 180) * angle);
         this.ctx.translate(y+20, -110);
-        console.log(x,y);
 
     }
     this.ctx.strokeStyle = clr;
