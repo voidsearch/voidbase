@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.LinkedList;
+import java.net.URLDecoder;
 
 public class  QueueTreeModule implements VoidBaseModule {
 
@@ -95,7 +96,7 @@ public class  QueueTreeModule implements VoidBaseModule {
                 if (req.containsParams(QueueTreeProtocol.getRequiredParams(VoidBaseOperationType.PUT))) {
 
                     String queue = req.getParam(QueueTreeProtocol.QUEUE);
-                    String value = req.getParam(QueueTreeProtocol.VALUE);
+                    String value = URLDecoder.decode(req.getParam(QueueTreeProtocol.VALUE));
                     qTree.putFIFO(queue, value);
 
                     response.setResponse(QueueTreeProtocol.ENQUEUED);

@@ -17,8 +17,63 @@
 package com.voidsearch.voidbase.apps.queuetree.client;
 
 import com.voidsearch.voidbase.client.VoidBaseHttpClient;
+import com.voidsearch.voidbase.apps.queuetree.protocol.QueueTreeProtocol;
+
+import java.net.URLEncoder;
 
 public class QueueTreeClient extends VoidBaseHttpClient {
-    
+
+    private static String hostname;
+    private static String module = "/queuetree";
+
+    public QueueTreeClient(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public QueueTreeClient(String hostname,String module) {
+        this.hostname = hostname;
+        this.module = module;
+    }
+
+    public void create(String queue, Integer size) throws Exception {
+
+        QueueTreeQuery query = new QueueTreeQuery(hostname);
+        query.set(QueueTreeProtocol.METHOD, "ADD");
+        query.set(QueueTreeProtocol.QUEUE, queue);
+        query.set(QueueTreeProtocol.SIZE, size.toString());
+
+        get(query);
+    }
+
+    public void put(String queue, String content) throws Exception {
+
+        QueueTreeQuery query = new QueueTreeQuery(hostname);
+        query.set(QueueTreeProtocol.METHOD, "PUT");
+        query.set(QueueTreeProtocol.QUEUE, queue);
+        query.set(QueueTreeProtocol.VALUE, URLEncoder.encode(content));
+
+        get(query);
+
+    }
+
+    public String get(String queue, Integer size) throws Exception {
+
+        QueueTreeQuery query = new QueueTreeQuery(hostname);
+        query.set(QueueTreeProtocol.METHOD, "GET");
+        query.set(QueueTreeProtocol.QUEUE, queue);
+        query.set(QueueTreeProtocol.SIZE, size.toString());
+
+        return new String(get(query));
+
+    }
+
+    public String list() throws Exception {
+
+        QueueTreeQuery query = new QueueTreeQuery(hostname);
+        query.set(QueueTreeProtocol.METHOD, "LIST");
+
+        return new String(get(query));
+
+    }
 
 }

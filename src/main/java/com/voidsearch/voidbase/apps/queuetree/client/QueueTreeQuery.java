@@ -14,8 +14,17 @@
  * the License.
  */
 
-package com.voidsearch.voidbase.client;
+package com.voidsearch.voidbase.apps.queuetree.client;
 
-public interface VoidBaseClient {
+import com.voidsearch.voidbase.client.VoidBaseQuery;
+
+public class QueueTreeQuery extends VoidBaseQuery {
+
+    private static String DEFAULT_HANDLER = "/queuetree/";
+
+    public QueueTreeQuery(String host) {
+        this.host = host;
+        this.handler = DEFAULT_HANDLER;
+    }
 
 }

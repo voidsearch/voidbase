@@ -19,7 +19,13 @@ package com.voidsearch.test.apps.feedq.apps.queuetree.client;
 import org.testng.annotations.*;
 import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
 
-public class QueueTreeClientTest {
+import java.util.Random;
+
+public class SimpleFeedqLoaderTest {
+
+    private int QUEUE_SIZE = 100;
+    private String TEST_QUEUE = "xml_test";
+    Random rnd = new Random();
 
     @Test
     public void nullTest() {
@@ -28,18 +34,24 @@ public class QueueTreeClientTest {
 
         try {
 
-            client.create("test",10);
+            client.create(TEST_QUEUE,QUEUE_SIZE);
 
-            client.put("test","----");
-            client.put("test","++++");
+            for (int i=0; i<QUEUE_SIZE; i++) {
+                StringBuilder sb = new StringBuilder();
 
-            System.out.println(client.get("test",5));
+                sb.append("<count>").append(i).append("</count>")
+                  .append("<random>").append(rnd.nextInt(1024)).append("</random>");
+
+                client.put(TEST_QUEUE,sb.toString());
+            }
+
+            System.out.println(client.get(TEST_QUEUE,QUEUE_SIZE));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    
+
 
 }

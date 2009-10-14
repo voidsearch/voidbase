@@ -16,7 +16,61 @@
 
 package com.voidsearch.voidbase.client;
 
-public class VoidBaseHttpClient implements VoidBaseClient {
-    
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+
+import java.io.IOException;
+
+public abstract class VoidBaseHttpClient implements VoidBaseClient {
+
+    protected HttpClient client = new HttpClient();
+
+    protected byte[] get(VoidBaseQuery query) throws Exception {
+
+        GetMethod method = new GetMethod(query.getQuery());
+        method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,new DefaultHttpMethodRetryHandler(3, false));
+
+        byte[] responseBody = null;
+
+        try {
+            int statusCode = client.executeMethod(method);
+
+            if (statusCode == HttpStatus.SC_OK) {
+                responseBody = method.getResponseBody();
+            }
+
+        } catch (HttpException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            method.releaseConnection();
+        }
+
+        return responseBody;
+
+    }
+
+    protected void post(VoidBaseQuery query, String content) throws Exception {
+
+        PostMethod post = new PostMethod(query.getQuery());
+        post.setRequestBody(content);
+
+        try {
+            client.executeMethod(post);
+            post.getResponseBodyAsStream(); // ignore response
+        } catch (HttpException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            post.releaseConnection();
+        }
+    }
 
 }
