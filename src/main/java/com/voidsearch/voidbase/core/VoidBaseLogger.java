@@ -54,7 +54,7 @@ public class VoidBaseLogger {
     public void log(String message) {
 
         if (logFile != null) {
-            log.info(message);
+            log.info(getLogEntry(message));
         } else {
             logService.log(name, message);
         }
@@ -77,6 +77,15 @@ public class VoidBaseLogger {
                .append("\n");
             return buf.toString();
         }
+    }
+
+
+    public String getLogEntry(String content) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<entry>\n")
+          .append(content)
+          .append("</entry>\n");
+        return sb.toString();
     }
 
 }
