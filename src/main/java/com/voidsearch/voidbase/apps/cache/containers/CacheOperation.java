@@ -23,17 +23,24 @@ public class CacheOperation {
     public CacheOperation() { }
 
     public CacheOperation(String name) {
-        this.name = name;
+        if (name == null)
+            return;
+
+        this.name = name.toUpperCase();
     }
 
     public CacheOperation(String name, String lockType) {
-        this.name = name;
-        this.lockType = CacheLockType.deserialize(lockType);
+        if (name != null)
+            this.name = name.toUpperCase();
+        if (lockType != null)
+            this.lockType = CacheLockType.deserialize(lockType);
     }
 
     public CacheOperation(String name, CacheLockType lockType) {
-        this.name = name;
-        this.lockType = lockType;
+        if (name != null)
+            this.name = name.toUpperCase();
+        if (lockType != null)
+            this.lockType = lockType;
     }
 
     public String toString() {

@@ -25,28 +25,28 @@ public class RegisteredOperations {
         if (operation == null)
             return false;
 
-        return registeredOperations.containsKey(operation);
+        return registeredOperations.containsKey(operation.toUpperCase());
     }
 
     public Boolean isRegistered(CacheOperation operation) {
         if (operation == null)
             return false;
 
-        return registeredOperations.containsKey(operation.name);
+        return registeredOperations.containsKey(operation.name.toUpperCase());
     }
 
     public CacheOperation get(String key) {
         if (key == null)
             return null;
 
-        return registeredOperations.get(key);
+        return registeredOperations.get(key.toUpperCase());
     }
 
     public void put(String key, CacheOperation operation) {
         if (key == null)
             return;
 
-        registeredOperations.put(key, operation);
+        registeredOperations.put(key.toUpperCase(), operation);
     }
 
     public Boolean contains(String key) {
@@ -60,7 +60,7 @@ public class RegisteredOperations {
         if (operation == null)
             return CacheLockType.DEFAULT;
 
-        return registeredOperations.get(operation).lockType;
+        return registeredOperations.get(operation.toUpperCase()).lockType;
     }
 
     public String toString() {

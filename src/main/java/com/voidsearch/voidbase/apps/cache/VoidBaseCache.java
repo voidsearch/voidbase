@@ -76,6 +76,8 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
         if (operation == null)
             return false;
 
+        System.out.println("Operations: " + operations);
+
         return operations.isRegistered(operation);
     }
 

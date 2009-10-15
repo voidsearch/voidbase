@@ -112,27 +112,6 @@ simple configuration
 
     </FeedQModule>
 
-    <!-- cache-specific configuration -->
-
-    <CacheModule>
-        <default_handler>store</default_handler>
-
-        <handlers>
-            <store>com.voidsearch.voidbase.apps.cache.module.MessagePersistenceStore</store>
-        </handlers>
-    </CacheModule>
-    
-    <MessagePersistenceStore>
-        <storage>/data/storage/messages</storage>
-        
-        <operations>
-            <GET lock="none"/>
-            <PUT lock="atomic"/>
-            <DELETE lock="atomic"/>
-            <FLUSH lock="global"/>
-        </operations>
-    </MessagePersistenceStore>
-
     <!-- storage-specific configurations -->
 
     <storage>
