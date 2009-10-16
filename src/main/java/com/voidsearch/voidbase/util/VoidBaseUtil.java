@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 public class VoidBaseUtil {
 
-
-
     public static ArrayList<Double> getZeroDoubleArray(int size) {
         return getDoubleArray(size,0.0);
     }
@@ -33,6 +31,18 @@ public class VoidBaseUtil {
         }
         return array;
     }
+
+
+    public static String XMLEncode(String value)
+    {
+        if (value == null) return value;
+
+         return value.replaceAll("&", "&amp;")
+                     .replaceAll("'", "&apos;")
+                     .replaceAll("\"", "&quot;")
+                     .replaceAll("<", "&lt;")
+                     .replaceAll(">", "&gt;");
+    } 
 
 
 }
