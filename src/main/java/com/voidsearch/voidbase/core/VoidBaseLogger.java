@@ -84,7 +84,7 @@ public class VoidBaseLogger {
         StringBuilder sb = new StringBuilder();
         sb.append("<entry>\n")
           .append(content)
-          .append("</entry>\n");
+          .append("</entry>");
         return sb.toString();
     }
 
