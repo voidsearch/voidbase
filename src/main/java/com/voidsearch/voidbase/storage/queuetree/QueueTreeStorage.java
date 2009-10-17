@@ -113,6 +113,7 @@ public class QueueTreeStorage implements SupervisedStorage {
         else {
             throw new QueueAlreadyExistsException();
         }
+
     }
 
     // resize existing queue
@@ -130,7 +131,7 @@ public class QueueTreeStorage implements SupervisedStorage {
         if (queueTree.containsKey(queueName)) {
             ArrayBlockingQueue queue = new ArrayBlockingQueue(size,true,queueTree.get(queueName));
             queueTree.put(queueName,queue);
-            if (queueMedatada.contains(queueName)) {
+            if (queueMedatada.containsKey(queueName)) {
                 QueueMetadata metadata = queueMedatada.get(queueName);
                 metadata.set(QueueTreeProtocol.SIZE,size);
                 queueMedatada.put(queueName,metadata);
@@ -150,7 +151,7 @@ public class QueueTreeStorage implements SupervisedStorage {
         if (opLocks.contains(StorageOperation.EXISTS))
             throw new SupervisionException();
 
-        return queueTree.contains(name);
+        return queueTree.containsKey(name);
     }
 
 

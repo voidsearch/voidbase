@@ -58,8 +58,6 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
 
     protected void post(VoidBaseQuery query, String content) throws Exception {
 
-        System.out.println("POSTING : " + query.getQuery());
-
         PostMethod post = new PostMethod(query.getQuery());
         post.setRequestBody(content);
 
