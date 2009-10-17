@@ -44,6 +44,10 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
         }
     }
 
+    public static VoidBaseCache getInstance() throws CacheException {
+        throw new CacheException("Not Implemented");
+    }
+
     public void initialize() throws CacheException {
         Set<String> operationKeys = config.getKeys(name, "operations");
 

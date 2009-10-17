@@ -29,6 +29,8 @@ import java.util.Map;
 
 public class MessagePersistenceStore extends VoidBaseCache {
     BDBStorage storage = BDBStorage.getInstance();
+    
+    protected static MessagePersistenceStore instance = null;
     protected static final String STORE = "messages";
 
     public MessagePersistenceStore() throws CacheException {
@@ -39,6 +41,14 @@ public class MessagePersistenceStore extends VoidBaseCache {
 
         // initialize STORE
         initializeStore();
+    }
+
+    public static MessagePersistenceStore getInstance() throws CacheException {
+        if (instance == null) {
+            instance = new MessagePersistenceStore();
+        }
+
+        return instance;
     }
 
     protected synchronized void initializeStore() throws CacheException {
