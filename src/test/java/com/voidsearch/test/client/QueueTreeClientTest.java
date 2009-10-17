@@ -33,6 +33,8 @@ public class QueueTreeClientTest {
             client.put("test","----");
             client.put("test","++++");
 
+            client.put("test","<title>voidbase: [voidbase] http://bit.ly/2o3Pkx Igor Bogicevic - internal interface for store</title>");
+
             System.out.println(client.get("test",5));
 
         } catch (Exception e) {

@@ -96,7 +96,14 @@ public class  QueueTreeModule implements VoidBaseModule {
                 if (req.containsParams(QueueTreeProtocol.getRequiredParams(VoidBaseOperationType.PUT))) {
 
                     String queue = req.getParam(QueueTreeProtocol.QUEUE);
-                    String value = URLDecoder.decode(req.getParam(QueueTreeProtocol.VALUE));
+                    String value = req.getParam(QueueTreeProtocol.VALUE);
+
+                    if (value != null) {
+                        value = URLDecoder.decode(value);
+                    } else {
+                        value = request.getContent();
+                    }
+
                     qTree.putFIFO(queue, value);
 
                     response.setResponse(QueueTreeProtocol.ENQUEUED);

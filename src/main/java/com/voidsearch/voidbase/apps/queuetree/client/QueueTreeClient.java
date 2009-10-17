@@ -50,9 +50,8 @@ public class QueueTreeClient extends VoidBaseHttpClient {
         QueueTreeQuery query = new QueueTreeQuery(hostname);
         query.set(QueueTreeProtocol.METHOD, "PUT");
         query.set(QueueTreeProtocol.QUEUE, queue);
-        query.set(QueueTreeProtocol.VALUE, URLEncoder.encode(content));
 
-        get(query);
+        post(query,content);
 
     }
 

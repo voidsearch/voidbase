@@ -9,7 +9,7 @@
     </CacheModule>
 
     <MessagePersistenceStore>
-        <storage>/data/storage/messages</storage>
+        <storage>/Data/tmp/messages</storage>
 
         <operations>
             <GET lock="none"/>

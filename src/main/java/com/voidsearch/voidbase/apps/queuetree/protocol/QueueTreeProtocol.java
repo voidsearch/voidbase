@@ -50,7 +50,7 @@ public class QueueTreeProtocol extends VoidBaseProtocol {
     private static HashMap<VoidBaseOperationType,String[]> requiredParams = new HashMap<VoidBaseOperationType,String[]>();
 
     static {
-        requiredParams.put(VoidBaseOperationType.PUT,     new String[] {QUEUE,VALUE});
+        requiredParams.put(VoidBaseOperationType.PUT,     new String[] {QUEUE});
         requiredParams.put(VoidBaseOperationType.ADD,     new String[] {QUEUE,SIZE});
         requiredParams.put(VoidBaseOperationType.GET,     new String[] {QUEUE,SIZE});
         requiredParams.put(VoidBaseOperationType.RESIZE,  new String[] {QUEUE,SIZE});
