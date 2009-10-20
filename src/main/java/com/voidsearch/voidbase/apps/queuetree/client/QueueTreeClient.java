@@ -19,20 +19,11 @@ package com.voidsearch.voidbase.apps.queuetree.client;
 import com.voidsearch.voidbase.client.VoidBaseHttpClient;
 import com.voidsearch.voidbase.apps.queuetree.protocol.QueueTreeProtocol;
 
-import java.net.URLEncoder;
-
 public class QueueTreeClient extends VoidBaseHttpClient {
-
-    private static String hostname;
-    private static String module = "/queuetree";
 
     public QueueTreeClient(String hostname) {
         this.hostname = hostname;
-    }
-
-    public QueueTreeClient(String hostname,String module) {
-        this.hostname = hostname;
-        this.module = module;
+        this.module = "/queuetree";
     }
 
     public void create(String queue, Integer size) throws Exception {
