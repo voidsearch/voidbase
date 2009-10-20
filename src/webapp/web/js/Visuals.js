@@ -178,7 +178,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
             this.ctx.save();
 
             this.ctx.rotate((Math.PI / 180) * angle);
-            this.ctx.translate(y+20, -60);
+            this.ctx.translate(y-10, -60);
 
         }
 
@@ -217,7 +217,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
             this.ctx.save();
 
             this.ctx.rotate((Math.PI / 180) * angle);
-            this.ctx.translate(y+20, -60);
+            this.ctx.translate(y-10, -60);
 
         }
         this.ctx.strokeStyle = clr;
