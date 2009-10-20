@@ -22,23 +22,25 @@ import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
 
 public class SimpleQueueTreePerformanceTest {
 
-    int BLOCK_SIZE = 4096;
-    int MAX_SIZE = 256 * BLOCK_SIZE;
+    private int BLOCK_SIZE = 4096;
+    private int MAX_SIZE = 256 * BLOCK_SIZE;
 
-    int QUEUE_SIZE = 1000;
-    int MAX_ENTRIES = 100 * QUEUE_SIZE;
+    private int QUEUE_SIZE = 1000;
+    private int MAX_ENTRIES = 100 * QUEUE_SIZE;
 
-    int NUM_QUEUES = 1000;
+    private int NUM_QUEUES = 1000;
 
-    String TEST_QUEUE = "test";
+    private String TEST_QUEUE = "testq";
 
-    @Test(enabled = true)
+    private String LOG_HEADER = "num_entries,data_size,insert_elapsed";
+
+    @Test(enabled = false)
     public void storageTest() {
 
         try {
             QueueTreeStorage queueStore = QueueTreeStorage.factory();
 
-            System.out.println("num_entries,data_size,insert_elapsed");
+            System.out.println(LOG_HEADER);
             for (int dataSize = BLOCK_SIZE; dataSize < MAX_SIZE; dataSize += BLOCK_SIZE) {
                 for (int numEntries = QUEUE_SIZE; numEntries < MAX_ENTRIES; numEntries += QUEUE_SIZE) {
                     if (queueStore.queueExists(TEST_QUEUE)) {
@@ -57,15 +59,15 @@ public class SimpleQueueTreePerformanceTest {
 
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void serviceTest() {
         QueueTreeClient client = new QueueTreeClient("localhost:8080");
 
         try {
-            System.out.println("num_entries,data_size,insert_elapsed");
+            System.out.println(LOG_HEADER);
             for (int dataSize = BLOCK_SIZE; dataSize < MAX_SIZE; dataSize += BLOCK_SIZE) {
                 for (int numEntries = QUEUE_SIZE; numEntries < MAX_ENTRIES; numEntries += QUEUE_SIZE) {
-                    client.create("test",QUEUE_SIZE);
+                    client.create(TEST_QUEUE,QUEUE_SIZE);
                     long elapsed = getClientPutEnqueueTime(client, TEST_QUEUE, numEntries, dataSize);
                     System.out.println(numEntries + "," + dataSize + "," + elapsed);
                 }

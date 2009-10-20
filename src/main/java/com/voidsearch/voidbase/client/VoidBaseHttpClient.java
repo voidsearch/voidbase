@@ -30,6 +30,17 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
 
     protected HttpClient client = new HttpClient();
 
+    protected static String hostname;
+    protected static String module;
+
+    public VoidBaseHttpClient() {
+    }
+
+    public VoidBaseHttpClient(String hostname, String module) {
+        this.hostname = hostname;
+        this.module = module;
+    }
+
     protected byte[] get(VoidBaseQuery query) throws Exception {
 
         GetMethod method = new GetMethod(query.getQuery());
