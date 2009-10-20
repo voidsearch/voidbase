@@ -267,6 +267,6 @@ Visuals.prototype.detectCanvasTextSupport=function(){
 
 
 Visuals.prototype.setFont=function(fontStyle){
-    console.log('setting font to: '+fontStyle);
+    //console.log('setting font to: '+fontStyle);
     this.ctx.font=fontStyle;
 }

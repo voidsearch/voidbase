@@ -41,12 +41,8 @@ var ChartEngine = Class.create({
         //prepare graph, and if ok draw data
 
         if (this.prepareGraph()) {
+            this.drawGraph();
 
-            var self = this;
-            var timeoutFunc = function () {
-                self.drawGraph();
-            }
-            this.timer = setTimeout(timeoutFunc, 10);
         }
     },
 
@@ -213,7 +209,7 @@ var ChartEngine = Class.create({
 
 
             //console.log(x);
-            self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
+            self.canvas.line(x, y, x, yZero, '#7878cc', 0.4);
 
         });
 
