@@ -59,6 +59,9 @@ public class VoidBaseLogger {
             logService.log(name, message);
         }
 
+    }
+
+    public void queue(String message) {
         if (logQueue != null) {
             try {
                 QueueTreeClient client = new QueueTreeClient(logQueue);
@@ -67,7 +70,6 @@ public class VoidBaseLogger {
                 e.printStackTrace();
             }
         }
-
     }
 
     public class VoidBaseLogFormatter extends Formatter {
