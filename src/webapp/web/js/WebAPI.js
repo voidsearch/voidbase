@@ -413,8 +413,8 @@ APIModules.queuetree = {
         new ChartEngine({
             'canvasID':'graph-canvas',
             'type':'line',
-            'xTitle':'x-title',
-            'yTitle':'y-title',
+            'xTitle':'time',
+            'yTitle':this.fieldToDraw,
             'chartData':data
         });
 
