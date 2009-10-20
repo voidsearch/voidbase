@@ -18,6 +18,7 @@ package com.voidsearch.test.apps.queuetree.performance;
 
 import org.testng.annotations.*;
 import com.voidsearch.voidbase.storage.queuetree.QueueTreeStorage;
+import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
 
 public class SimpleQueueTreePerformanceTest {
 
@@ -31,8 +32,8 @@ public class SimpleQueueTreePerformanceTest {
 
     String TEST_QUEUE = "test";
 
-    @Test
-    public void nullTest() {
+    @Test(enabled = true)
+    public void storageTest() {
 
         try {
             QueueTreeStorage queueStore = QueueTreeStorage.factory();
@@ -56,6 +57,25 @@ public class SimpleQueueTreePerformanceTest {
 
     }
 
+    @Test(enabled = false)
+    public void serviceTest() {
+        QueueTreeClient client = new QueueTreeClient("localhost:8080");
+
+        try {
+            System.out.println("num_entries,data_size,insert_elapsed");
+            for (int dataSize = BLOCK_SIZE; dataSize < MAX_SIZE; dataSize += BLOCK_SIZE) {
+                for (int numEntries = QUEUE_SIZE; numEntries < MAX_ENTRIES; numEntries += QUEUE_SIZE) {
+                    client.create("test",QUEUE_SIZE);
+                    long elapsed = getClientPutEnqueueTime(client, TEST_QUEUE, numEntries, dataSize);
+                    System.out.println(numEntries + "," + dataSize + "," + elapsed);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // utils
 
     public long getPutEnqueueTime(QueueTreeStorage queueStore, String queueName, int NUM_ENTRIES, int DATA_SIZE) throws Exception {
@@ -69,6 +89,17 @@ public class SimpleQueueTreePerformanceTest {
         return System.currentTimeMillis() - start;
     }
 
+    public long getClientPutEnqueueTime(QueueTreeClient client, String queueName, int NUM_ENTRIES, int DATA_SIZE) throws Exception {
+
+        String content = getRandomQueueEntry(DATA_SIZE);
+
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < NUM_ENTRIES; i++) {
+            client.put(queueName,content);
+        }
+        return System.currentTimeMillis() - start;
+    }
+    
 
     public static String getRandomQueueEntry(int size) {
         StringBuilder sb = new StringBuilder();
