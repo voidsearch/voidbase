@@ -28,14 +28,13 @@ public class QueueTreeClientTest {
 
         try {
 
-            client.create("test",10);
+            client.create("test",100);
 
-            client.put("test","----");
-            client.put("test","++++");
+            for (int i=0; i<100; i++) {
+                client.put("test","<title>voidbase: [voidbase] http://bit.ly/2o3Pkx internal interface for store</title>");
+            }
 
-            client.put("test","<title>voidbase: [voidbase] http://bit.ly/2o3Pkx internal interface for store</title>");
-
-            System.out.println(client.get("test",5));
+            System.out.println(client.get("test",500));
 
         } catch (Exception e) {
             e.printStackTrace();
