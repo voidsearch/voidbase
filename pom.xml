@@ -4,7 +4,7 @@
   <groupId>com.voidsearch</groupId>
   <artifactId>voidbase</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.11</version>
+  <version>0.1.12</version>
   <name>voidbase</name>
   <url>http://maven.apache.org</url>
   <distributionManagement>
