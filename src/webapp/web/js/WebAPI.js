@@ -375,7 +375,7 @@ APIModules.queuetree = {
         this.fieldNames.each(function(elm) {
             selectHTML += '<option value="' + elm + '">' + elm + '</option>';
         });
-        selectHTML += '</select><select id="fetchSizeSelect"><option value="100" >-- queue elements to fetch --</option><option value="10">10</option><option value="100" selected="selected">100</option><option value="1000">1000</option></select><canvas id="graph-canvas" ></canvas>';
+        selectHTML += '</select><select id="fetchSizeSelect"><option value="100" >-- queue elements to fetch --</option><option value="10">10</option><option value="100" selected="selected">100</option><option value="1000">1000</option></select> <br/><canvas id="graph-canvas" ></canvas>';
         $('qtView').insert(selectHTML);
 
         //attach event to select field change
@@ -394,8 +394,8 @@ APIModules.queuetree = {
     },
 
     _drawObjectGraph:function() {
-        $('graph-canvas').width = '960';
-        $('graph-canvas').height = '260';
+        $('graph-canvas').width = '660';
+        $('graph-canvas').height = '160';
 
         var self = this;
         var data = [];
@@ -614,23 +614,17 @@ APIModules.test = {
     _testCanvasTextSupport:function(canvasId){
 
         var canvas=new Visuals(canvasId);
-
         this._drawGrid(canvas,10,'#cacaca');
 
         var isCanvasTextSupported=canvas.hasCanvasTextSupport;
-        console.log(isCanvasTextSupported);
+
         if(isCanvasTextSupported){
-
             canvas.text('Hello.. this is some nice canvas text at 20px height',20,20,10,'#000000',1,0);
-
             canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
-         
-
             canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
 
         }else{
             canvas.text('Hello.. this is some nice canvas text at 20px',20,20,10,'#000000',1,0);
-
             canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
             canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
         }
