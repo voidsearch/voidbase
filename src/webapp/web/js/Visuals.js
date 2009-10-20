@@ -153,36 +153,46 @@ Visuals.prototype.reset = function () {
 }
 
 Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, angle) {
-    if (typeof(angle) == 'undefined') {
-        angle = 0;
-    }
-    set_textRenderContext(this.ctx);
 
-    function cutHex(colorHex) {
-        return (colorHex.charAt(0) == "#") ? colorHex.substring(1, 7) : colorHex
-    }
+    if(this.detectCanvasTextSupport()){
 
-    colorRF = parseInt((cutHex(colorHexStroke)).substring(0, 2), 16);
-    colorGF = parseInt((cutHex(colorHexStroke)).substring(2, 4), 16);
-    colorBF = parseInt((cutHex(colorHexStroke)).substring(4, 6), 16);
 
-    var clr = 'rgba(' + colorRF + ',' + colorGF + ',' + colorBF + ',' + alpha + ')';
+    }else{
+        // there is no canvas text (HTML5 Support)
+        // fall back to ... tricks.
 
-    if (angle == 90) {
-        this.ctx.save();
+        if (typeof(angle) == 'undefined') {
+            angle = 0;
+        }
+        set_textRenderContext(this.ctx);
 
-        this.ctx.rotate((Math.PI / 180) * angle);
-        this.ctx.translate(y+20, -110);
+        function cutHex(colorHex) {
+            return (colorHex.charAt(0) == "#") ? colorHex.substring(1, 7) : colorHex
+        }
 
-    }
-    this.ctx.strokeStyle = clr;
-    this.ctx.strokeText(text, x, y, fontsize);
+        colorRF = parseInt((cutHex(colorHexStroke)).substring(0, 2), 16);
+        colorGF = parseInt((cutHex(colorHexStroke)).substring(2, 4), 16);
+        colorBF = parseInt((cutHex(colorHexStroke)).substring(4, 6), 16);
 
-    if (angle != 0) {
-        //this.ctx.translate(x, y);
-        //this.ctx.rotate((Math.PI/180)*(-1*angle));
-        //this.ctx.translate(-400,0);
-        this.ctx.restore();
+        var clr = 'rgba(' + colorRF + ',' + colorGF + ',' + colorBF + ',' + alpha + ')';
+
+        if (angle == 90) {
+            this.ctx.save();
+
+            this.ctx.rotate((Math.PI / 180) * angle);
+            this.ctx.translate(y+20, -110);
+
+        }
+        this.ctx.strokeStyle = clr;
+        this.ctx.strokeText(text, x, y, fontsize);
+
+        if (angle != 0) {
+            //this.ctx.translate(x, y);
+            //this.ctx.rotate((Math.PI/180)*(-1*angle));
+            //this.ctx.translate(-400,0);
+            this.ctx.restore();
+        }
+
     }
 }
 
@@ -207,5 +217,13 @@ Visuals.prototype.clearBlack2 = function () {
     this.clear(0, 0, 640, 480);
     this.ctx.fillStyle = "rgba(0, 0, 0, 1)";
     this.ctx.fillRect(0, 0, 640, 480);
+
+}
+
+Visuals.prototype.detectCanvasTextSupport=function(){
+
+    var dummyCanvas = document.createElement('canvas');
+    var context = dummyCanvas.getContext('2d');
+    return (typeof context.fillText == 'function');
 
 }
