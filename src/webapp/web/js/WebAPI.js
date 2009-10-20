@@ -12,7 +12,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- */
+ */ 
 
 var WebAPI = Class.create({
 
@@ -273,10 +273,10 @@ APIModules.queuetree = {
                     onSuccess: function(transport) {
                         // create simple list html
                         var HTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
-                        HTML += '<h4>Queue "' + params.name + '" Dump</h4>';
-                        HTML += '<textarea rows="10" cols="120" id="qtViewDump">';
-                        HTML += transport.responseText;
-                        HTML += '</textarea><br/><br/><br/>';
+                        //HTML += '<h4>Queue "' + params.name + '" Dump</h4>';
+                        //HTML += '<textarea rows="10" cols="120" id="qtViewDump">';
+                        //HTML += transport.responseText;
+                        //HTML += '</textarea><br/><br/><br/>';
                         $('qtCanvas').innerHTML = HTML;
                         // leave more advanced stuff to hanfler funciton
                         self._view(transport.responseJSON);
@@ -312,7 +312,7 @@ APIModules.queuetree = {
             onSuccess: function(transport) {
 
                 self._queueData = transport.responseJSON;
-                $('qtViewDump').innerHTML = transport.responseText;
+                //$('qtViewDump').innerHTML = transport.responseText;
                 self._queueData = self._queueData.queue;
                 self._drawObjectGraph(this.fieldToDraw);
             }
@@ -375,7 +375,7 @@ APIModules.queuetree = {
         this.fieldNames.each(function(elm) {
             selectHTML += '<option value="' + elm + '">' + elm + '</option>';
         });
-        selectHTML += '</select><select id="fetchSizeSelect"><option value="-1">-- queue elements to fetch --</option><option value="10">10</option><option value="100">100</option><option value="1000">1000</option></select><canvas id="graph-canvas" ></canvas>';
+        selectHTML += '</select><select id="fetchSizeSelect"><option value="100" >-- queue elements to fetch --</option><option value="10">10</option><option value="100" selected="selected">100</option><option value="1000">1000</option></select><canvas id="graph-canvas" ></canvas>';
         $('qtView').insert(selectHTML);
 
         //attach event to select field change
@@ -423,11 +423,15 @@ APIModules.queuetree = {
     _selectFieldNameHandler:function() {
 
         this.fieldToDraw = $('qtViewSelectField').value;
+        clearTimeout(this.viewTimer);
+        this._repeatObjectView();
     },
 
     _selectSizeChange:function() {
         var field = $('fetchSizeSelect').value;
         this.fetchSize = parseInt(field);
+        clearTimeout(this.viewTimer);
+        this._repeatObjectView();
     },
 
     //  GET PROPERTY NAMES
@@ -588,6 +592,68 @@ APIModules.modules = {
         this.API.includeTemplate($('main-ajax-content'), '/files/html/webapi/modulesTemplate.html');
     }
 }
+
+APIModules.test = {
+    _init:function(apiObjectReference) {
+        this.API = apiObjectReference;
+    },
+
+    canvasText: function (params) {
+
+        var canvasId='test_canvasText';
+        //create empty canvas element
+        $('main-ajax-content').update('<canvas id="'+canvasId+'" width="700px;" height="500px"></canvas>');
+
+        //test the HTML5 text support
+
+
+        this._testCanvasTextSupport(canvasId);
+
+    },
+
+    _testCanvasTextSupport:function(canvasId){
+
+        var canvas=new Visuals(canvasId);
+
+        this._drawGrid(canvas,10,'#cacaca');
+
+        var isCanvasTextSupported=canvas.hasCanvasTextSupport;
+        console.log(isCanvasTextSupported);
+        if(isCanvasTextSupported){
+
+            canvas.text('Hello.. this is some nice canvas text at 20px height',20,20,10,'#000000',1,0);
+
+            canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
+         
+
+            canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
+
+        }else{
+            canvas.text('Hello.. this is some nice canvas text at 20px',20,20,10,'#000000',1,0);
+
+            canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
+            canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
+        }
+
+    },
+
+    _drawGrid:function(canvasObject,step,color){
+
+        for(var i=0;i<canvasObject.containerHeight;i+=step){
+            var alpha=0.5;
+
+            if(i%50==0){
+                alpha=1;
+            }
+            canvasObject.line(0,i+0.5,canvasObject.containerWidth,i+0.5,color,alpha);
+
+        }
+
+
+    }
+
+}
+
 
 //
 //set defaultModule to home module

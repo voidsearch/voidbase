@@ -14,9 +14,12 @@
  * the License.
  */
 
+
+// DEPENDS ON Prototype.js
+
 Visuals = function (elm) {
     // initialise
-    var canvas = document.getElementById(elm);
+    var canvas = $(elm);
     this.ctx = canvas.getContext('2d');
 
     //define some constants
@@ -35,7 +38,11 @@ Visuals = function (elm) {
     this.lineWidth = 1.0;
 
     this.factor = Math.round(this.stepX / 1.41421356);
-
+    this.hasCanvasTextSupport=this.detectCanvasTextSupport();
+    if(this.hasCanvasTextSupport){
+        this.ctx.textBaseline='top';
+        this.defaultFont='Arial,Sans-serif';
+    }
 }
 
 Visuals.prototype.cutHex = function (colorHex) {
@@ -154,8 +161,38 @@ Visuals.prototype.reset = function () {
 
 Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, angle) {
 
-    if(this.detectCanvasTextSupport()){
+    if(this.hasCanvasTextSupport){
+        var setText='normal '+fontsize+'pt '+this.defaultFont;
+        if(colorHexStroke.charAt(0) == "#"){
+            colorHexStroke=colorHexStroke.substring(1, 7) 
+        }
+        var colorRF = parseInt(colorHexStroke.substring(0, 2), 16);
+        var colorGF = parseInt(colorHexStroke.substring(2, 4), 16);
+        var colorBF = parseInt(colorHexStroke.substring(4, 6), 16);
 
+        var clr = 'rgba(' + colorRF + ',' + colorGF + ',' + colorBF + ',' + alpha + ')';
+
+        //console.log(clr);
+
+        if (angle == 90) {
+            this.ctx.save();
+
+            this.ctx.rotate((Math.PI / 180) * angle);
+            this.ctx.translate(y+20, -110);
+
+        }
+
+
+        this.setFont(setText);
+        this.ctx.fillStyle = clr;
+        this.ctx.fillText(text,x,y);
+
+        if (angle != 0) {
+            //this.ctx.translate(x, y);
+            //this.ctx.rotate((Math.PI/180)*(-1*angle));
+            //this.ctx.translate(-400,0);
+            this.ctx.restore();
+        }
 
     }else{
         // there is no canvas text (HTML5 Support)
@@ -226,4 +263,10 @@ Visuals.prototype.detectCanvasTextSupport=function(){
     var context = dummyCanvas.getContext('2d');
     return (typeof context.fillText == 'function');
 
+}
+
+
+Visuals.prototype.setFont=function(fontStyle){
+    console.log('setting font to: '+fontStyle);
+    this.ctx.font=fontStyle;
 }
