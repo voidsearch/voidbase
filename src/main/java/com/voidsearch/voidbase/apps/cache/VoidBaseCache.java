@@ -35,6 +35,10 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
     protected RegisteredOperations operations = new RegisteredOperations();
     protected static final Logger logger = LoggerFactory.getLogger(VoidBaseCache.class.getName());
 
+    /**
+     * Creates a new instance of VoidBaseCache
+     * @throws CacheException
+     */
     public VoidBaseCache() throws CacheException {
        try {
             config = VoidBaseConfig.getInstance();
