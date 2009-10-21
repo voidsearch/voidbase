@@ -204,13 +204,13 @@ var ChartEngine = Class.create({
         var yZero = this.scaleY(self.yMin);
         var xMaxScaled=this.scaleX(this.xMax);
         var xMinScaled=this.scaleX(this.xMin);
-        var barWidth=(xMaxScaled-xMinScaled)/this.options.chartData.length;
+        var barWidth=(xMaxScaled-xMinScaled-2)/this.options.chartData.length;
         if(barWidth < 1){
-            barWidth=0  ;
+            barWidth=1  ;
         }
 
-        if(barWidth  > 2){
-            barWidth-=1.5;
+        if(barWidth  > 3){
+            barWidth-=2.5;
         }
 
         this.options.chartData.reverse(false).each(function(elm, index) {
