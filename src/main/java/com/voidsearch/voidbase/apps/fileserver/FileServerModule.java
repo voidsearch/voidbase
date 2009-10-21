@@ -21,12 +21,10 @@ import com.voidsearch.voidbase.config.VoidBaseConfiguration;
 import com.voidsearch.voidbase.config.Config;
 
 import java.io.*;
-import java.awt.image.BufferedImage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.imageio.ImageIO;
 
 public class FileServerModule implements VoidBaseModule {
 
@@ -36,7 +34,6 @@ public class FileServerModule implements VoidBaseModule {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void initialize(String name) throws VoidBaseModuleException {
-
         contentRoot = VoidBaseConfiguration.get(Config.MODULES, name, Config.CONTENT_ROOT);
         fileNotFound = VoidBaseConfiguration.get(Config.MODULES, name, Config.NOT_FOUND);
         directoryIndex = VoidBaseConfiguration.get(Config.MODULES, name, Config.DIRECTORY_INDEX);
@@ -59,9 +56,11 @@ public class FileServerModule implements VoidBaseModule {
         }catch (Exception e){
             fileExtension =""; 
         }
+        
         //@TODO add support for gif and png
-        if (fileExtension.equals(".jpg")) {
+        if (fileExtension.equals(".jpg") || fileExtension.equals(".png") ) {
             // READ BINARY
+
             return readBinaryFile(requestedFile);
         } else {
             // READ PLAIN TEXT
@@ -80,7 +79,6 @@ public class FileServerModule implements VoidBaseModule {
             DataInputStream in = new DataInputStream(new FileInputStream(image));
             in.readFully(bytes);
             in.close();
-
             VoidBaseResponseType responseType = getResponseTypeFromFilename(requestedFile);
             return new VoidBaseModuleResponse(bytes, VoidBaseResponseStatus.OK, responseType);
 
@@ -159,6 +157,8 @@ public class FileServerModule implements VoidBaseModule {
             return VoidBaseResponseType.CSS;
         } else if (fileExtension.equals(".jpg")) {
             return VoidBaseResponseType.JPG;
+        } else if (fileExtension.equals(".png")) {
+            return VoidBaseResponseType.PNG;    
         } else {
             //default type
             return VoidBaseResponseType.TEXT;

@@ -186,6 +186,8 @@ var ChartEngine = Class.create({
 
         this.paddingFactor = 0.05;
         this.getDataScope();
+        //we are drawing from the zero
+        this.yMin=0;
         this.drawMinMaxLines = false;
 
         // X AXIS
@@ -221,7 +223,7 @@ var ChartEngine = Class.create({
 
             //console.log(x);
             //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
-            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#7878cc', 0.4);
+            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#66ff66', 0.5);
 
         });
 

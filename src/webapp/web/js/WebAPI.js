@@ -263,6 +263,77 @@ APIModules.queuetree = {
         }
     },
 
+    viewGrid:function(params){
+        var self=this;
+        if (this.API.requiresNode('qtCanvas', this)) {
+            if (typeof(params.name) !== undefined) {
+                // use default fetch size
+                if (this.fetchSize == undefined) {
+                    this.fetchSize = 100;
+                }
+
+                    new Ajax.Request('/webapi/queuetree/?method=GET&queue=' + params.name + '&size=' + this.fetchSize, {
+                    method: 'get',
+                    onSuccess: function(transport) {
+                        // create simple list html
+                        var HTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
+                        //HTML += '<h4>Queue "' + params.name + '" Dump</h4>';
+                        //HTML += '<textarea rows="10" cols="120" id="qtViewDump">';
+                        //HTML += transport.responseText;
+                        //HTML += '</textarea><br/><br/><br/>';
+                        $('qtCanvas').innerHTML = HTML;
+                        // leave more advanced stuff to hanfler funciton
+                        self._viewGridDispatcher(transport.responseJSON);
+                    }
+                });
+
+
+
+            }
+        }
+    },
+
+    _viewGridDispatcher:function(data){
+
+
+        var qs = [];
+        var numResults = data.queue.header.results.totalResults;
+        qs.push(data.queue.response.queueElements.val);
+
+        var firstElement = false;
+
+        if (numResults == 1) {
+            firstElement = qs[0];
+        }
+
+        if (numResults > 1) {
+            qs = qs[0];
+        }
+
+        firstElement = qs[0];
+
+
+        this.fieldNames = this._getPropertyNames(firstElement);
+        if (numResults > 1) {
+            qs = qs[0];
+        }
+
+        var dataType = this._detectType(firstElement);
+        this._queueData = data.queue;
+
+        // hanfle according to type
+        if (dataType == 'object') {
+
+
+            console.log(this.fieldNames);
+            console.log(this._queueData);
+        }
+
+
+    },
+
+
+
     view:function(params) {
         var self = this;
         if (this.fetchSize == undefined) {
@@ -324,7 +395,7 @@ APIModules.queuetree = {
         var timeoutFunc = function() {
             self._repeatObjectView();
         }
-        this.viewTimer = setTimeout(timeoutFunc, 4000);
+        this.viewTimer = setTimeout(timeoutFunc, 2000);
 
 
     },
@@ -494,7 +565,7 @@ APIModules.queuetree = {
                 }
                 //itterate array
                 qs.each(function(c) {
-                    HTML += '<li><a href="#queuetree/view/?name=' + c + '">' + c + '</a></li>';
+                    HTML += '<li><a href="#queuetree/view/?name=' + c + '">' + c +'</a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <a href="#queuetree/viewGrid/?name=' + c + '">[VIEW GRID # ]</a> </li>';
                 });
                 HTML += '</ul>';
                 $('qtCanvas').innerHTML = HTML;
@@ -655,3 +726,4 @@ APIModules.test = {
 //set defaultModule to home module
 //
 APIModules.defaultModule = APIModules.home;
+

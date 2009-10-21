@@ -24,6 +24,7 @@ public enum VoidBaseResponseType {
     CSS,
     JPG,
     JSON,
+    PNG,
     UNKNOWN;
 
     public static VoidBaseResponseType deserialize(String type) {
@@ -44,6 +45,8 @@ public enum VoidBaseResponseType {
             return CSS;
         if (type.toUpperCase().equals("JSON"))
             return JSON;
+        if (type.toUpperCase().equals("PNG"))
+            return PNG;
 
         return UNKNOWN;
     }
@@ -67,6 +70,8 @@ public enum VoidBaseResponseType {
             return CSS;
         if (contentType.equals("image/jpeg"))
             return JPG;
+        if (contentType.equals("image/png"))
+            return PNG;
         if (contentType.equals("application/json"))
             return JSON;
     
@@ -86,6 +91,8 @@ public enum VoidBaseResponseType {
             return "text/css";
         if (this == JPG)
             return "image/jpeg";
+        if (this == PNG)
+            return "image/png";
         if (this == JSON)
             return "application/json";
 
