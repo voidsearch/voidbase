@@ -155,9 +155,14 @@ body {
 // STRUCTURE/CONTAINERS
 */
 #container {
-    width: 960px;
+    width: 100%;
     margin: 0px auto;
 
+
+}
+
+div#padder{
+    padding:0 20px 0 20px;
 }
 
 #result {
@@ -172,7 +177,7 @@ body {
 #header {
     margin: 0px 0 0 0;
     background: #fff;
-    height: 90px;
+    height: 60px;
     padding: 20px 0 0 0;
 }
 
@@ -196,7 +201,7 @@ body {
 
     height: 39px;
     border-bottom: solid 1px #acacac;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 
 }
 
@@ -331,6 +336,20 @@ h4 {
     margin-bottom: 1.5em;
 }
 
+p{
+    margin-bottom:1.5em;
+}
+
+ul{
+    margin-bottom:1.5em;
+    list-style:circle;
+}
+
+li{
+    list-style-type:circle;
+    list-style-position:inside;
+}
+
 ul.moduleSubMenu {
 
     margin: 0;
@@ -383,6 +402,7 @@ ul.big-list li {
     margin: 0;
     height: 20px;
     border-bottom: solid 1px #f1f1f1;
+    list-style-type:none;
 
 }
 

@@ -44,6 +44,8 @@ var WebAPI = Class.create({
             this.dispatchModule();
         }
 
+        this.screenWidth=$('padder').getWidth();
+
         //register timeout function and repeat
         var self = this;
         var timeoutFunc = function () {
@@ -394,7 +396,7 @@ APIModules.queuetree = {
     },
 
     _drawObjectGraph:function() {
-        $('graph-canvas').width = '660';
+        $('graph-canvas').width = this.API.screenWidth-40;
         $('graph-canvas').height = '160';
 
         var self = this;

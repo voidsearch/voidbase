@@ -202,6 +202,17 @@ var ChartEngine = Class.create({
         var x = 0;
         var y = 0;
         var yZero = this.scaleY(self.yMin);
+        var xMaxScaled=this.scaleX(this.xMax);
+        var xMinScaled=this.scaleX(this.xMin);
+        var barWidth=(xMaxScaled-xMinScaled)/this.options.chartData.length;
+        if(barWidth < 1){
+            barWidth=0  ;
+        }
+
+        if(barWidth  > 2){
+            barWidth-=1.5;
+        }
+
         this.options.chartData.reverse(false).each(function(elm, index) {
 
             x = self.scaleX(index) + 0.5;
@@ -209,7 +220,8 @@ var ChartEngine = Class.create({
 
 
             //console.log(x);
-            self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
+            //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
+            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#7878cc', 0.4);
 
         });
 
