@@ -17,11 +17,28 @@
 package com.voidsearch.voidbase.apps.cache.containers;
 
 public class CacheValue extends CacheContent {
+
+    /**
+     * Creates a new instance of a CacheContent
+     */
     public CacheValue() { super(); }
+
+    /**
+     * Creates a new instance of a CacheConten
+     * @param value
+     */
     public CacheValue(String value) { super(value); }
+
+    /**
+     * Creates a new instance of a CacheConten
+     * @param value
+     */
     public CacheValue(byte[] value) { super(value); }
 
-    // TODO: put proper appender logic in place
+    /**
+     * Appends a content to CacheValue - needs rewrite to support better content merging
+     * @param text
+     */
     public void append(String text) {
         if (this.text == null)
             this.text = text;
@@ -29,7 +46,11 @@ public class CacheValue extends CacheContent {
             this.text += text;
     }
 
-     public void append(CacheValue value) {
+    /**
+     * Appends a content to CacheValue - needs rewrite to support better content merging
+     * @param value
+     */
+    public void append(CacheValue value) {
         if (this.text == null)
             this.text = value.text;
         else

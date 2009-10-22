@@ -33,6 +33,10 @@ public class MessagePersistenceStore extends VoidBaseCache {
     protected static MessagePersistenceStore instance = null;
     protected static final String STORE = "messages";
 
+    /**
+     * Creates a new instance of a MessagePersistenceStore
+     * @throws CacheException
+     */
     public MessagePersistenceStore() throws CacheException {
         super();
 
@@ -43,6 +47,11 @@ public class MessagePersistenceStore extends VoidBaseCache {
         initializeStore();
     }
 
+    /**
+     * Creates a new instance of a MessagePersistenceStore
+     * @return
+     * @throws CacheException
+     */
     public static MessagePersistenceStore getInstance() throws CacheException {
         if (instance == null) {
             instance = new MessagePersistenceStore();
@@ -51,6 +60,10 @@ public class MessagePersistenceStore extends VoidBaseCache {
         return instance;
     }
 
+    /**
+     * Initializes BDB store for message persistence
+     * @throws CacheException
+     */
     protected synchronized void initializeStore() throws CacheException {
         String store = config.getString(name, "storage");
 
@@ -70,6 +83,16 @@ public class MessagePersistenceStore extends VoidBaseCache {
         }
     }
 
+    /**
+     * Processes cache requests
+     * @param method
+     * @param route
+     * @param params
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
     public CacheValue process(String method,
                               List<String> route,
                               Map<String, String> params,
@@ -101,6 +124,12 @@ public class MessagePersistenceStore extends VoidBaseCache {
         return result;
     }
 
+    /**
+     * Puts a key/value pair in messages store
+     * @param key
+     * @param value
+     * @throws CacheException
+     */
     public void put(String key, String value) throws CacheException {
 
         // sanity check
@@ -120,6 +149,12 @@ public class MessagePersistenceStore extends VoidBaseCache {
         }
     }
 
+    /**
+     * Returns value from a messages store
+     * @param key
+     * @return
+     * @throws CacheException
+     */
     public CacheValue get(String key) throws CacheException {
 
         // sanity check
@@ -137,6 +172,11 @@ public class MessagePersistenceStore extends VoidBaseCache {
         }
     }
 
+    /**
+     * Deletes a key from a messages store
+     * @param key
+     * @throws CacheException
+     */
     public void delete(String key) throws CacheException {
 
         // sanity check
@@ -154,6 +194,10 @@ public class MessagePersistenceStore extends VoidBaseCache {
         }
     }
 
+    /**
+     * Flushes a messages store
+     * @throws CacheException
+     */
     public void flush() throws CacheException {
         try {
             storage.flush(STORE);

@@ -21,6 +21,11 @@ import java.util.HashMap;
 public class RegisteredOperations {
     protected HashMap<String, CacheOperation> registeredOperations = new HashMap<String, CacheOperation>();
 
+    /**
+     * Verifies if operation is registered 
+     * @param operation
+     * @return
+     */
     public Boolean isRegistered(String operation) {
         if (operation == null)
             return false;
@@ -28,6 +33,11 @@ public class RegisteredOperations {
         return registeredOperations.containsKey(operation.toUpperCase());
     }
 
+    /**
+     * Verifies if operation is registered 
+     * @param operation
+     * @return
+     */
     public Boolean isRegistered(CacheOperation operation) {
         if (operation == null)
             return false;
@@ -35,6 +45,11 @@ public class RegisteredOperations {
         return registeredOperations.containsKey(operation.name.toUpperCase());
     }
 
+    /**
+     * Gets CacheOperation from registeredOperations container
+     * @param key
+     * @return
+     */
     public CacheOperation get(String key) {
         if (key == null)
             return null;
@@ -42,6 +57,11 @@ public class RegisteredOperations {
         return registeredOperations.get(key.toUpperCase());
     }
 
+    /**
+     * Puts CacheOperation in registeredOperations container
+     * @param key
+     * @param operation
+     */
     public void put(String key, CacheOperation operation) {
         if (key == null)
             return;
@@ -49,6 +69,11 @@ public class RegisteredOperations {
         registeredOperations.put(key.toUpperCase(), operation);
     }
 
+    /**
+     * Verifies if operation is registered
+     * @param key
+     * @return
+     */
     public Boolean contains(String key) {
         if (key == null)
             return false;
@@ -56,6 +81,11 @@ public class RegisteredOperations {
         return registeredOperations.containsKey(key);
     }
 
+    /**
+     * Gets a lock type for operation
+     * @param operation
+     * @return
+     */
     public CacheLockType getLockType(String operation) {
         if (operation == null)
             return CacheLockType.DEFAULT;
@@ -63,6 +93,10 @@ public class RegisteredOperations {
         return registeredOperations.get(operation.toUpperCase()).lockType;
     }
 
+    /**
+     * Returns a string from RegisteredOperations object
+     * @return
+     */
     public String toString() {
         return registeredOperations.toString();
     }

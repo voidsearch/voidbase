@@ -22,10 +22,19 @@ public enum CacheLockType {
     NONE,
     DEFAULT;
 
+    /**
+     * Serializes a content of a CacheLockType
+     * @return
+     */
     public String serialize() {
         return toString();
     }
 
+    /**
+     * Initializes a CacheLockType object
+     * @param str
+     * @return
+     */
     public static CacheLockType deserialize(String str) {
         if (str.toUpperCase().equals("ATOMIC")) {
             return ATOMIC;

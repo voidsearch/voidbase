@@ -17,6 +17,11 @@
 package com.voidsearch.voidbase.apps.cache;
 
 public class CacheException extends Exception {
+
+    /**
+     * Creates a new instance of a CacheException 
+     * @param message
+     */
     public CacheException(String message) {
         super(message);
     }

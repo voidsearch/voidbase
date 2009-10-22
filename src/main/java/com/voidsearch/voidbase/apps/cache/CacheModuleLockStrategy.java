@@ -33,8 +33,23 @@ public class CacheModuleLockStrategy {
 
     protected static final Logger logger = LoggerFactory.getLogger(CacheModuleLockStrategy.class.getName());
 
+    /**
+     * Creates a new instance of CacheModuleLockStrategy
+     */
     public CacheModuleLockStrategy() { }
 
+    /**
+     * Executes cache operation with respect to operation's atomicity and proxies
+     * it down to specific executors (atomic, global lock, etc.)
+     * @param handler
+     * @param operation
+     * @param route
+     * @param params
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
     protected CacheValue execute(VoidBaseCache handler,
                                  String operation,
                                  List<String> route,
@@ -60,7 +75,18 @@ public class CacheModuleLockStrategy {
         throw new CacheException("Cache execute lock strategy failed - unknown lock type");
     }
 
-
+    /**
+     * Executes atomic operation on cache
+     * @param handler
+     * @param operation
+     * @param route
+     * @param params
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     * @throws InterruptedException
+     */
     protected synchronized CacheValue executeAtomicLockOperation(VoidBaseCache handler,
                                                     String operation,
                                                     List<String> route,
@@ -93,6 +119,17 @@ public class CacheModuleLockStrategy {
         return result;
     }
 
+    /**
+     * Executes globally locked operation on cache
+     * @param handler
+     * @param operation
+     * @param route
+     * @param params
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
     protected CacheValue executeGlobalLockOperation(VoidBaseCache handler,
                                                     String operation,
                                                     List<String> route,
@@ -108,6 +145,17 @@ public class CacheModuleLockStrategy {
         return result;
     }
 
+    /**
+     * Executes operation on cache without any locking
+     * @param handler
+     * @param operation
+     * @param route
+     * @param params
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
     protected CacheValue executeOperation(VoidBaseCache handler,
                                           String operation,
                                           List<String> route,

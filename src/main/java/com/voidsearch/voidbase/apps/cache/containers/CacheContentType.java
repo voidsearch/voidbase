@@ -21,10 +21,19 @@ public enum CacheContentType {
     BINARY,
     UNKNOWN;
 
+    /**
+     * Serializes a content of a CacheContentType
+     * @return
+     */
     public String serialize() {
         return toString();
     }
 
+    /**
+     * Initializes a CacheContentType object
+     * @param str
+     * @return
+     */
     public static CacheContentType deserialize(String str) {
         if (str.toUpperCase().equals("TEXT")) {
             return TEXT;

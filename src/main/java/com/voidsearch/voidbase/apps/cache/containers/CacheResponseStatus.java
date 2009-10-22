@@ -23,10 +23,19 @@ public enum CacheResponseStatus {
     FATAL_ERROR,
     UNKNOWN;
 
+    /**
+     * Serializes a content of a CacheResponseStatus
+     * @return
+     */
     public String serialize() {
         return toString();
     }
 
+    /**
+     * Initializes a CacheResponseStatus object
+     * @param str
+     * @return
+     */
     public static CacheResponseStatus deserialize(String str) {
         if (str.toUpperCase().equals("OK")) {
             return OK;

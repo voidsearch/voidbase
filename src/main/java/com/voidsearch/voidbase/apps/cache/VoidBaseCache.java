@@ -29,7 +29,6 @@ import com.voidsearch.voidbase.util.GenericUtil;
 import java.util.*;
 
 public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
-    protected String root = null;
     protected String name = null;
     protected VoidBaseConfig config = null;
     protected RegisteredOperations operations = new RegisteredOperations();
@@ -48,10 +47,19 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
         }
     }
 
+    /**
+     * Not implemented for VoidBaseCache - needs to be implemented in subclasses
+     * @return
+     * @throws CacheException
+     */
     public static VoidBaseCache getInstance() throws CacheException {
         throw new CacheException("Not Implemented");
     }
 
+    /**
+     * Initializes cache operations and their atomicity 
+     * @throws CacheException
+     */
     public void initialize() throws CacheException {
         Set<String> operationKeys = config.getKeys(name, "operations");
 
@@ -67,6 +75,10 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
         }
     }
 
+    /**
+     * Clones a VoidBaseCache object
+     * @return
+     */
     public Object clone() {
         try {
             return super.clone();
@@ -76,19 +88,23 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
         }
     }
 
-    public void setConfigRoot(String root) {
-        this.root = root;
-    }
-
+    /**
+     * Check if operation is registered
+     * @param operation
+     * @return
+     */
     public Boolean isRegistered(String operation) {
         if (operation == null)
             return false;
 
-        System.out.println("Operations: " + operations);
-
         return operations.isRegistered(operation);
     }
 
+    /**
+     * Returns lock type for operation
+     * @param operation
+     * @return
+     */
     public CacheLockType getLockType(String operation) {
         if (operation == null)
             return CacheLockType.DEFAULT;

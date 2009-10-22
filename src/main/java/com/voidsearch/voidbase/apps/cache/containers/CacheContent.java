@@ -22,20 +22,35 @@ public abstract class CacheContent {
 
     public CacheContentType type = CacheContentType.TEXT;
 
+    /**
+     * Creates new instance of a CacheContent 
+     */
     public CacheContent() {
         this.type = CacheContentType.TEXT;
     }
 
+    /**
+     * Creates new instance of a CacheContent with String value
+     * @param value
+     */
     public CacheContent(String value) {
         this.text = value;
         this.type = CacheContentType.TEXT;
     }
 
+    /**
+     * Creates new instance of a CacheContent with bytearray
+     * @param value
+     */
     public CacheContent(byte[] value) {
         this.binary = value;
         this.type = CacheContentType.BINARY;
     }
 
+    /**
+     * Returns String from CacheContent object
+     * @return
+     */
     public String toString() {
         StringBuilder str = new StringBuilder();
 

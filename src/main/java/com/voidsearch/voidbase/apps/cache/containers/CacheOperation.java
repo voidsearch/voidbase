@@ -20,8 +20,15 @@ public class CacheOperation {
     public String name = null;
     public CacheLockType lockType = CacheLockType.NONE;
 
+    /**
+     * Creates a new instance of a CacheOperation
+     */
     public CacheOperation() { }
 
+    /**
+     * Creates a new instance of a CacheOperation
+     * @param name
+     */
     public CacheOperation(String name) {
         if (name == null)
             return;
@@ -29,6 +36,11 @@ public class CacheOperation {
         this.name = name.toUpperCase();
     }
 
+    /**
+     * Creates a new instance of a CacheOperation
+     * @param name
+     * @param lockType
+     */
     public CacheOperation(String name, String lockType) {
         if (name != null)
             this.name = name.toUpperCase();
@@ -36,6 +48,11 @@ public class CacheOperation {
             this.lockType = CacheLockType.deserialize(lockType);
     }
 
+    /**
+     * Creates a new instance of a CacheOperation
+     * @param name
+     * @param lockType
+     */
     public CacheOperation(String name, CacheLockType lockType) {
         if (name != null)
             this.name = name.toUpperCase();
@@ -43,6 +60,10 @@ public class CacheOperation {
             this.lockType = lockType;
     }
 
+    /**
+     * Returns a String from CacheOperation object
+     * @return
+     */
     public String toString() {
         StringBuilder str = new StringBuilder();
 

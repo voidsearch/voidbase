@@ -28,13 +28,21 @@ public class CacheHandlers {
 
     protected static final Logger logger = LoggerFactory.getLogger(CacheHandlers.class.getName());
 
+    /**
+     * Singleton object - concstructor is protected
+     */
     protected CacheHandlers() { super(); }
 
+    /**
+     * Singleton object - cloning not allowed
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 
-    public static synchronized CacheHandlers factory() {
+    public static synchronized CacheHandlers getInstance() {
         if (handlers == null) {
             handlers = new CacheHandlers();
         }
