@@ -416,3 +416,14 @@ ul.big-list li a {
     text-decoration: none;
     color: #313166;
 }
+
+table.gridTable{
+    width:100%;
+    border:none;
+    font-size:12px;
+}
+
+table.gridTable td{
+
+    border:solid 1px #cacaca;
+}

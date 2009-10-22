@@ -34,6 +34,12 @@ VOIDSEARCH.VoidBase.Util=function(){
             }else{
                 element.style.background='';
             }
+        },
+
+        test:function(){
+
+            console.log('hello from test');
+            
         }
     };
 
