@@ -81,7 +81,7 @@ public class CacheModule implements VoidBaseModule {
     /**
      * Handler for all cache requests which are further proxied down to specific cache handler
      * @param request
-     * @return
+     * @return a response from VoidBaseModule handler
      * @throws VoidBaseModuleException
      */
     public VoidBaseModuleResponse handle(VoidBaseModuleRequest request) throws VoidBaseModuleException {
@@ -187,7 +187,7 @@ public class CacheModule implements VoidBaseModule {
     /**
      * Returns a Cache specific route from original request route 
      * @param route
-     * @return
+     * @return a vector of route
      */
     protected List<String> getRoute(List<String> route) {
         Boolean start = false;
@@ -207,7 +207,7 @@ public class CacheModule implements VoidBaseModule {
 
     /**
      * Returns a CacheModule's resource
-     * @return
+     * @return a module's resource
      */
     protected String getResource() {
         StringBuilder key = new StringBuilder("modules.");
@@ -223,7 +223,7 @@ public class CacheModule implements VoidBaseModule {
      * @param value
      * @param format
      * @param status
-     * @return
+     * @return rendered response from VoidBaseModule handler
      */
     protected VoidBaseModuleResponse renderResponse(CacheValue value, String format, CacheResponseStatus status) {
         return renderResponse(value.text == null ? "" : value.text, format, status);
@@ -234,7 +234,7 @@ public class CacheModule implements VoidBaseModule {
      * @param message
      * @param format
      * @param status
-     * @return
+     * @return rendered response from VoidBaseModule handler
      */
     protected VoidBaseModuleResponse renderResponse(String message, String format, CacheResponseStatus status) {
         String responseText;
@@ -263,7 +263,7 @@ public class CacheModule implements VoidBaseModule {
      * Returns a key from request params
      * @param route
      * @param params
-     * @return
+     * @return a key from a request
      */
     protected String getKey(List<String> route, Map<String, String> params) {
         if (params.containsKey("key"))
@@ -278,7 +278,7 @@ public class CacheModule implements VoidBaseModule {
      * Returns a content from request params
      * @param content
      * @param params
-     * @return
+     * @return a content from a request
      */
     protected String getContent(String content, Map<String, String> params) {
         if (params.containsKey("content"))
@@ -293,7 +293,7 @@ public class CacheModule implements VoidBaseModule {
      * Builds JSON from a cache result response
      * @param message
      * @param status
-     * @return
+     * @return serialized JSON
      */
     protected String getJSON(String message, CacheResponseStatus status) {
         StringBuilder response = new StringBuilder();
@@ -307,7 +307,7 @@ public class CacheModule implements VoidBaseModule {
     /**
      * Returnds response status from a cache response
      * @param status
-     * @return
+     * @return response status of a VoidBaseModule handler
      */
     protected VoidBaseResponseStatus renderStatus(CacheResponseStatus status) {
         if (status == CacheResponseStatus.OK)

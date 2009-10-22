@@ -52,7 +52,7 @@ public abstract class CacheContent {
 
     /**
      * Returns String from CacheContent object
-     * @return
+     * @return serialized content of CacheContent object
      */
     public String toString() {
         StringBuilder str = new StringBuilder();

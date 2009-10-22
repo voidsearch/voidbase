@@ -53,7 +53,7 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
 
     /**
      * Not implemented for VoidBaseCache - needs to be implemented in subclasses
-     * @return
+     * @return instance of a VoidBaseCache
      * @throws CacheException
      */
     public static VoidBaseCache getInstance() throws CacheException {
@@ -81,7 +81,7 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
 
     /**
      * Clones a VoidBaseCache object
-     * @return
+     * @return a clone of a VoidBaseCache object
      */
     public Object clone() {
         try {
@@ -95,7 +95,7 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
     /**
      * Check if operation is registered
      * @param operation
-     * @return
+     * @return <code>true</code> if operation is registered and <code>false</code> if it's not
      */
     public Boolean isRegistered(String operation) {
         if (operation == null)
@@ -107,7 +107,7 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
     /**
      * Returns lock type for operation
      * @param operation
-     * @return
+     * @return lock type for operation
      */
     public CacheLockType getLockType(String operation) {
         if (operation == null)

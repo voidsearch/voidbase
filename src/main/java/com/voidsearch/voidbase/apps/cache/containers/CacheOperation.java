@@ -65,7 +65,7 @@ public class CacheOperation {
 
     /**
      * Returns a String from CacheOperation object
-     * @return
+     * @return serialized content of a CacheOperation object
      */
     public String toString() {
         StringBuilder str = new StringBuilder();

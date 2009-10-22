@@ -26,7 +26,7 @@ public enum CacheContentType {
 
     /**
      * Serializes a content of a CacheContentType
-     * @return
+     * @return serialized CacheContentType object
      */
     public String serialize() {
         return toString();
@@ -35,7 +35,7 @@ public enum CacheContentType {
     /**
      * Initializes a CacheContentType object
      * @param str
-     * @return
+     * @return a new CacheContentType from a String value
      */
     public static CacheContentType deserialize(String str) {
         if (str.toUpperCase().equals("TEXT")) {

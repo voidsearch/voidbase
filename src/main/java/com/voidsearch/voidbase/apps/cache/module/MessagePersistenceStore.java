@@ -52,7 +52,7 @@ public class MessagePersistenceStore extends VoidBaseCache {
 
     /**
      * Creates a new instance of a MessagePersistenceStore
-     * @return
+     * @return a MessagePersistenceStore instance
      * @throws CacheException
      */
     public static MessagePersistenceStore getInstance() throws CacheException {
@@ -93,7 +93,7 @@ public class MessagePersistenceStore extends VoidBaseCache {
      * @param params
      * @param key
      * @param value
-     * @return
+     * @return a result of cache request operation
      * @throws CacheException
      */
     public CacheValue process(String method,
@@ -155,7 +155,7 @@ public class MessagePersistenceStore extends VoidBaseCache {
     /**
      * Returns value from a messages store
      * @param key
-     * @return
+     * @return value from a messages store
      * @throws CacheException
      */
     public CacheValue get(String key) throws CacheException {

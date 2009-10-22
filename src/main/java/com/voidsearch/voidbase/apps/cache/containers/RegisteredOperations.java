@@ -32,7 +32,7 @@ public class RegisteredOperations {
     /**
      * Verifies if operation is registered 
      * @param operation
-     * @return
+     * @return <code>true</code> if operation is registered and <code>false</code> if it's not
      */
     public Boolean isRegistered(String operation) {
         if (operation == null)
@@ -44,7 +44,7 @@ public class RegisteredOperations {
     /**
      * Verifies if operation is registered 
      * @param operation
-     * @return
+     * @return <code>true</code> if operation is registered and <code>false</code> if it's not
      */
     public Boolean isRegistered(CacheOperation operation) {
         if (operation == null)
@@ -56,7 +56,7 @@ public class RegisteredOperations {
     /**
      * Gets CacheOperation from registeredOperations container
      * @param key
-     * @return
+     * @return a CacheOperation object from registeredOperations in operation is registered
      */
     public CacheOperation get(String key) {
         if (key == null)
@@ -80,7 +80,7 @@ public class RegisteredOperations {
     /**
      * Verifies if operation is registered
      * @param key
-     * @return
+     * @return <code>true</code> if operation is registered and <code>false</code> if it's not
      */
     public Boolean contains(String key) {
         if (key == null)
@@ -92,7 +92,7 @@ public class RegisteredOperations {
     /**
      * Gets a lock type for operation
      * @param operation
-     * @return
+     * @return a lock type for operation
      */
     public CacheLockType getLockType(String operation) {
         if (operation == null)
@@ -102,8 +102,8 @@ public class RegisteredOperations {
     }
 
     /**
-     * Returns a string from RegisteredOperations object
-     * @return
+     * Returns a String from RegisteredOperations object
+     * @return a String from RegisteredOperations object
      */
     public String toString() {
         return registeredOperations.toString();

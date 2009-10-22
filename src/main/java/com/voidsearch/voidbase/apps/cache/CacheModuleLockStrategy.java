@@ -50,7 +50,7 @@ public class CacheModuleLockStrategy {
      * @param params
      * @param key
      * @param value
-     * @return
+     * @return a response from operation
      * @throws CacheException
      */
     protected CacheValue execute(VoidBaseCache handler,
@@ -86,7 +86,7 @@ public class CacheModuleLockStrategy {
      * @param params
      * @param key
      * @param value
-     * @return
+     * @return a response from operation
      * @throws CacheException
      * @throws InterruptedException
      */
@@ -130,7 +130,7 @@ public class CacheModuleLockStrategy {
      * @param params
      * @param key
      * @param value
-     * @return
+     * @return a response from operation
      * @throws CacheException
      */
     protected CacheValue executeGlobalLockOperation(VoidBaseCache handler,
@@ -156,7 +156,7 @@ public class CacheModuleLockStrategy {
      * @param params
      * @param key
      * @param value
-     * @return
+     * @return a response from operation
      * @throws CacheException
      */
     protected CacheValue executeOperation(VoidBaseCache handler,

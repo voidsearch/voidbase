@@ -30,7 +30,7 @@ public enum CacheLockType {
 
     /**
      * Serializes a content of a CacheLockType
-     * @return
+     * @return serialized CacheLockType object
      */
     public String serialize() {
         return toString();
@@ -39,7 +39,7 @@ public enum CacheLockType {
     /**
      * Initializes a CacheLockType object
      * @param str
-     * @return
+     * @return a new CacheLockType object from a String
      */
     public static CacheLockType deserialize(String str) {
         if (str.toUpperCase().equals("ATOMIC")) {

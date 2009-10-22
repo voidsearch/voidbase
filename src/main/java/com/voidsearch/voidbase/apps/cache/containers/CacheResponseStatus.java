@@ -31,8 +31,8 @@ public enum CacheResponseStatus {
     UNKNOWN;
 
     /**
-     * Serializes a content of a CacheResponseStatus
-     * @return
+     * Serializes a content of a CacheOperation
+     * @return a serialized CacheOperation object
      */
     public String serialize() {
         return toString();
@@ -41,7 +41,7 @@ public enum CacheResponseStatus {
     /**
      * Initializes a CacheResponseStatus object
      * @param str
-     * @return
+     * @return a CacheOperation object from a String value
      */
     public static CacheResponseStatus deserialize(String str) {
         if (str.toUpperCase().equals("OK")) {
