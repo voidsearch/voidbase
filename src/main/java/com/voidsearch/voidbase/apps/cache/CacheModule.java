@@ -29,6 +29,10 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * CacheModule is a generic cache module which implements strategies for containing and routing to cache handlers and
+ * handling a high-level atomicity of operations on cache implementations based on individual cache handler configurations.
+ */
 public class CacheModule implements VoidBaseModule {    
     protected String name = null;
     protected String defaultHandler = null;

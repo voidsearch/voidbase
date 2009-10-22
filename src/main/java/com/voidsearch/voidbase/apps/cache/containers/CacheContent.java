@@ -16,6 +16,9 @@
 
 package com.voidsearch.voidbase.apps.cache.containers;
 
+/**
+ * Placeholder for all other Cache content clases for key, value etc.
+ */
 public abstract class CacheContent {
     public String text = null;
     public byte[] binary = null;

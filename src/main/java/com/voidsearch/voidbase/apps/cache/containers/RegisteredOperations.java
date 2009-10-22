@@ -18,8 +18,16 @@ package com.voidsearch.voidbase.apps.cache.containers;
 
 import java.util.HashMap;
 
+/**
+ * Container of all registered operations and their behavior and locking for certain Cache handler
+ */
 public class RegisteredOperations {
     protected HashMap<String, CacheOperation> registeredOperations = new HashMap<String, CacheOperation>();
+
+    /**
+     * Creates a new instance of a RegisteredOperations
+     */
+    public RegisteredOperations() { }
 
     /**
      * Verifies if operation is registered 

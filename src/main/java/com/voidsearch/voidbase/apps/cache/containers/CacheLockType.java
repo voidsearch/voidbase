@@ -16,6 +16,12 @@
 
 package com.voidsearch.voidbase.apps.cache.containers;
 
+/**
+ * Cache lock types, currently supported are - ATOMIC, GLOBAL and NONE locks where:
+ * - ATOMIC level locks on a level of key, thus guarantees atomicity of an operation
+ * - GLOBAL level locks on a level of operation blocking all other similar operations running concurrently
+ * - NONE level doesn't lock concurrent similar operations in any respect 
+ */
 public enum CacheLockType {
     ATOMIC,
     GLOBAL,

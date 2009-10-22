@@ -16,6 +16,9 @@
 
 package com.voidsearch.voidbase.apps.cache.containers;
 
+/**
+ * Cache value implementation of CacheContent
+ */
 public class CacheValue extends CacheContent {
 
     /**

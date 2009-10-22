@@ -16,12 +16,14 @@
 
 package com.voidsearch.voidbase.apps.cache;
 
-import com.voidsearch.voidbase.apps.cache.CacheException;
 import com.voidsearch.voidbase.apps.cache.containers.CacheValue;
 
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Interface for VoidBaseCache handlers
+ */
 public interface VoidBaseCacheHandler {
     public CacheValue process(String method, List<String> route, Map<String, String> params, String key, String value) throws CacheException;
 }

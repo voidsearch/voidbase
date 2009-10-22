@@ -16,6 +16,9 @@
 
 package com.voidsearch.voidbase.apps.cache.containers;
 
+/**
+ * Placeholder object for Cache operations - each operation is assigned one CacheOperation object
+ */
 public class CacheOperation {
     public String name = null;
     public CacheLockType lockType = CacheLockType.NONE;

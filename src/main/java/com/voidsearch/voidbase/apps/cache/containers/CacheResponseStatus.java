@@ -16,6 +16,13 @@
 
 package com.voidsearch.voidbase.apps.cache.containers;
 
+/**
+ * Cache response types, currently supported are:
+ * - OK, healthy response status
+ * - ERROR, failed to execute an operation
+ * - INTERNAL_ERROR, cache had internally failed to execute an operation
+ * - FATAL_ERROR, cache can't recover from internal error
+ */
 public enum CacheResponseStatus {
     OK,
     ERROR,

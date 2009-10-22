@@ -28,6 +28,10 @@ import com.voidsearch.voidbase.util.GenericUtil;
 
 import java.util.*;
 
+/**
+ * Abstract class as an prototype for all cache handhers, handles initialization of atomicity and cache handler
+ * operation subscriptions based on configuration. 
+ */
 public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
     protected String name = null;
     protected VoidBaseConfig config = null;

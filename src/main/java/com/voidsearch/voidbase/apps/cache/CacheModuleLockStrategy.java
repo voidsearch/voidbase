@@ -28,6 +28,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * CacheModuleLockStrategy handles atomicity of cache operations based on cache handler configuration
+ */
 public class CacheModuleLockStrategy {
     private static final Map<String, ReentrantLock> locks = new ConcurrentHashMap<String, ReentrantLock>();
 

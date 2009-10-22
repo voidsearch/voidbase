@@ -19,7 +19,14 @@ package com.voidsearch.voidbase.apps.cache.module;
 import com.voidsearch.voidbase.protocol.VoidBaseProtocol;
 import com.voidsearch.voidbase.protocol.VoidBaseOperationType;
 
+/**
+ * MessagePersistenceStoreProtocol implements a protocol for MessagePersistenceStore
+ */
 public class MessagePersistenceStoreProtocol extends VoidBaseProtocol {
+
+    /**
+     * Creates a new instance of a MessagePersistenceStoreProtocol
+     */
     public MessagePersistenceStoreProtocol() { }
 
     // module-specific protocol params

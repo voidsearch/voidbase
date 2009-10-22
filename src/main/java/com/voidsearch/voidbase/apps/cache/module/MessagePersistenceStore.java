@@ -27,6 +27,9 @@ import com.voidsearch.voidbase.protocol.VoidBaseOperationType;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * MessagePersistenceStore implementation of VoidBaseCache. This is a simple String key/value store on top of a BerkeleyDB.
+ */
 public class MessagePersistenceStore extends VoidBaseCache {
     BDBStorage storage = BDBStorage.getInstance();
     

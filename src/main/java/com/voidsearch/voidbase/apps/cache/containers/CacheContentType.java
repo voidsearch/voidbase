@@ -16,6 +16,9 @@
 
 package com.voidsearch.voidbase.apps.cache.containers;
 
+/**
+ * Cache content type - currently supported are TEXT and BINARY types
+ */
 public enum CacheContentType {
     TEXT,
     BINARY,
