@@ -64,9 +64,11 @@ simple configuration
          </QueueTreeModule>
 
         <FeedQModule>
-            <class>com.voidsearch.voidbase.apps.feedq.module.FeedQModule</class>
+            <class>com.voidsearch.voidbase.apps.feedq.FeedQueueModule</class>
             <status>active</status>
             <resource>feedq</resource>
+            <pollInterval>1000</pollInterval>
+            <diffWindowByteSize>4096</diffWindowByteSize>
          </FeedQModule>
 
         <HelloWorldModule>
@@ -111,6 +113,20 @@ simple configuration
     <FeedQModule>
 
     </FeedQModule>
+
+
+    <FeedQModule>
+        <!-- set of resources to be monitored -->
+        <resources>
+            <system>file://var/log/system.log</system>
+            <!--<syslog   freq="1000">file://var/log/messages</syslog>-->
+            <!--<http_log freq="1000">file://var/log/httpd/access_log</http_log>-->
+            <!--<twitter_last freq="1000">file://var/log/httpd/access_log</twitter_last>-->
+        </resources>
+
+    </FeedQModule>
+
+
 
     <!-- storage-specific configurations -->
 

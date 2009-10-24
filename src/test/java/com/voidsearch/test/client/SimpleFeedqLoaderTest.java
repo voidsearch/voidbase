@@ -30,10 +30,11 @@ public class SimpleFeedqLoaderTest {
     @Test
     public void nullTest() {
 
-        QueueTreeClient client = new QueueTreeClient("localhost:8080");
+        QueueTreeClient client = new QueueTreeClient("www.voidsearch.com:8081");
 
         try {
 
+            int queryCnt = 0;
             client.create(TEST_QUEUE,QUEUE_SIZE);
 
             for (int i=0; i<QUEUE_SIZE*1000; i++) {
@@ -44,6 +45,7 @@ public class SimpleFeedqLoaderTest {
                   .append("<sin>").append(1000*Math.sin(rnd.nextGaussian())).append("</sin>");
 
                 try {
+                    System.out.println(queryCnt++);
                     Thread.sleep(1000);
                 } catch (Exception e) { }
 

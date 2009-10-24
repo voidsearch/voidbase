@@ -77,6 +77,10 @@ object VoidBaseConfiguration {
     return null
   }
 
+  def getInt(domain: String, segment: String, param: String): int = {
+    return Integer.parseInt(get(domain,segment,param))
+  }
+
   def contains(domain: String, segment: String, param: String): boolean = {
     var value = get(domain,segment,param);
     if (value == null) {

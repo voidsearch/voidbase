@@ -15,20 +15,26 @@
  */
 
 
-package com.voidsearch.voidbase.apps.feedq.module
+package com.voidsearch.voidbase.apps.feedq.connector.fetcher;
 
-import voidbase.module.{VoidBaseModuleResponse, VoidBaseModule, VoidBaseModuleRequest}
 
-class FeedQModule extends VoidBaseModule {
+public class HttpFeedFetcher implements FeedFetcher {
 
-  def initialize(name : String) = {
-  }
+    
+    public byte[] fetch(String resource) throws Exception {
+        return fetch(resource, Integer.MAX_VALUE);
+    }
 
-  def handle(request : VoidBaseModuleRequest) : VoidBaseModuleResponse = {
-    return new VoidBaseModuleResponse("howdy")
-  }
+    /**
+     * Http-specific tail reader - need to fetch entire content and return last size bytes
+     *
+     * @param resource resource to fetch
+     * @param size buffer size to fetch
+     * @return
+     */
 
-  def run() = {
-  }
+    public byte[] fetch(String resource, int size) throws Exception {
+        return null;
+    }
 
 }
