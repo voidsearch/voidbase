@@ -18,11 +18,12 @@ var ChartEngine = Class.create({
     initialize: function (options) {
         //get options
         this.options = options;
-        this.options.numResults = this.options.chartData.length;
+
+        //this.options.numResults = this.options.chartData.length;
         this.chartPadding = 10;
-        this.leftPadding = 30.5;
+        this.leftPadding = 22.5;
         this.rightPadding = 15.5;
-        this.bottomPadding = 30.5;
+        this.bottomPadding = 22.5;
         this.topPadding = 15;
         this.axisColor = '#acacac';
         this.axisOpacity = 0.9;
@@ -34,6 +35,8 @@ var ChartEngine = Class.create({
         this.canvas = new Visuals(options.canvasID);
         this.canvasWidth = this.canvas.containerWidth;
         this.canvasHeight = this.canvas.containerHeight;
+
+
 
         //reset drawing surface
         this.canvas.reset();
@@ -61,7 +64,7 @@ var ChartEngine = Class.create({
     },
 
     prepareGraph: function () {
-        if (!this.options.chartData.length == 0) {
+        if (!this.options.type !== undefined) {
             this.xAxis = new xAxis(this);
             this.yAxis = new yAxis(this);
             this.drawAxes();
@@ -76,6 +79,9 @@ var ChartEngine = Class.create({
     drawGraph: function () {
 
         switch (this.options.type) {
+            case 'instance':
+                break;
+
             case 'api-scatter':
                 this.drawAPIScatterGraph();
                 break;

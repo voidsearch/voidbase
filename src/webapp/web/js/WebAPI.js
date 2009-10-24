@@ -12,7 +12,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- */ 
+ */
+
+//
+// WebAPI is the front controller of the whole application 
+//
+
 VOIDSEARCH.VoidBase.WebAPI=function(){
     return {
 
@@ -52,8 +57,6 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
 
         },
 
-        // ID MODULE DISPATHCABLE
-        //  check if module and module handler method exists
         isModuleDispatchable:function() {
             var dispatchable = false;
             if (typeof(this.modules[this.app.module].API == undefined)) {
@@ -258,61 +261,53 @@ VOIDSEARCH.VoidBase.WebAPI.modules.modules = function(){
 
 VOIDSEARCH.VoidBase.WebAPI.modules.test = function() {
     return{
+        _init:function(apiObjectReference) {
+            this.API = apiObjectReference;
+        },
+
+        canvasText: function (params) {
+
+            var canvasId='test_canvasText';
+            //create empty canvas element
+            $('main-ajax-content').update('<canvas id="'+canvasId+'" width="700px;" height="500px"></canvas>');
+
+            //test the HTML5 text support
 
 
-    _init:function(apiObjectReference) {
-        this.API = apiObjectReference;
-    },
+            this._testCanvasTextSupport(canvasId);
 
-    canvasText: function (params) {
+        },
 
-        var canvasId='test_canvasText';
-        //create empty canvas element
-        $('main-ajax-content').update('<canvas id="'+canvasId+'" width="700px;" height="500px"></canvas>');
+        _testCanvasTextSupport:function(canvasId){
 
-        //test the HTML5 text support
+            var canvas=new Visuals(canvasId);
+            this._drawGrid(canvas,10,'#cacaca');
 
+            var isCanvasTextSupported=canvas.hasCanvasTextSupport;
 
-        this._testCanvasTextSupport(canvasId);
+            if(isCanvasTextSupported){
+                canvas.text('Hello.. this is some nice canvas text at 20px height',20,20,10,'#000000',1,0);
+                canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
+                canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
 
-    },
-
-    _testCanvasTextSupport:function(canvasId){
-
-        var canvas=new Visuals(canvasId);
-        this._drawGrid(canvas,10,'#cacaca');
-
-        var isCanvasTextSupported=canvas.hasCanvasTextSupport;
-
-        if(isCanvasTextSupported){
-            canvas.text('Hello.. this is some nice canvas text at 20px height',20,20,10,'#000000',1,0);
-            canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
-            canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
-
-        }else{
-            canvas.text('Hello.. this is some nice canvas text at 20px',20,20,10,'#000000',1,0);
-            canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
-            canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
-        }
-
-    },
-
-    _drawGrid:function(canvasObject,step,color){
-
-        for(var i=0;i<canvasObject.containerHeight;i+=step){
-            var alpha=0.5;
-
-            if(i%50==0){
-                alpha=1;
+            }else{
+                canvas.text('Hello.. this is some nice canvas text at 20px',20,20,10,'#000000',1,0);
+                canvas.text('Hello.. this is some nice canvas text at 100px height',20,100,10,'#4141cc',1,0);
+                canvas.text('Hello.. this is some nice canvas text at 200px height',20,200,15,'#000000',1,0);
             }
-            canvasObject.line(0,i+0.5,canvasObject.containerWidth,i+0.5,color,alpha);
 
+        },
+
+        _drawGrid:function(canvasObject,step,color){
+            for(var i=0;i<canvasObject.containerHeight;i+=step){
+                var alpha=0.5;
+                if(i%50==0){
+                    alpha=1;
+                }
+                canvasObject.line(0,i+0.5,canvasObject.containerWidth,i+0.5,color,alpha);
+
+            }
         }
-
-
-    }
-
-
 
     }// end return
 

@@ -422,12 +422,15 @@ ul.big-list li a {
 }
 
 table.gridTable{
-    width:100%;
+    width:800px;;
     border:none;
     font-size:12px;
+    padding:0px;
+    margin:0px;
+    border-collapse:collapse;
 }
 
 table.gridTable td{
-
+    padding:10px;
     border:solid 1px #cacaca;
 }

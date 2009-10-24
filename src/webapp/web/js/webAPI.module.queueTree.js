@@ -21,10 +21,15 @@
 //
 
 VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function(){
+    // private properties
+    var defaultObjectRefreshRate=4000; //miliseconds
+    
 
     return{
         _init:function(apiObjectReference) {
             this.API = apiObjectReference;
+            this.objectRegister={};
+            this.objectRegister.activeObjects=[];
         },
 
         //requre map
@@ -105,15 +110,84 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function(){
 
 
         drawObjectGrid:function(){
-            console.log('test');
+            var self=this;
+
             // TODO move this code to the "grid generator" method
             var tableHTML   =   '<table class="gridTable">';
-            tableHTML       +=  '<tr><td id="gf_a1">a1</td><td id="gf_b1">b1</td></tr>';
-            tableHTML       +=  '<tr><td id="gf_a2">a2</td><td id="gf_b2">b2</td></tr>';
+            tableHTML       +=  '<tr><td id="gf_a1" class="gf">a1</td><td id="gf_b1" class="gf">b1</td></tr>';
+            tableHTML       +=  '<tr><td id="gf_a2" class="gf">a2</td><td id="gf_b2" class="gf">b2</td></tr>';
             tableHTML       +=  '</table>';
             $('qtView').innerHTML=tableHTML;
 
+            var availableGridFields=$$('td.gf');
 
+            var feedName=this._queueData.response.queueMetadata.name;
+            this.fieldNames.each(function(field,index){
+                self.registerNewObject(field,feedName,availableGridFields[index].id);
+                console.log(self.objectRegister.activeObjects[index][3]);
+            });
+
+
+            this.gridUpdater(0);
+
+
+        },
+
+        //
+        // GRID UPDATER
+        // 
+
+        gridUpdater:function(index){
+
+            var self=this;
+
+            // fetch field, queue and chart instance from active objects array
+            var field=self.objectRegister.activeObjects[index][0];
+            var queue=self.objectRegister.activeObjects[index][1];
+            var objectInstance=self.objectRegister.activeObjects[index][3];
+
+
+
+            this.updateSingleObject(field, queue,objectInstance)
+
+
+
+            index+=1;
+
+            if(index >= this.objectRegister.activeObjects.length){
+                index=0;
+            }
+            
+            var timeoutFunc = function () { self.gridUpdater(index); };
+            this.timer = setTimeout(timeoutFunc, 1000);
+
+
+            
+        },
+
+        updateSingleObject:function(field, queue, chartInstance){
+            console.log(field,queue,chartInstance);
+
+        },
+
+        
+
+        registerNewObject:function(field,queue,container){
+
+            var canvasId='graph-canvas-'+container;
+            $(container).innerHTML='<canvas id="'+canvasId+'" width="400" height="150"></canvas>';
+
+            var instance=new ChartEngine({
+                'canvasID':canvasId,
+                'tooltip':'scatter-tooltip',
+                'type':'instance',
+                'xTitle':'time',
+                'yTitle':field
+
+            });
+            this.objectRegister.activeObjects.push([field,queue,container,instance]);
+
+            
         },
 
 
