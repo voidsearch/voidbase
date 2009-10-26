@@ -30,7 +30,7 @@ public class SimpleFeedqLoaderTest {
     @Test
     public void nullTest() {
 
-        QueueTreeClient client = new QueueTreeClient("www.voidsearch.com:8080");
+        QueueTreeClient client = new QueueTreeClient("localhost:8080");
 
         try {
 
