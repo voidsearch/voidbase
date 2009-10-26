@@ -110,10 +110,6 @@ simple configuration
 
      </QueueTreeModule>
 
-    <FeedQModule>
-
-    </FeedQModule>
-
 
     <!--<FeedQModule>-->
         <!-- set of resources to be monitored -->
@@ -125,8 +121,6 @@ simple configuration
         <!--</resources>-->
 
     <!--</FeedQModule>-->
-
-
 
     <!-- storage-specific configurations -->
 
