@@ -22,6 +22,7 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
     return {
 
         modules: {},
+        timers:{},
 
         init: function () {
             this.app = {};
@@ -69,9 +70,25 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
             return dispatchable;
         },
 
+
+        // STOP TIMERS 
+        // clear all refresh timers when changing controller
+
+        stopTimers:function(){
+            try{
+                for(var i in this.timers){
+                    console.log(i);
+                    clearTimeout(this.timers[i]);
+
+                }
+            }catch (e){
+                console.log(e);
+            }
+        },
+
         // DISPATCH MODULE
         dispatchModule: function () {
-
+            this.stopTimers();
             this.app.module = this.getModuleFromPath();
             this.app.action = this.getActionFromPath();
             this.app.params = this.getParamsFromPath();

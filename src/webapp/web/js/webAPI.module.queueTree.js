@@ -148,6 +148,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function(){
 
 
 
+
+            
+            var timeout=defaultObjectRefreshRate/this.objectRegister.activeObjects.length;
+
+
             this.updateSingleObject(field, queue,objectInstance)
 
 
@@ -159,8 +164,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function(){
             }
             
             var timeoutFunc = function () { self.gridUpdater(index); };
-            this.timer = setTimeout(timeoutFunc, 1000);
-
+            this.timer = setTimeout(timeoutFunc, timeout);
+            console.log('refresh timeout: '+timeout);
 
             
         },
@@ -252,7 +257,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function(){
             var timeoutFunc = function() {
                 self._repeatObjectView();
             }
-            this.viewTimer = setTimeout(timeoutFunc, 2000);
+
+            this.API.timers.refreshViewTimer = setTimeout(timeoutFunc, 2000);
 
 
         },
