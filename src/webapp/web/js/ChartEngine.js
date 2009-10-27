@@ -49,6 +49,19 @@ var ChartEngine = Class.create({
         }
     },
 
+    resetGraph:function(){
+
+        this.canvas.reload();
+        this.canvasWidth = this.canvas.canvasElement.getWidth();
+        this.canvasHeight = this.canvas.canvasElement.getHeight();
+
+        this.xAxis = new xAxis(this);
+        this.yAxis = new yAxis(this);
+
+        this.drawAxes();
+    },
+
+
     getPadding: function () {
         return[this.topPadding, this.rightPadding, this.bottomPadding, this.leftPadding];
     },
@@ -230,7 +243,7 @@ var ChartEngine = Class.create({
 
             //console.log(x);
             //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
-            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#acacdd', 0.5);
+            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#caca77', 0.7);
 
         });
 
@@ -448,7 +461,7 @@ var xAxis = Class.create(ChartEngine, {
             this.chart.canvas.line(xScaled, y, xScaled, this.chart.topPadding, color, alpha);
         }
         var textWidth = get_textWidth(h.toString(), 8);
-        this.chart.canvas.text(h.toString(), xScaled - (textWidth / 2), this.chart.canvasHeight - 15, 8, color, alpha);
+        this.chart.canvas.text(h.toString(), xScaled - (textWidth / 2) , this.chart.canvasHeight - 2, 8, color, alpha);
     }
 });
 
@@ -494,7 +507,7 @@ var yAxis = Class.create(ChartEngine, {
         if (this.chart.drawMinMaxLines) {
             this.chart.canvas.line(x, yScaled, (this.chart.canvasWidth - this.chart.rightPadding), yScaled, color, alpha);
         }
-        this.chart.canvas.text(h.toString(), 0, yScaled - 5, 8, color, alpha);
+        this.chart.canvas.text(h.toString(), 0, yScaled - 1, 8, color, alpha);
 
     }
 });

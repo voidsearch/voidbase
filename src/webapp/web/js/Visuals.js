@@ -19,8 +19,8 @@
 
 Visuals = function (elm) {
     // initialise
-    var canvas = $(elm);
-    this.ctx = canvas.getContext('2d');
+    this.canvasElement = $(elm);
+    this.ctx = this.canvasElement.getContext('2d');
 
     //define some constants
     this.containerWidth = $(elm).getWidth(); //default
@@ -178,7 +178,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
             this.ctx.save();
 
             this.ctx.rotate((Math.PI / 180) * angle);
-            this.ctx.translate(y-10, -60);
+            this.ctx.translate(y-10, -45);
 
         }
 
@@ -217,7 +217,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
             this.ctx.save();
 
             this.ctx.rotate((Math.PI / 180) * angle);
-            this.ctx.translate(y-10, -60);
+            this.ctx.translate(y-10, -45);
 
         }
         this.ctx.strokeStyle = clr;
@@ -269,4 +269,20 @@ Visuals.prototype.detectCanvasTextSupport=function(){
 Visuals.prototype.setFont=function(fontStyle){
     //console.log('setting font to: '+fontStyle);
     this.ctx.font=fontStyle;
+}
+
+Visuals.prototype.reload=function(){
+    this.containerWidth = this.canvasElement.getWidth(); //default
+    this.containerHeight = this.canvasElement.getHeight(); //default
+
+    this.xMid = this.containerWidth / 2;
+    this.yMid = this.containerHeight / 2;
+
+    this.startX = this.xMid - 60;
+    this.startY = this.yMid + 60;
+    this.defaultColor = '#414141';
+    this.stepX = this.xMid / 10;
+
+    this.lineWidth = 1.0;
+
 }
