@@ -22,7 +22,7 @@
 
 VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
-    var defaultObjectRefreshRate = 5000; //miliseconds
+    var defaultObjectRefreshRate = 6000; //miliseconds
 
     getFieldData=function(fieldName, JSONData){
 
@@ -131,9 +131,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
             // TODO move this code to the "grid generator" method
             var tableHTML = '<table class="gridTable">';
-            tableHTML += '<tr><td id="gf_a1" class="gf">a1</td><td id="gf_b1" class="gf">b1</td><td id="gf_bc1" class="gf">b1</td></tr>';
-            tableHTML += '<tr><td id="gf_a2" class="gf">a1</td><td id="gf_b2" class="gf">b1</td><td id="gf_bc2" class="gf">b1</td></tr>';
-            tableHTML += '<tr><td id="gf_a3" class="gf">a1</td><td id="gf_b3" class="gf">b1</td><td id="gf_bc3" class="gf">b1</td></tr>';
+            tableHTML += '<tr><td id="gf_a1" class="gf bbt">a1</td><td id="gf_b1" class="gf bet">b1</td><td id="gf_bc1" class="gf bet">b1</td></tr>';
+            tableHTML += '<tr><td id="gf_a2" class="gf bbb">a1</td><td id="gf_b2" class="gf beb">b1</td><td id="gf_bc2" class="gf beb">b1</td></tr>';
+            tableHTML += '<tr><td id="gf_a3" class="gf bbb">a1</td><td id="gf_b3" class="gf beb">b1</td><td id="gf_bc3" class="gf beb">b1</td></tr>';
             tableHTML += '</table>';
             $('qtView').innerHTML = tableHTML;
 
@@ -164,8 +164,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var queue = self.objectRegister.activeObjects[index][1];
             var objectInstance = self.objectRegister.activeObjects[index][3];
 
-            this.fetchSize=50;
-            this.updateSingleObject(field, queue, objectInstance)
+            this.fetchSize=70;
+            this.updateSingleObject(field, queue, objectInstance);
 
 
             index += 1;
@@ -205,7 +205,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var fieldData=getFieldData(field,data);
 
             //resize canvas to fit container
-            canvasElement.width=400;
+            canvasElement.width=390;
             canvasElement.height=150;
 
             // redraw 
@@ -221,7 +221,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         registerNewObject:function(field, queue, container) {
 
             var canvasId = 'graph-canvas-' + container;
-            $(container).innerHTML = '<canvas id="' + canvasId + '" width="450" height="150"></canvas>';
+            $(container).innerHTML = '<canvas id="' + canvasId + '" width="250" height="150"></canvas>';
 
             var instance = new ChartEngine({
                 'canvasID':canvasId,

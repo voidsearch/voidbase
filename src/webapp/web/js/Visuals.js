@@ -40,7 +40,7 @@ Visuals = function (elm) {
     this.factor = Math.round(this.stepX / 1.41421356);
     this.hasCanvasTextSupport=this.detectCanvasTextSupport();
     if(this.hasCanvasTextSupport){
-        this.ctx.textBaseline='top';
+        this.ctx.textBaseline='bottom';
         this.defaultFont='Arial,Sans-serif';
     }
 }
@@ -163,6 +163,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
 
     if(this.hasCanvasTextSupport){
         var setText='normal '+fontsize+'pt '+this.defaultFont;
+        this.ctx.textBaseline='top';
         if(colorHexStroke.charAt(0) == "#"){
             colorHexStroke=colorHexStroke.substring(1, 7) 
         }
@@ -178,7 +179,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
             this.ctx.save();
 
             this.ctx.rotate((Math.PI / 180) * angle);
-            this.ctx.translate(y-10, -45);
+            this.ctx.translate(y-10, -54);
 
         }
 
@@ -217,7 +218,7 @@ Visuals.prototype.text = function (text, x, y, fontsize, colorHexStroke, alpha, 
             this.ctx.save();
 
             this.ctx.rotate((Math.PI / 180) * angle);
-            this.ctx.translate(y-10, -45);
+            this.ctx.translate(y-10, -54);
 
         }
         this.ctx.strokeStyle = clr;

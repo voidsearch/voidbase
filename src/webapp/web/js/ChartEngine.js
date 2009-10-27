@@ -25,8 +25,8 @@ var ChartEngine = Class.create({
         this.rightPadding = 15.5;
         this.bottomPadding = 22.5;
         this.topPadding = 15;
-        this.axisColor = '#acacac';
-        this.axisOpacity = 0.9;
+        this.axisColor = '#cacaca';
+        this.axisOpacity = 1;
         this.paddingFactor = 0.00;
         this.drawMinMaxLines = false;
         this.scatterChunkSize = 1000;
@@ -243,7 +243,7 @@ var ChartEngine = Class.create({
 
             //console.log(x);
             //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
-            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#caca77', 0.7);
+            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#acca66', 0.7);
 
         });
 
@@ -450,7 +450,7 @@ var xAxis = Class.create(ChartEngine, {
     },
     // draw x axis title
     printTitle: function (title) {
-        this.chart.canvas.text(title.toString(), (this.chart.canvasWidth / 2) - this.chart.rightPadding - 20, (this.chart.canvasHeight - this.chart.bottomPadding + 10), 8, '#414141', 0.9);
+        this.chart.canvas.text(title.toString(), (this.chart.canvasWidth / 2) - this.chart.rightPadding - 20, (this.chart.canvasHeight - this.chart.bottomPadding + 12), 8, '#414141', 0.9);
     },
     drawLine: function (h, text, color, alpha) {
         //scale coordinates
@@ -461,7 +461,7 @@ var xAxis = Class.create(ChartEngine, {
             this.chart.canvas.line(xScaled, y, xScaled, this.chart.topPadding, color, alpha);
         }
         var textWidth = get_textWidth(h.toString(), 8);
-        this.chart.canvas.text(h.toString(), xScaled - (textWidth / 2) , this.chart.canvasHeight - 2, 8, color, alpha);
+        this.chart.canvas.text(h.toString(), xScaled - (textWidth / 2) , this.chart.canvasHeight - 12, 8, color, alpha);
     }
 });
 

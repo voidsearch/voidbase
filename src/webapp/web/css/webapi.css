@@ -432,5 +432,26 @@ table.gridTable{
 
 table.gridTable td{
     padding:10px;
-    border:solid 1px #cacaca;
+
+}
+
+
+table.gridTable td.bbt{
+  border-right:solid 1px #acacac;
+  border-bottom:solid 1px #acacac;
+}
+
+table.gridTable td.bbb{
+  border-right:solid 1px #acacac;
+  border-top:solid 1px #acacac;
+}
+
+table.gridTable td.bet{
+  border-left:solid 1px #acacac;
+  border-bottom:solid 1px #acacac;
+}
+
+table.gridTable td.beb{
+  border-left:solid 1px #acacac;
+  border-top:solid 1px #acacac;
 }
