@@ -91,7 +91,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         _viewGridDispatcher:function(data) {
 
-
             var qs = [];
             var numResults = data.queue.header.results.totalResults;
             qs.push(data.queue.response.queueElements.val);
@@ -128,21 +127,28 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         drawObjectGrid:function() {
             var self = this;
+            this.gridContainerWidth=$('qtView').getWidth()-(4*22);
 
             // TODO move this code to the "grid generator" method
             var tableHTML = '<table class="gridTable">';
-            tableHTML += '<tr><td id="gf_a1" class="gf bbt">a1</td><td id="gf_b1" class="gf bet">b1</td><td id="gf_bc1" class="gf bet">b1</td></tr>';
-            tableHTML += '<tr><td id="gf_a2" class="gf bbb">a1</td><td id="gf_b2" class="gf beb">b1</td><td id="gf_bc2" class="gf beb">b1</td></tr>';
-            tableHTML += '<tr><td id="gf_a3" class="gf bbb">a1</td><td id="gf_b3" class="gf beb">b1</td><td id="gf_bc3" class="gf beb">b1</td></tr>';
-            tableHTML += '</table>';
+            tableHTML += '<tr><td id="gf_a1" class="gf bbt">a1</td><td id="gf_b1" class="gf bet">b1</td><td id="gf_bc1" class="gf bet">c1</td><td id="gf_bd1" class="gf bet">d1</td></tr>';
+            tableHTML += '<tr><td id="gf_a2" class="gf bbb">a2</td><td id="gf_b2" class="gf beb">b2</td><td id="gf_bc2" class="gf beb">c2</td><td id="gf_bd2" class="gf beb">d2</td></tr>';
+            tableHTML += '<tr><td id="gf_a3" class="gf bbb">a3</td><td id="gf_b3" class="gf beb">b3</td><td id="gf_bc3" class="gf beb">c3</td><td id="gf_bd3" class="gf beb">d3</td></tr>';
+            tableHTML += '</table><div id="gridCtrl"><input type="button" value="&laquo;" id="gridSizeReduce"/><input type="button" value="&raquo;" id="gridSizeIncrease"/></div>';
             $('qtView').innerHTML = tableHTML;
 
             var availableGridFields = $$('td.gf');
+            this.maxCellSize=this.gridContainerWidth/4 ;
+            availableGridFields.each(function(cell){
+                cell.style.width=self.maxCellSize+'px';
+
+            });
+
 
             var feedName = this._queueData.response.queueMetadata.name;
             this.fieldNames.each(function(field, index) {
                 self.registerNewObject(field, feedName, availableGridFields[index].id);
-                //console.log(self.objectRegister.activeObjects[index][3]);
+                //console.log(availableGridFields[index].id);
             });
 
             // start grid updater, start from the first element
@@ -164,10 +170,10 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var queue = self.objectRegister.activeObjects[index][1];
             var objectInstance = self.objectRegister.activeObjects[index][3];
 
-            this.fetchSize=70;
+            this.fetchSize=100;
             this.updateSingleObject(field, queue, objectInstance);
 
-
+            //console.log(this.gridContainerWidth);
             index += 1;
 
             if (index >= this.objectRegister.activeObjects.length) {
@@ -184,9 +190,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         },
 
         updateSingleObject:function(field, queue, chartInstance) {
-
             var self=this;
-            
+
             new Ajax.Request('/webapi/queuetree/?method=GET&queue=' +queue+ '&size=' + this.fetchSize, {
                 method: 'get',
                 onSuccess: function(transport) {
@@ -204,13 +209,20 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var canvasContainer=canvasElement.parentNode;
             var fieldData=getFieldData(field,data);
 
+            var containerWidth=canvasContainer.getWidth();
+            var canvasWidth=canvasElement.getWidth();
+
+            var newWidth=containerWidth-22;
+
+            //console.log('container width: '+containerWidth+' canvas width: '+canvasWidth+'  new width: '+newWidth)
+
             //resize canvas to fit container
-            canvasElement.width=390;
+            //canvasElement.width=container;
+            canvasElement.width=newWidth;
             canvasElement.height=150;
 
             // redraw 
             chartInstance.options.chartData=fieldData;
-
             chartInstance.resetGraph();
             chartInstance.drawLineGraph();
 

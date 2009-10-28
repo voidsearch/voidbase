@@ -208,6 +208,9 @@ var ChartEngine = Class.create({
         //we are drawing from the zero
         this.yMin=0;
         this.yscope=this.yMax-this.yMin;
+
+        
+
         this.drawMinMaxLines = false;
 
         // X AXIS
@@ -232,8 +235,9 @@ var ChartEngine = Class.create({
         }
 
         if(barWidth  > 3){
-            barWidth-=2.5;
+            barWidth-=1.5;
         }
+
 
         this.options.chartData.reverse(false).each(function(elm, index) {
 
@@ -243,7 +247,7 @@ var ChartEngine = Class.create({
 
             //console.log(x);
             //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
-            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#acca66', 0.7);
+            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#acca66', 0.7  );
 
         });
 
@@ -507,7 +511,7 @@ var yAxis = Class.create(ChartEngine, {
         if (this.chart.drawMinMaxLines) {
             this.chart.canvas.line(x, yScaled, (this.chart.canvasWidth - this.chart.rightPadding), yScaled, color, alpha);
         }
-        this.chart.canvas.text(h.toString(), 0, yScaled - 1, 8, color, alpha);
+        this.chart.canvas.text(h.toString(), 0, yScaled - 10, 8, color, alpha);
 
     }
 });

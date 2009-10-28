@@ -422,7 +422,6 @@ ul.big-list li a {
 }
 
 table.gridTable{
-    width:1200px;;
     border:none;
     font-size:12px;
     padding:0px;
@@ -432,6 +431,7 @@ table.gridTable{
 
 table.gridTable td{
     padding:10px;
+    width:100px;
 
 }
 
