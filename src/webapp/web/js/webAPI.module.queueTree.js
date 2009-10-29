@@ -22,7 +22,7 @@
 
 VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
-    var defaultObjectRefreshRate = 6000; //miliseconds
+    var defaultObjectRefreshRate = 8000; //miliseconds
 
     getFieldData=function(fieldName, JSONData){
 
@@ -224,7 +224,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             // redraw 
             chartInstance.options.chartData=fieldData;
             chartInstance.resetGraph();
-            chartInstance.drawLineGraph();
+            chartInstance.drawGraph();
 
         },
 
@@ -238,12 +238,46 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var instance = new ChartEngine({
                 'canvasID':canvasId,
                 'tooltip':'scatter-tooltip',
-                'type':'instance',
+                'type':'bars',
+
                 'xTitle':'time',
                 'yTitle':field
 
             });
-            this.objectRegister.activeObjects.push([field,queue,container,instance]);
+
+            var self=this;
+            $(canvasId).observe('click',function(event){
+                var elem=event.element();
+                console.log(elem);
+                self.switchType(elem.id);
+
+            });
+            this.objectRegister.activeObjects.push([field,queue,container,instance,canvasId]);
+
+
+        },
+
+        switchType:function(containerId){
+            console.log(containerId);
+            this.objectRegister.activeObjects.each(function(elm){
+                if(elm[4]==containerId){
+                    console.log('found in register');
+                    var instance=elm[3];
+                    if(instance.options.type=='line'){
+                        instance.options.type='bars';
+
+                    }else{
+                        instance.options.type='line';    
+                    }
+
+                    instance.canvas.reset();
+                    instance.resetGraph();
+                    instance.drawGraph();
+                    throw $break;
+
+                }
+
+            });
 
 
         },
@@ -399,13 +433,15 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             });
 
 
-            new ChartEngine({
+            var graph=new ChartEngine({
                 'canvasID':'graph-canvas',
-                'type':'line',
+                'type':'bars',
                 'xTitle':'time',
                 'yTitle':this.fieldToDraw,
                 'chartData':data
             });
+
+            graph.drawGraph();
 
         },
 

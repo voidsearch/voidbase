@@ -44,7 +44,7 @@ var ChartEngine = Class.create({
         //prepare graph, and if ok draw data
 
         if (this.prepareGraph()) {
-            this.drawGraph();
+
 
         }
     },
@@ -92,7 +92,8 @@ var ChartEngine = Class.create({
     drawGraph: function () {
 
         switch (this.options.type) {
-            case 'instance':
+            case 'bars':
+                this.drawGenericGraph();
                 break;
 
             case 'api-scatter':
@@ -103,7 +104,7 @@ var ChartEngine = Class.create({
                 break;
 
             case 'line':
-                this.drawLineGraph();
+                this.drawGenericGraph();
                 break;
         }
     },
@@ -211,23 +212,26 @@ var ChartEngine = Class.create({
 
     // DRAW LINE GRAPH
     // !! PLEASE !! provide array of integers in this.options.data
-    drawLineGraph:function() {
-        var self = this;
+    drawGenericGraph:function() {
+        
 
         this.detectNegative();
         //get scope and min/max values
 
-        this.paddingFactor = 0.00;
+
+        this.paddingFactor = 0;
+        if(this.options.type=='line'){
+            this.paddingFactor = 0.0;    
+        }
         this.getDataScope();
 
-        if(!this.hasNegative){
+        if(!this.hasNegative && this.options.type=='bars'){
             //we are drawing from the zero
             this.yMin=0;
             this.yscope=this.yMax-this.yMin;
         }
         
         this.availableCanvasWidth=this.scaleX(this.xMax)-this.scaleX(this.xMin);
-        console.log(this.availableCanvasWidth);
         this.drawMinMaxLines = false;
 
         // X AXIS
@@ -240,34 +244,75 @@ var ChartEngine = Class.create({
         this.yAxis.drawLine(this.yMax, 'max', '6767cc', 0.4);
         this.yAxis.drawLine(this.yMin, 'min', '6767cc', 0.4);
 
+        
+        if(this.options.type=='bars'){
+            this.drawBars();
+        }
 
+        if(this.options.type=='line'){
+            this.drawLineGraph();
+        }
+
+
+
+
+    },
+
+    drawLineGraph:function(){
+
+        var self=this;
+        var len=this.options.chartData.length;
+        var data=this.options.chartData.reverse(false);
+
+        var x = 0;
+        var xNext = 0;
+        var y = 0;
+        var yNext = 0;
+
+        data.each(function(elm, index) {
+
+            if(index < len){
+                x = self.scaleX(index) + 0.5;
+                y = self.scaleY(elm);
+
+                xNext = self.scaleX(index+1) + 0.5;
+                yNext = self.scaleY(data[index+1]);
+
+                self.canvas.line(x,y,xNext,yNext , '#acac66', 0.6 );
+            }
+        });
+    
+    },
+
+
+    drawBars:function(){
+        var self=this;
+        
         var x = 0;
         var y = 0;
         var yZero = this.scaleY(self.yMin);
         var xMaxScaled=this.scaleX(this.xMax);
         var xMinScaled=this.scaleX(this.xMin);
+
         var barWidth=(xMaxScaled-xMinScaled-2)/this.options.chartData.length;
         if(barWidth < 1){
             barWidth=1  ;
         }
 
-        if(barWidth  > 3){
-            barWidth-=1.5;
+        if(barWidth  >= 2){
+            barWidth-=0.5;
         }
-
 
         this.options.chartData.reverse(false).each(function(elm, index) {
 
             x = self.scaleX(index) + 0.5;
             y = self.scaleY(elm);
 
-
             //console.log(x);
             //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
             self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#acca66', 0.7  );
 
         });
-
 
     },
 
@@ -291,7 +336,12 @@ var ChartEngine = Class.create({
         this.xscope = this.xMax - this.xMin;
         this.yscope = this.yMax - this.yMin;
 
+        this.yMax = Math.ceil(this.yMax + ((this.yMax - this.yMin) * this.paddingFactor));
+        if(this.yMin==0){
+            this.paddingFactor=0;
+        }
         this.yMin = Math.floor(this.yMin - ((this.yMax - this.yMin) * this.paddingFactor));
+
 
         this.yscope = this.yMax - this.yMin;
 
