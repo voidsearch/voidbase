@@ -111,16 +111,16 @@ simple configuration
      </QueueTreeModule>
 
 
-    <!--<FeedQModule>-->
-        <!-- set of resources to be monitored -->
-        <!--<resources>-->
-            <!--<system>file://var/log/system.log</system>-->
+    <FeedQModule>
+         <!--set of resources to be monitored-->
+        <resources>
+            <system>file://var/log/system.log</system>
             <!--<syslog   freq="1000">file://var/log/messages</syslog>-->
             <!--<http_log freq="1000">file://var/log/httpd/access_log</http_log>-->
             <!--<twitter_last freq="1000">file://var/log/httpd/access_log</twitter_last>-->
-        <!--</resources>-->
+        </resources>
 
-    <!--</FeedQModule>-->
+    </FeedQModule>
 
     <!-- storage-specific configurations -->
 

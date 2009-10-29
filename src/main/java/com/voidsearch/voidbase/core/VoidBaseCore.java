@@ -118,7 +118,10 @@ public class VoidBaseCore implements VoidBaseModule {
 
                         // invoke module-specific initialization
                         childModule.initialize(module);
-                        childModule.run();
+
+                        if (childModule instanceof Thread) {
+                            ((Thread)childModule).start();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

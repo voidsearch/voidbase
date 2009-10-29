@@ -24,11 +24,12 @@ import com.voidsearch.voidbase.config.VoidBaseConfiguration;
 import com.voidsearch.voidbase.config.Config;
 import com.voidsearch.voidbase.apps.feedq.connector.fetcher.FeedFetcher;
 import com.voidsearch.voidbase.apps.feedq.connector.fetcher.FeedFetcherFactory;
+import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
 
 import java.util.HashMap;
 import java.util.Arrays;
 
-public class FeedQueueModule implements VoidBaseModule {
+public class FeedQueueModule extends Thread implements VoidBaseModule {
 
     private static int POLL_INTERVAL;
     private static int DIFF_WINDOW_SIZE;
@@ -60,22 +61,31 @@ public class FeedQueueModule implements VoidBaseModule {
 
     public void run() {
 
+        QueueTreeClient client = new QueueTreeClient("localhost:8080");
+
         while(true) {
 
             for (String resource : resources.keySet()) {
-                System.out.println(resource + "\t" + resources.get(resource));
 
                 try {
                     byte[] newContent = fetchContent(resources.get(resource));
 
+                    client.create(resource,100);
+
                     if (contentQueue.containsKey(resource)) {
+
                         byte[] oldContent = contentQueue.get(resource);
 
-                        if (Arrays.equals(oldContent,newContent)) {
+                        int delta = 0;
 
-                        } else {
-
+                        if (!Arrays.equals(oldContent,newContent)) {
+                            delta = getDelta(oldContent,newContent);
                         }
+
+                        // dispatch delta to queue
+
+                        client.put(resource,"<val>"+delta+"</val>");
+
                     }
                     contentQueue.put(resource, newContent);
                 } catch (Exception e) {
@@ -90,6 +100,29 @@ public class FeedQueueModule implements VoidBaseModule {
             }
 
         }
+    }
+
+    private int getDelta(byte[] oldContent, byte[] newContent) {
+
+        if ((oldContent.length > 0) && (newContent.length > 0)) {
+            int j = 0;
+            for (int i = 0; i < newContent.length; i++) {
+                int offset = i;
+                while (newContent[i] == oldContent[j]) {
+                    i++;
+                    j++;
+                    if (j == oldContent.length) { // matched whole sequence
+                        if (offset == 0) {
+                            return (newContent.length - oldContent.length - 1);
+                        } else {
+                            return offset;
+                        }
+                    }
+                }
+                j = 0;
+            }
+        }
+        return 0;
     }
 
 
