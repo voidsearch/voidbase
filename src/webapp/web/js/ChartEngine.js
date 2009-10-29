@@ -21,10 +21,10 @@ var ChartEngine = Class.create({
 
         //this.options.numResults = this.options.chartData.length;
         this.chartPadding = 10;
-        this.leftPadding = 22.5;
+        this.leftPadding = 26.5;
         this.rightPadding = 15.5;
-        this.bottomPadding = 22.5;
-        this.topPadding = 15;
+        this.bottomPadding = 26.5;
+        this.topPadding = 26;
         this.axisColor = '#cacaca';
         this.axisOpacity = 1;
         this.paddingFactor = 0.00;
@@ -196,21 +196,38 @@ var ChartEngine = Class.create({
 
     },
 
+    detectNegative:function(){
+
+        this.hasNegative=false;
+        var self=this;
+        this.options.chartData.each(function(element){
+            if(element < 0){
+                self.hasNegative=true;
+                throw $break;
+            }
+        });
+
+    },
+
     // DRAW LINE GRAPH
     // !! PLEASE !! provide array of integers in this.options.data
     drawLineGraph:function() {
         var self = this;
 
+        this.detectNegative();
         //get scope and min/max values
 
-        this.paddingFactor = 0.05;
+        this.paddingFactor = 0.00;
         this.getDataScope();
-        //we are drawing from the zero
-        this.yMin=0;
-        this.yscope=this.yMax-this.yMin;
 
+        if(!this.hasNegative){
+            //we are drawing from the zero
+            this.yMin=0;
+            this.yscope=this.yMax-this.yMin;
+        }
         
-
+        this.availableCanvasWidth=this.scaleX(this.xMax)-this.scaleX(this.xMin);
+        console.log(this.availableCanvasWidth);
         this.drawMinMaxLines = false;
 
         // X AXIS
@@ -220,8 +237,8 @@ var ChartEngine = Class.create({
 
         // Y AXIS
         this.yAxis.printTitle(this.options.yTitle);
-        this.yAxis.drawLine(this.yMax, 'text', '6767cc', 0.4);
-        this.yAxis.drawLine(this.yMin, 'text', '6767cc', 0.4);
+        this.yAxis.drawLine(this.yMax, 'max', '6767cc', 0.4);
+        this.yAxis.drawLine(this.yMin, 'min', '6767cc', 0.4);
 
 
         var x = 0;
@@ -261,7 +278,7 @@ var ChartEngine = Class.create({
         // get min and max values
         this.xMin = 0;
         this.yMin = this.options.chartData.min();
-
+        //console.log(this.yMin);    
 
         this.xMax = this.options.chartData.length;
         this.yMax = this.options.chartData.max();
@@ -454,7 +471,7 @@ var xAxis = Class.create(ChartEngine, {
     },
     // draw x axis title
     printTitle: function (title) {
-        this.chart.canvas.text(title.toString(), (this.chart.canvasWidth / 2) - this.chart.rightPadding - 20, (this.chart.canvasHeight - this.chart.bottomPadding + 12), 8, '#414141', 0.9);
+        this.chart.canvas.text(title.toString(), (this.chart.canvasWidth / 2) - this.chart.rightPadding - 20, (this.chart.canvasHeight - this.chart.bottomPadding + 8), 8, '#414141', 0.9);
     },
     drawLine: function (h, text, color, alpha) {
         //scale coordinates
@@ -465,7 +482,7 @@ var xAxis = Class.create(ChartEngine, {
             this.chart.canvas.line(xScaled, y, xScaled, this.chart.topPadding, color, alpha);
         }
         var textWidth = get_textWidth(h.toString(), 8);
-        this.chart.canvas.text(h.toString(), xScaled - (textWidth / 2) , this.chart.canvasHeight - 12, 8, color, alpha);
+        this.chart.canvas.text(h.toString(), xScaled - (textWidth / 2) , this.chart.canvasHeight - 16, 8, color, alpha);
     }
 });
 
@@ -503,7 +520,19 @@ var yAxis = Class.create(ChartEngine, {
         this.chart.canvas.text(val.toString(), 5, ((this.chart.canvasHeight / 2) - this.chart.bottomPadding) - 15, 8, '#414141', 0.9, 90);
     },
 
-    drawLine: function (h, text, color, alpha) {
+    drawLine: function (h, type, color, alpha) {
+
+        var hOffset=0;
+
+        if(type=='max'){
+            hOffset=+21;
+        }
+
+        if(type=='min'){
+            hOffset=-1;
+        }
+
+
         //scale
         var x = this.chart.leftPadding;
         var yScaled = this.chart.scaleY(h) + 0.5;
@@ -511,7 +540,7 @@ var yAxis = Class.create(ChartEngine, {
         if (this.chart.drawMinMaxLines) {
             this.chart.canvas.line(x, yScaled, (this.chart.canvasWidth - this.chart.rightPadding), yScaled, color, alpha);
         }
-        this.chart.canvas.text(h.toString(), 0, yScaled - 10, 8, color, alpha);
+        this.chart.canvas.text(h.toString(), 4, yScaled - hOffset, 8, color, alpha);
 
     }
 });

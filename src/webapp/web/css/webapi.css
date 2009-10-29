@@ -430,10 +430,12 @@ table.gridTable{
 }
 
 table.gridTable td{
-    padding:10px;
+    padding:1px;
     width:100px;
+    position:relative;
 
 }
+
 
 
 table.gridTable td.bbt{
@@ -454,4 +456,15 @@ table.gridTable td.bet{
 table.gridTable td.beb{
   border-left:solid 1px #acacac;
   border-top:solid 1px #acacac;
+}
+
+table.gridTable td:hover {
+   padding:0px;
+    
+}
+
+
+table.gridTable td:hover canvas{
+        border:dashed 1px #d4d4d4;
+
 }

@@ -127,7 +127,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         drawObjectGrid:function() {
             var self = this;
-            this.gridContainerWidth=$('qtView').getWidth()-(4*22);
+            this.gridContainerWidth=$('qtView').getWidth()-(4*8);
 
             // TODO move this code to the "grid generator" method
             var tableHTML = '<table class="gridTable">';
@@ -170,7 +170,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var queue = self.objectRegister.activeObjects[index][1];
             var objectInstance = self.objectRegister.activeObjects[index][3];
 
-            this.fetchSize=100;
+            this.fetchSize=259;
             this.updateSingleObject(field, queue, objectInstance);
 
             //console.log(this.gridContainerWidth);
@@ -212,7 +212,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var containerWidth=canvasContainer.getWidth();
             var canvasWidth=canvasElement.getWidth();
 
-            var newWidth=containerWidth-22;
+            var newWidth=containerWidth-3;
 
             //console.log('container width: '+containerWidth+' canvas width: '+canvasWidth+'  new width: '+newWidth)
 
