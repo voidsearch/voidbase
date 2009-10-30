@@ -29,6 +29,8 @@ import java.util.HashMap;
 
 public class VoidBaseResourceRegister {
 
+    private static long POLL_WAIT_INTERVAL = 1000;
+
 
     private HashMap<String, VoidBaseModule> uriRegister = new HashMap<String, VoidBaseModule>();
 
@@ -55,6 +57,45 @@ public class VoidBaseResourceRegister {
         } else {
             throw new HandlerNotRegisteredException();
         }
+    }
+
+
+    /**
+     * blocks on call indefinitely until handler register
+     *
+     * @param uri
+     * @return
+     */
+    public VoidBaseModule getHandlerBlocking(String uri) {
+        while (!uriRegister.containsKey(uri)) {
+            try {
+                Thread.sleep(POLL_WAIT_INTERVAL);
+            } catch (Exception e) {
+            }
+        }
+        return uriRegister.get(uri);
+    }
+
+
+    /**
+     * blocks on call until handler register
+     * throws HandlerNotRegisteredException if timeout period expired
+     *
+     * @param uri
+     * @return
+     */
+    public VoidBaseModule getHandlerBlocking(String uri, long timeout) throws HandlerNotRegisteredException {
+        while (!uriRegister.containsKey(uri)) {
+            try {
+                Thread.sleep(POLL_WAIT_INTERVAL);
+                timeout -= POLL_WAIT_INTERVAL;
+                if (timeout < 0) {
+                    throw new HandlerNotRegisteredException();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return uriRegister.get(uri);
     }
 
 

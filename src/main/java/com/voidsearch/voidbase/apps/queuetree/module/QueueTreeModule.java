@@ -36,10 +36,13 @@ import java.util.List;
 import java.util.LinkedList;
 import java.net.URLDecoder;
 
-public class  QueueTreeModule implements VoidBaseModule {
+public class QueueTreeModule implements VoidBaseModule {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    StorageSupervisor supervisor = StorageSupervisor.getInstance();
+
+    private StorageSupervisor supervisor = StorageSupervisor.getInstance();
+    private QueueTreeStorage qTree = QueueTreeStorage.factory();
+
 
     // init
 
@@ -88,8 +91,6 @@ public class  QueueTreeModule implements VoidBaseModule {
             String method = req.getParam(QueueTreeProtocol.METHOD);
             VoidBaseOperationType operation = VoidBaseOperationType.deserialize(method);
 
-            QueueTreeStorage qTree = QueueTreeStorage.factory();
-
             // put key to given queue
             if (operation == VoidBaseOperationType.PUT) {
 
@@ -104,7 +105,7 @@ public class  QueueTreeModule implements VoidBaseModule {
                         value = request.getContent();
                     }
 
-                    qTree.putFIFO(queue, value);
+                    insertToQueue(queue, value);
 
                     response.setResponse(QueueTreeProtocol.ENQUEUED);
                 } else {
@@ -145,7 +146,8 @@ public class  QueueTreeModule implements VoidBaseModule {
                 if (req.containsParams(QueueTreeProtocol.getRequiredParams(VoidBaseOperationType.ADD))) {
                     String queue = req.getParam(QueueTreeProtocol.QUEUE);
                     int size = Integer.parseInt(req.getParam(QueueTreeProtocol.SIZE));
-                    qTree.createQueue(queue, size);
+
+                    createQueue(queue,size);
 
                     response.setResponse(QueueTreeProtocol.CREATED);
                 } else {
@@ -243,6 +245,19 @@ public class  QueueTreeModule implements VoidBaseModule {
 
         return responseContent.toString() ;
 
+    }
+
+    public void createQueue(String queue, int size) throws QueueAlreadyExistsException, SupervisionException {
+        qTree.createQueue(queue, size);
+    }
+
+    public void insertToQueue(String queue, String value) throws InvalidQueueException, SupervisionException {
+        qTree.putFIFO(queue, value);
+    }
+
+
+    public boolean queueExists(String queue) throws SupervisionException {
+        return qTree.queueExists(queue); 
     }
 
     public void run() {
