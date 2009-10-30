@@ -42,6 +42,15 @@ public class SimpleFeedqLoaderTest {
 
                 sb.append("<count>").append(i).append("</count>")
                   .append("<random>").append(rnd.nextInt(1024)).append("</random>")
+                  .append("<random2>").append(rnd.nextInt(1024)).append("</random2>")
+                  .append("<random3>").append(rnd.nextInt(10)).append("</random3>")
+                  .append("<random4>").append(rnd.nextInt(100)).append("</random4>")
+                  .append("<random5>").append(rnd.nextInt(10000)).append("</random5>")
+                  .append("<random6>").append(rnd.nextInt(100000)).append("</random6>")
+                  .append("<random7>").append(rnd.nextInt(10000)).append("</random7>")
+                  .append("<random8>").append(rnd.nextInt(1000)).append("</random8>")
+                  .append("<random9>").append(rnd.nextInt(100)).append("</random9>")
+                  .append("<random10>").append(rnd.nextInt(10)).append("</random10>")
                   .append("<sin>").append(1000*Math.sin(rnd.nextGaussian())).append("</sin>");
 
                 try {
