@@ -57,14 +57,15 @@ public class QueueTreeFeedUtils {
         StringBuilder sb = new StringBuilder();
         for (Object elem : list) {
             if (elem instanceof QueueEntry) {
-                sb.append("<val timestamp=\"")
+                sb.append("<entry timestamp=\"")
                   .append(((QueueEntry)elem).getTimestamp())
-                  .append("\">");
+                  .append("\">")
+                  .append("<val>");
             } else {
-                sb.append("<val>");
+                sb.append("<entry><val>");
             }
             sb.append(elem.toString())
-              .append("</val>\r\n");
+              .append("</val></entry>\r\n");
         }
         return sb.toString();
     }

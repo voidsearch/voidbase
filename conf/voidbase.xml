@@ -116,9 +116,7 @@ simple configuration
 
         <!-- system logs-->
         <syslog>
-            <osxlog>file://var/log/system.log</osxlog>
-            <t1>file://Users/aleksandarbradic/test2</t1>
-            <t2>file://Users/aleksandarbradic/test3</t2>
+            <!--<osxlog>file://var/log/system.log</osxlog>-->
         </syslog>
 
          <!-- news feeds -->
