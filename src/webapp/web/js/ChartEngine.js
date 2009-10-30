@@ -229,6 +229,7 @@ var ChartEngine = Class.create({
         if(this.options.type=='line'){
             this.paddingFactor = 0.0;    
         }
+
         this.getDataScope();
 
         if(!this.hasNegative && this.options.type=='bars'){
@@ -244,6 +245,7 @@ var ChartEngine = Class.create({
         this.xAxis.printTitle(this.options.xTitle);
         this.xAxis.drawLine(this.xMax, 'text', '6767cc', 0.4);
         this.xAxis.drawLine(this.xMin, 'text', '6767cc', 0.4);
+
 
         // Y AXIS
         this.yAxis.printTitle(this.options.yTitle);
@@ -277,7 +279,7 @@ var ChartEngine = Class.create({
 
         data.each(function(elm, index) {
 
-            if(index < len){
+            if(index < len-1){
                 x = self.scaleX(index) + 0.5;
                 y = self.scaleY(elm);
 
@@ -329,20 +331,18 @@ var ChartEngine = Class.create({
         // get min and max values
         this.xMin = 0;
         this.yMin = this.options.chartData.min();
-        //console.log(this.yMin);    
-
         this.xMax = this.options.chartData.length;
         this.yMax = this.options.chartData.max();
+
 
         if (this.yMax == this.yMin && this.yMax != 0) {
             this.yMin = 0;
         }
 
-
         this.xscope = this.xMax - this.xMin;
         this.yscope = this.yMax - this.yMin;
 
-        this.yMax = Math.ceil(this.yMax + ((this.yMax - this.yMin) * this.paddingFactor));
+        this.yMax = this.yMax + ((this.yMax - this.yMin) * this.paddingFactor);
         if(this.yMin==0){
             this.paddingFactor=0;
         }

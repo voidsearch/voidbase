@@ -243,7 +243,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var self = this;
             $(canvasId).observe('click', function(event) {
                 var elem = event.element();
-                console.log(elem);
                 self.switchType(elem.id);
 
             });
