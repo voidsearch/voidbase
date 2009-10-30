@@ -59,7 +59,7 @@ public class ResourceCluster {
         for (String key : resourceStats.keySet()) {
             sb.append("<").append(resourceKeys.get(key)).append(">")
               .append(resourceStats.get(key))
-              .append("</").append(resourceKeys.get(key)).append(">\n");
+              .append("</").append(resourceKeys.get(key)).append(">");
         }
         return sb.toString();
     }

@@ -128,7 +128,9 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                 System.out.println(cluster.getQueueStatEntry());
 
                 try {
-                    queue.insertToQueue(cluster.getName(), cluster.getQueueStatEntry());
+                    if (cluster.getQueueStatEntry().length() != 0) {
+                        queue.insertToQueue(cluster.getName(), cluster.getQueueStatEntry());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
