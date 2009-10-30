@@ -24,7 +24,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
     var defaultObjectRefreshRate = 8000; //miliseconds
 
-    getFieldData=function(fieldName, JSONData){
+    getFieldData = function(fieldName, JSONData) {
 
         var data = [];
         var qs = [];
@@ -119,15 +119,15 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             // hanfle according to type
             if (dataType == 'object') {
                 this.drawObjectGrid();
-               // console.log(this.fieldNames);
-               // console.log(this._queueData);
+                // console.log(this.fieldNames);
+                // console.log(this._queueData);
             }
         },
 
 
         drawObjectGrid:function() {
             var self = this;
-            this.gridContainerWidth=$('qtView').getWidth()-(4*8);
+            this.gridContainerWidth = $('qtView').getWidth() - (4 * 8);
 
             // TODO move this code to the "grid generator" method
             var tableHTML = '<table class="gridTable">';
@@ -138,23 +138,19 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             $('qtView').innerHTML = tableHTML;
 
             var availableGridFields = $$('td.gf');
-            this.maxCellSize=this.gridContainerWidth/4 ;
-            availableGridFields.each(function(cell){
-                cell.style.width=self.maxCellSize+'px';
+            this.maxCellSize = this.gridContainerWidth / 4;
+            availableGridFields.each(function(cell) {
+                cell.style.width = self.maxCellSize + 'px';
 
             });
-
 
             var feedName = this._queueData.response.queueMetadata.name;
             this.fieldNames.each(function(field, index) {
                 self.registerNewObject(field, feedName, availableGridFields[index].id);
-                //console.log(availableGridFields[index].id);
             });
 
             // start grid updater, start from the first element
             this.gridUpdater(0);
-
-
         },
 
         //
@@ -170,7 +166,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var queue = self.objectRegister.activeObjects[index][1];
             var objectInstance = self.objectRegister.activeObjects[index][3];
 
-            this.fetchSize=259;
+            this.fetchSize = 259;
             this.updateSingleObject(field, queue, objectInstance);
 
             //console.log(this.gridContainerWidth);
@@ -190,9 +186,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         },
 
         updateSingleObject:function(field, queue, chartInstance) {
-            var self=this;
+            var self = this;
 
-            new Ajax.Request('/webapi/queuetree/?method=GET&queue=' +queue+ '&size=' + this.fetchSize, {
+            new Ajax.Request('/webapi/queuetree/?method=GET&queue=' + queue + '&size=' + this.fetchSize, {
                 method: 'get',
                 onSuccess: function(transport) {
                     // leave more advanced stuff to hanfler funciton
@@ -202,27 +198,26 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         },
 
-        updateSingleObjectHandler:function(field, queue, chartInstance, data){
+        updateSingleObjectHandler:function(field, queue, chartInstance, data) {
 
             //fetch data
-            var canvasElement=$(chartInstance.canvas.ctx.canvas.id);
-            var canvasContainer=canvasElement.parentNode;
-            var fieldData=getFieldData(field,data);
+            var canvasElement = $(chartInstance.canvas.ctx.canvas.id);
+            var canvasContainer = canvasElement.parentNode;
+            var fieldData = getFieldData(field, data);
 
-            var containerWidth=canvasContainer.getWidth();
-            var canvasWidth=canvasElement.getWidth();
+            var containerWidth = canvasContainer.getWidth();
+            //var canvasWidth = canvasElement.getWidth();
 
-            var newWidth=containerWidth-3;
+
 
             //console.log('container width: '+containerWidth+' canvas width: '+canvasWidth+'  new width: '+newWidth)
 
             //resize canvas to fit container
-            //canvasElement.width=container;
-            canvasElement.width=newWidth;
-            canvasElement.height=150;
+            canvasElement.width = containerWidth - 3;
+            canvasElement.height = 150;
 
             // redraw 
-            chartInstance.options.chartData=fieldData;
+            chartInstance.options.chartData = fieldData;
             chartInstance.resetGraph();
             chartInstance.drawGraph();
 
@@ -245,9 +240,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
             });
 
-            var self=this;
-            $(canvasId).observe('click',function(event){
-                var elem=event.element();
+            var self = this;
+            $(canvasId).observe('click', function(event) {
+                var elem = event.element();
                 console.log(elem);
                 self.switchType(elem.id);
 
@@ -257,29 +252,24 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         },
 
-        switchType:function(containerId){
-            console.log(containerId);
-            this.objectRegister.activeObjects.each(function(elm){
-                if(elm[4]==containerId){
-                    console.log('found in register');
-                    var instance=elm[3];
-                    if(instance.options.type=='line'){
-                        instance.options.type='bars';
+        switchType:function(containerId) {
+            this.objectRegister.activeObjects.each(function(elm) {
+                if (elm[4] == containerId) {
 
-                    }else{
-                        instance.options.type='line';    
+                    var instance = elm[3];
+
+                    if (instance.options.type == 'line') {
+                        instance.options.type = 'bars';
+
+                    } else {
+                        instance.options.type = 'line';
                     }
-
-                    instance.canvas.reset();
-                    instance.resetGraph();
-                    instance.drawGraph();
+                    // switch type and redraw
+                    instance.resetAndRedraw();
                     throw $break;
-
                 }
 
-            });
-
-
+            }); //each end
         },
 
 
@@ -433,7 +423,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             });
 
 
-            var graph=new ChartEngine({
+            var graph = new ChartEngine({
                 'canvasID':'graph-canvas',
                 'type':'bars',
                 'xTitle':'time',

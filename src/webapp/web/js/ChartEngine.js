@@ -61,6 +61,12 @@ var ChartEngine = Class.create({
         this.drawAxes();
     },
 
+    resetAndRedraw:function(){
+
+        this.canvas.reset();
+        this.resetGraph();
+        this.drawGraph();
+    },
 
     getPadding: function () {
         return[this.topPadding, this.rightPadding, this.bottomPadding, this.leftPadding];
@@ -299,8 +305,8 @@ var ChartEngine = Class.create({
             barWidth=1  ;
         }
 
-        if(barWidth  >= 2){
-            barWidth-=0.5;
+        if(barWidth  >= 3){
+            barWidth-=1.5;
         }
 
         this.options.chartData.reverse(false).each(function(elm, index) {
