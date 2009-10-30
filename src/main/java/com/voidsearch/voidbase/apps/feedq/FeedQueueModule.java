@@ -99,10 +99,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                     try {
                         byte[] newContent = fetchContent(resource);
 
-                        System.out.println("------------------------");
-                        System.out.println(new String(newContent));
-                        System.out.println("------------------------");
-
                         if (contentQueue.containsKey(resource)) {
 
                             byte[] oldContent = contentQueue.get(resource);
@@ -110,12 +106,10 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                             int delta = 0;
 
                             if (!Arrays.equals(oldContent, newContent)) {
-                                //delta = 1;
-                                delta = oldContent.length;
                                 //delta = getDelta(oldContent, newContent);
+                                delta = 1;
                             }
 
-                            System.out.println("DELTA : " + delta);
                             cluster.setStat(resource,delta);
 
                         }
@@ -124,8 +118,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                         e.printStackTrace();
                     }
                 }
-
-                System.out.println(cluster.getQueueStatEntry());
 
                 try {
                     if (cluster.getQueueStatEntry().length() != 0) {
