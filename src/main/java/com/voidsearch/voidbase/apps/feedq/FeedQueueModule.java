@@ -24,29 +24,43 @@ import com.voidsearch.voidbase.config.VoidBaseConfiguration;
 import com.voidsearch.voidbase.config.Config;
 import com.voidsearch.voidbase.apps.feedq.connector.fetcher.FeedFetcher;
 import com.voidsearch.voidbase.apps.feedq.connector.fetcher.FeedFetcherFactory;
-import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
+import com.voidsearch.voidbase.apps.feedq.resource.ResourceCluster;
+import com.voidsearch.voidbase.apps.queuetree.module.QueueTreeModule;
+import com.voidsearch.voidbase.core.VoidBaseResourceRegister;
 
 import java.util.HashMap;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class FeedQueueModule extends Thread implements VoidBaseModule {
+
+    private static String CONF_FEED_RESOURCES = "FeedQResources";
 
     private static int POLL_INTERVAL;
     private static int DIFF_WINDOW_SIZE;
 
-    private HashMap<String,String> resources;
+    VoidBaseResourceRegister resourceRegister = VoidBaseResourceRegister.getInstance();
+    private LinkedList<ResourceCluster> resources = new LinkedList<ResourceCluster>();
     private HashMap<String, byte[]> contentQueue = new HashMap<String, byte[]>();
+
     private Object contentLock;
+
+    private QueueTreeModule queue;
 
     public void initialize(String name) throws VoidBaseModuleException {
 
         POLL_INTERVAL = VoidBaseConfiguration.getInt(Config.MODULES, name, "pollInterval");
         DIFF_WINDOW_SIZE = VoidBaseConfiguration.getInt(Config.MODULES, name, "diffWindowByteSize");
 
-        resources = new HashMap<String,String>();
-        for (String resource : VoidBaseConfiguration.getKeyList(name,"resources")) {
-            resources.put(resource, VoidBaseConfiguration.get(name,"resources",resource));
+        for (String resourceCluster : VoidBaseConfiguration.getKeyList(CONF_FEED_RESOURCES)) {
+            ResourceCluster cluster = new ResourceCluster(resourceCluster);
+            for (String resourceName : VoidBaseConfiguration.getKeyList(CONF_FEED_RESOURCES,resourceCluster)) {
+                String resource =  VoidBaseConfiguration.get(CONF_FEED_RESOURCES,resourceCluster,resourceName);
+                cluster.add(resourceName,resource);
+            }
+            resources.add(cluster);
         }
+        
     }
 
     public VoidBaseModuleResponse handle(VoidBaseModuleRequest request) throws VoidBaseModuleException {
@@ -61,44 +75,72 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
 
     public void run() {
 
-        QueueTreeClient client = new QueueTreeClient("localhost:8080");
+        // blocking wait for queue to be initialized
+        try {
+            queue = (QueueTreeModule) resourceRegister.getHandlerBlocking("queuetree");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        while(true) {
+        while (true) {
 
-            for (String resource : resources.keySet()) {
+            for (ResourceCluster cluster : resources) {
 
                 try {
-                    byte[] newContent = fetchContent(resources.get(resource));
-
-                    client.create(resource,100);
-
-                    if (contentQueue.containsKey(resource)) {
-
-                        byte[] oldContent = contentQueue.get(resource);
-
-                        int delta = 0;
-
-                        if (!Arrays.equals(oldContent,newContent)) {
-                            delta = getDelta(oldContent,newContent);
-                        }
-
-                        // dispatch delta to queue
-
-                        client.put(resource,"<val>"+delta+"</val>");
-
+                    if (!queue.queueExists(cluster.getName())) {
+                        queue.createQueue(cluster.getName(),100);
                     }
-                    contentQueue.put(resource, newContent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
 
-            try {
-              Thread.sleep(POLL_INTERVAL);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                for (String resource : cluster.resources()) {
 
+                    try {
+                        byte[] newContent = fetchContent(resource);
+
+                        System.out.println("------------------------");
+                        System.out.println(new String(newContent));
+                        System.out.println("------------------------");
+
+                        if (contentQueue.containsKey(resource)) {
+
+                            byte[] oldContent = contentQueue.get(resource);
+
+                            int delta = 0;
+
+                            if (!Arrays.equals(oldContent, newContent)) {
+                                //delta = 1;
+                                delta = oldContent.length;
+                                //delta = getDelta(oldContent, newContent);
+                            }
+
+                            System.out.println("DELTA : " + delta);
+                            cluster.setStat(resource,delta);
+
+                        }
+                        contentQueue.put(resource, newContent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                System.out.println(cluster.getQueueStatEntry());
+
+                try {
+                    queue.insertToQueue(cluster.getName(), cluster.getQueueStatEntry());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    Thread.sleep(POLL_INTERVAL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
     }
 
@@ -129,7 +171,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
     private static byte[] fetchContent(String resource) throws Exception {
 
         FeedFetcher fetcher = FeedFetcherFactory.getFetcher(resource);
-
         if (fetcher != null) {
           return fetcher.fetch(resource,DIFF_WINDOW_SIZE);
         } else {

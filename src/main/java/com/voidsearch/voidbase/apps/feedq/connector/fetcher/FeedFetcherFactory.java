@@ -21,6 +21,7 @@ public class FeedFetcherFactory {
     public static FeedFetcher getFetcher(String resource) {
 
         int pivot = resource.indexOf(ResourceType.RESOURCE_DELIMITER);
+
         if (pivot > 0) {
             String type = resource.substring(0,pivot);
             if (type.equals(ResourceType.FILE)) {

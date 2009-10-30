@@ -17,10 +17,12 @@
 
 package com.voidsearch.voidbase.apps.feedq.connector.fetcher;
 
+import com.voidsearch.voidbase.client.VoidBaseHttpClient;
 
-public class HttpFeedFetcher implements FeedFetcher {
 
-    
+public class HttpFeedFetcher extends VoidBaseHttpClient implements FeedFetcher {
+
+
     public byte[] fetch(String resource) throws Exception {
         return fetch(resource, Integer.MAX_VALUE);
     }
@@ -34,7 +36,7 @@ public class HttpFeedFetcher implements FeedFetcher {
      */
 
     public byte[] fetch(String resource, int size) throws Exception {
-        return null;
+        return get(resource);
     }
 
 }

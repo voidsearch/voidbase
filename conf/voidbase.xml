@@ -31,6 +31,7 @@ simple configuration
     </global>
 
     <!--  module bootstrap configuration -->
+    <!-- TODO : add explicit dependencies -->
 
     <modules>
 
@@ -63,14 +64,6 @@ simple configuration
             <resource>queuetree</resource>
          </QueueTreeModule>
 
-        <FeedQModule>
-            <class>com.voidsearch.voidbase.apps.feedq.FeedQueueModule</class>
-            <status>active</status>
-            <resource>feedq</resource>
-            <pollInterval>1000</pollInterval>
-            <diffWindowByteSize>4096</diffWindowByteSize>
-         </FeedQModule>
-
         <HelloWorldModule>
             <class>com.voidsearch.voidbase.apps.helloworld.HelloWorldModule</class>
             <status>active</status>
@@ -88,6 +81,14 @@ simple configuration
             <status>active</status>
             <resource>cache</resource>
          </Cache>
+
+        <FeedQModule>
+            <class>com.voidsearch.voidbase.apps.feedq.FeedQueueModule</class>
+            <status>active</status>
+            <resource>feedq</resource>
+            <pollInterval>1000</pollInterval>
+            <diffWindowByteSize>4096</diffWindowByteSize>
+         </FeedQModule>
 
     </modules>
 
@@ -111,16 +112,26 @@ simple configuration
      </QueueTreeModule>
 
 
-    <FeedQModule>
-         <!--set of resources to be monitored-->
-        <resources>
-            <system>file://var/log/system.log</system>
-            <!--<syslog   freq="1000">file://var/log/messages</syslog>-->
-            <!--<http_log freq="1000">file://var/log/httpd/access_log</http_log>-->
-            <!--<twitter_last freq="1000">file://var/log/httpd/access_log</twitter_last>-->
-        </resources>
+    <FeedQResources>
 
-    </FeedQModule>
+        <!-- system logs-->
+        <syslog>
+            <osxlog>file://var/log/system.log</osxlog>
+            <t1>file://Users/aleksandarbradic/test2</t1>
+            <t2>file://Users/aleksandarbradic/test3</t2>
+        </syslog>
+
+         <!-- news feeds -->
+        <news>
+            <top>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dh%26output%3Drss</top>
+            <world>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dt%26output%3Drss</world>
+            <biz>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Db%26output%3Drss</biz>
+            <tech>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dt%26output%3Drss</tech>
+            <sports>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dm%26output%3Drss</sports>
+            <health>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dm%26output%3Drss</health>
+        </news>
+
+    </FeedQResources>
 
     <!-- storage-specific configurations -->
 

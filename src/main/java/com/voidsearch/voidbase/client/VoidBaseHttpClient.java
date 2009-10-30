@@ -42,8 +42,12 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
     }
 
     protected byte[] get(VoidBaseQuery query) throws Exception {
+        return get(query.getQuery());
+    }
 
-        GetMethod method = new GetMethod(query.getQuery());
+    public byte[] get(String query) throws Exception {
+
+        GetMethod method = new GetMethod(query);
         method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,new DefaultHttpMethodRetryHandler(3, false));
 
         byte[] responseBody = null;
