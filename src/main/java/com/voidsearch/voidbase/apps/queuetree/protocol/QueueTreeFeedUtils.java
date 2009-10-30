@@ -18,6 +18,8 @@ package com.voidsearch.voidbase.apps.queuetree.protocol;
 
 import com.voidsearch.voidbase.module.VoidBaseModuleRequest;
 import com.voidsearch.voidbase.protocol.VoidBaseHttpRequest;
+import com.voidsearch.voidbase.storage.queuetree.QueueEntry;
+import com.voidsearch.voidbase.storage.queuetree.QueueTreeStorage;
 
 import java.util.List;
 
@@ -54,8 +56,14 @@ public class QueueTreeFeedUtils {
     public static String deserializeList(List list) {
         StringBuilder sb = new StringBuilder();
         for (Object elem : list) {
-            sb.append("<val>")
-              .append(elem.toString())
+            if (elem instanceof QueueEntry) {
+                sb.append("<val timestamp=\"")
+                  .append(((QueueEntry)elem).getTimestamp())
+                  .append("\">");
+            } else {
+                sb.append("<val>");
+            }
+            sb.append(elem.toString())
               .append("</val>\r\n");
         }
         return sb.toString();

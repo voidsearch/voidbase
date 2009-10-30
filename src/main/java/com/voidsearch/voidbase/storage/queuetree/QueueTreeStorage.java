@@ -52,37 +52,6 @@ public class QueueTreeStorage implements SupervisedStorage {
     private ConcurrentHashMap<StorageOperation, Long> queryCounter = new ConcurrentHashMap<StorageOperation,  Long>();
     private long totalQueries = 0;
 
-    // queue entry
-
-    class QueueEntry {
-
-        private long timestamp;
-        private Object value;
-
-        public QueueEntry(Object value) {
-            timestamp = System.currentTimeMillis();
-            this.value = value;
-        }
-
-        // allow for overriding of getKey method
-        public String getKey()  {
-            return (String)value;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public String toString() {
-            return (String)value;
-        }
-
-    }
-
     // instantiation
 
     protected QueueTreeStorage() { super(); }
