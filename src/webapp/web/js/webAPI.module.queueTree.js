@@ -22,7 +22,7 @@
 
 VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
-    var defaultObjectRefreshRate = 18000; //miliseconds
+    var defaultObjectRefreshRate = 8000; //miliseconds
 
     getFieldData = function(fieldName, JSONData) {
 
