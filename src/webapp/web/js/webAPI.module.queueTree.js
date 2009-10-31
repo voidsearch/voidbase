@@ -22,24 +22,22 @@
 
 VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
-    var defaultObjectRefreshRate = 8000; //miliseconds
+    var defaultObjectRefreshRate = 18000; //miliseconds
 
     getFieldData = function(fieldName, JSONData) {
 
+        var entries=[];
         var data = [];
-        var qs = [];
-
-        qs.push(JSONData.queue.response.queueElements.val);
-        if (JSONData.queue.header.results.totalResults > 1) {
-            qs = qs[0];
+        
+        entries.push(JSONData.queue.response.queueElements.entry);
+        if(JSONData.queue.header.results.totalResults>1){
+            entries=entries[0];
         }
-
-        qs.each(function(element) {
-            data.push(element[fieldName]);
+        
+        entries.each(function(element) {
+            data.push(element.val[fieldName]);
         });
-
         return data;
-
     }
 
     return{
@@ -91,36 +89,21 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         _viewGridDispatcher:function(data) {
 
-            var qs = [];
+            var entries=data.queue.response.queueElements.entry;
+            var qs = this.getComplexData(data.queue,'queueElements');
             var numResults = data.queue.header.results.totalResults;
-            qs.push(data.queue.response.queueElements.val);
-
             var firstElement = false;
 
-            if (numResults == 1) {
-                firstElement = qs[0];
-            }
-
-            if (numResults > 1) {
-                qs = qs[0];
-            }
-
             firstElement = qs[0];
-
-
-            this.fieldNames = this._getPropertyNames(firstElement);
-            if (numResults > 1) {
-                qs = qs[0];
-            }
 
             var dataType = this._detectType(firstElement);
             this._queueData = data.queue;
 
             // hanfle according to type
             if (dataType == 'object') {
+
+                this.fieldNames = this._getPropertyNames(firstElement);
                 this.drawObjectGrid();
-                // console.log(this.fieldNames);
-                // console.log(this._queueData);
             }
         },
 
@@ -158,7 +141,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         // 
 
         gridUpdater:function(index) {
-
             var self = this;
 
             // fetch field, queue and chart instance from active objects array
@@ -171,7 +153,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
             //console.log(this.gridContainerWidth);
             index += 1;
-
             if (index >= this.objectRegister.activeObjects.length) {
                 index = 0;
             }
@@ -187,7 +168,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         updateSingleObject:function(field, queue, chartInstance) {
             var self = this;
-
             new Ajax.Request('/webapi/queuetree/?method=GET&queue=' + queue + '&size=' + this.fetchSize, {
                 method: 'get',
                 onSuccess: function(transport) {
@@ -195,22 +175,14 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                     self.updateSingleObjectHandler(field, queue, chartInstance, transport.responseJSON);
                 }
             });
-
         },
 
         updateSingleObjectHandler:function(field, queue, chartInstance, data) {
-
             //fetch data
             var canvasElement = $(chartInstance.canvas.ctx.canvas.id);
             var canvasContainer = canvasElement.parentNode;
             var fieldData = getFieldData(field, data);
-
             var containerWidth = canvasContainer.getWidth();
-            //var canvasWidth = canvasElement.getWidth();
-
-
-
-            //console.log('container width: '+containerWidth+' canvas width: '+canvasWidth+'  new width: '+newWidth)
 
             //resize canvas to fit container
             canvasElement.width = containerWidth - 3;
@@ -224,7 +196,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         },
 
 
-
         registerNewObject:function(field, queue, container) {
 
             var canvasId = 'graph-canvas-' + container;
@@ -234,21 +205,16 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 'canvasID':canvasId,
                 'tooltip':'scatter-tooltip',
                 'type':'bars',
-
                 'xTitle':'time',
                 'yTitle':field
-
             });
 
             var self = this;
             $(canvasId).observe('click', function(event) {
                 var elem = event.element();
                 self.switchType(elem.id);
-
             });
             this.objectRegister.activeObjects.push([field,queue,container,instance,canvasId]);
-
-
         },
 
         switchType:function(containerId) {
@@ -293,8 +259,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                             self._view(transport.responseJSON);
                         }
                     });
-
-
                 }
             }
         },
@@ -329,43 +293,32 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 }
             });
 
-
             var timeoutFunc = function() {
                 self._repeatObjectView();
             }
 
             this.API.timers.refreshViewTimer = setTimeout(timeoutFunc, 2000);
-
-
         },
 
         _view:function(data) {
-
             //get the first element of queue and try to resolve type
-
             var qs = [];
             var numResults = data.queue.header.results.totalResults;
-            qs.push(data.queue.response.queueElements.val);
+            var entries=data.queue.response.queueElements.entry;
+
+            entries.each(function(entry){
+                qs.push(entry.val);
+            });
 
             var firstElement = false;
-
             if (numResults == 1) {
-                firstElement = qs[0];
+                firstElement = qs;
             }
-
-            if (numResults > 1) {
-                qs = qs[0];
-            }
-
             firstElement = qs[0];
 
-
             this.fieldNames = this._getPropertyNames(firstElement);
-            if (numResults > 1) {
-                qs = qs[0];
-            }
-
             var dataType = this._detectType(firstElement);
+
             this._queueData = data.queue;
 
             // hanfle according to type
@@ -377,10 +330,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         _viewObject:function() {
             var self = this;
-
-            //get first element to collect field names
-
-
 
             //construct select drop down with field names
             var selectHTML = '<select id="qtViewSelectField">';
@@ -405,22 +354,33 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         },
 
+
+       getComplexData:function(JSONData,container){
+            var data = [];
+            var entries=[];
+
+            entries.push(JSONData.response[container].entry);
+            if(JSONData.header.results.totalResults>1){
+                entries=entries[0];
+            }
+            entries.each(function(entry){
+                data.push(entry.val);
+            });
+
+            return data;
+        },
+
         _drawObjectGraph:function() {
             $('graph-canvas').width = this.API.screenWidth - 40;
             $('graph-canvas').height = '160';
 
             var self = this;
             var data = [];
-            var qs = [];
-            qs.push(this._queueData.response.queueElements.val);
-            if (this._queueData.header.results.totalResults > 1) {
-                qs = qs[0];
-            }
+            var qs=this.getComplexData(this._queueData,'queueElements');
 
             qs.each(function(element) {
                 data.push(element[self.fieldToDraw]);
             });
-
 
             var graph = new ChartEngine({
                 'canvasID':'graph-canvas',
@@ -431,20 +391,19 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             });
 
             graph.drawGraph();
-
         },
 
         _selectFieldNameHandler:function() {
 
             this.fieldToDraw = $('qtViewSelectField').value;
-            clearTimeout(this.viewTimer);
+            this.API.stopTimers();
             this._repeatObjectView();
         },
 
         _selectSizeChange:function() {
             var field = $('fetchSizeSelect').value;
             this.fetchSize = parseInt(field);
-            clearTimeout(this.viewTimer);
+            this.API.stopTimers();
             this._repeatObjectView();
             VOIDSEARCH.VoidBase.Util.test();
         },
@@ -489,22 +448,18 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         // AJAX CALLS FOR LISTING QUEUES
         _list:function() {
+            var self=this;
             new Ajax.Request('/webapi/queuetree/?method=LIST', {
                 method: 'get',
                 onSuccess: function(transport) {
                     var resp = transport.responseJSON;
-                    var qs = [];
-                    qs.push(resp.queue.response.queueList.val);
-                    var numResults = resp.queue.header.results.totalResults;
+                    
+                    var qs = self.getComplexData(resp.queue,'queueList');
 
                     // create simple list html
                     var HTML = '<h4>Queue List</h4>';
                     HTML += '<ul class="big-list">';
 
-                    //deal with one element arrays
-                    if (numResults > 1) {
-                        qs = qs[0];
-                    }
                     //itterate array
                     qs.each(function(c) {
                         HTML += '<li><a href="#queuetree/view/?name=' + c + '">' + c + '</a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <a href="#queuetree/viewGrid/?name=' + c + '">[VIEW GRID # ]</a> </li>';
@@ -542,7 +497,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             //var q = $('q').value;
             TIMER.message("sending query");
 
-            console.log('sending');
+
             new Ajax.Request('/webapi/queuetree/?method=GET&queue=scatter&size=100', {
                 method: 'get',
                 onSuccess: function(transport) {
@@ -566,7 +521,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         },
 
         drawScatter:function(apiData) {
-            console.log(apiData);
             if (apiData.error != true) {
                 $('debug').innerHTML = '';
                 var a = new ChartEngine({

@@ -77,9 +77,7 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
         stopTimers:function(){
             try{
                 for(var i in this.timers){
-                    console.log(i);
                     clearTimeout(this.timers[i]);
-
                 }
             }catch (e){
                 console.log(e);
