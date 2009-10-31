@@ -114,9 +114,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
             // TODO move this code to the "grid generator" method
             var tableHTML = '<table class="gridTable">';
-            tableHTML += '<tr><td id="gf_a1" class="gf bbt">a1</td><td id="gf_b1" class="gf bet">b1</td><td id="gf_bc1" class="gf bet">c1</td><td id="gf_bd1" class="gf bet">d1</td></tr>';
-            tableHTML += '<tr><td id="gf_a2" class="gf bbb">a2</td><td id="gf_b2" class="gf beb">b2</td><td id="gf_bc2" class="gf beb">c2</td><td id="gf_bd2" class="gf beb">d2</td></tr>';
-            tableHTML += '<tr><td id="gf_a3" class="gf bbb">a3</td><td id="gf_b3" class="gf beb">b3</td><td id="gf_bc3" class="gf beb">c3</td><td id="gf_bd3" class="gf beb">d3</td></tr>';
+            tableHTML += '<tr><td id="gf_a1" class="gf bbt"></td><td id="gf_b1" class="gf bet"></td><td id="gf_bc1" class="gf bet"></td><td id="gf_bd1" class="gf bet"></td></tr>';
+            tableHTML += '<tr><td id="gf_a2" class="gf bbb"></td><td id="gf_b2" class="gf beb"></td><td id="gf_bc2" class="gf beb"></td><td id="gf_bd2" class="gf beb"></td></tr>';
+            tableHTML += '<tr><td id="gf_a3" class="gf bbb"></td><td id="gf_b3" class="gf beb"></td><td id="gf_bc3" class="gf beb"></td><td id="gf_bd3" class="gf beb"></td></tr>';
             tableHTML += '</table><div id="gridCtrl"><input type="button" value="&laquo;" id="gridSizeReduce"/><input type="button" value="&raquo;" id="gridSizeIncrease"/></div>';
             $('qtView').innerHTML = tableHTML;
 
