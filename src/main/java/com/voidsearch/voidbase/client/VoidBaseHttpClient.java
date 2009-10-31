@@ -24,7 +24,10 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public abstract class VoidBaseHttpClient implements VoidBaseClient {
 
@@ -50,13 +53,21 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
         GetMethod method = new GetMethod(query);
         method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,new DefaultHttpMethodRetryHandler(3, false));
 
-        byte[] responseBody = null;
+        StringBuilder sb = new StringBuilder();
+
+        // TODO : add a content dependent fetch
 
         try {
             int statusCode = client.executeMethod(method);
 
             if (statusCode == HttpStatus.SC_OK) {
-                responseBody = method.getResponseBody();
+                InputStreamReader is = new InputStreamReader(method.getResponseBodyAsStream());
+                BufferedReader in = new BufferedReader(is);
+
+                String line = null;
+                while((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
             }
 
         } catch (HttpException e) {
@@ -67,7 +78,7 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
             method.releaseConnection();
         }
 
-        return responseBody;
+        return (sb.toString()).getBytes();
 
     }
 

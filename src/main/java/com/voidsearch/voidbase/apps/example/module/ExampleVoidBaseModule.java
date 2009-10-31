@@ -30,7 +30,7 @@ public class ExampleVoidBaseModule implements VoidBaseModule {
     public void initialize(String name) throws VoidBaseModuleException {
 
         ExampleVoidBaseStorage storage = new ExampleVoidBaseStorage();
-        supervisor.register(storage);
+        //supervisor.register(storage);
 
     }
 

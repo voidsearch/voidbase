@@ -11,3 +11,5 @@ viz engine
 
 queuetree browser : http://localhost:8080/files/webapi.html#queuetree/list
 
+sample data loader: mvn -Dtest=SimpleFeedqLoaderTest test
+
