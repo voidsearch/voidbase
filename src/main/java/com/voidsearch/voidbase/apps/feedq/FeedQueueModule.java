@@ -31,6 +31,7 @@ import com.voidsearch.voidbase.core.VoidBaseResourceRegister;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class FeedQueueModule extends Thread implements VoidBaseModule {
 
@@ -85,7 +86,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
         while (true) {
 
             for (ResourceCluster cluster : resources) {
-
                 try {
                     if (!queue.queueExists(cluster.getName())) {
                         queue.createQueue(cluster.getName(),100);
@@ -95,23 +95,11 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                 }
 
                 for (String resource : cluster.resources()) {
-
                     try {
                         byte[] newContent = fetchContent(resource);
-
                         if (contentQueue.containsKey(resource)) {
-
                             byte[] oldContent = contentQueue.get(resource);
-
-                            int delta = 0;
-
-                            if (!Arrays.equals(oldContent, newContent)) {
-                                //delta = getDelta(oldContent, newContent);
-                                delta = 1;
-                            }
-
-                            cluster.setStat(resource,delta);
-
+                            cluster.setStat(resource,getDelta(oldContent,newContent));
                         }
                         contentQueue.put(resource, newContent);
                     } catch (Exception e) {
@@ -161,7 +149,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
         return 0;
     }
 
-
     private static byte[] fetchContent(String resource) throws Exception {
 
         FeedFetcher fetcher = FeedFetcherFactory.getFetcher(resource);
@@ -172,7 +159,11 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
         }
 
     }
+    
+    private static int getDelta() {
+        return 1;
 
+    }
 
 
 }
