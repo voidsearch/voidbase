@@ -39,7 +39,7 @@ public class CacheModule implements VoidBaseModule {
     protected VoidBaseConfig config = null;
     protected ConcurrentHashMap<String, VoidBaseCache> handlers = new ConcurrentHashMap<String, VoidBaseCache>();
     
-    protected static final String CONFIG_PATH = "CacheModule";
+    protected static final String CONFIG_PATH = "cache";
     protected static final VoidBaseResponseType DEFAULT_TYPE = VoidBaseResponseType.TEXT;
 
     protected static final Logger logger = LoggerFactory.getLogger(VoidBaseModule.class.getName());

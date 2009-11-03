@@ -34,7 +34,10 @@ public class MessagePersistenceStore extends VoidBaseCache {
     BDBStorage storage = BDBStorage.getInstance();
     
     protected static MessagePersistenceStore instance = null;
-    protected static final String STORE = "messages";
+
+    protected static final String STORE = "messages";                   // default store name
+    protected static final String DEFAULT_STORE_PATH = "./data/store";  // default store path, in case one is missing in configuration
+                                                                        // basically makes sense only to bootstrap cache usage
 
     /**
      * Creates a new instance of a MessagePersistenceStore
@@ -69,10 +72,10 @@ public class MessagePersistenceStore extends VoidBaseCache {
      */
     protected synchronized void initializeStore() throws CacheException {
         String store = config.getString(name, "storage");
-
+       
         if (store == null) {
-            logger.error("Failed to initialize storage - storage not set for MessagePersistenceStore");
-            throw new CacheException("STORE not set for MessagePersistenceStore");
+            logger.warn("storage path not set using default path: " + DEFAULT_STORE_PATH);
+            store = DEFAULT_STORE_PATH;
         }
 
         try {

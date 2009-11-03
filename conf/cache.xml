@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config>
-    <CacheModule>
+
+    <!-- global cache handlers configuration -->
+    <cache>
         <default_handler>store</default_handler>
 
         <handlers>
             <store>com.voidsearch.voidbase.apps.cache.module.MessagePersistenceStore</store>
         </handlers>
-    </CacheModule>
+    </cache>
 
+    <!-- individual handlers configuration -->
     <MessagePersistenceStore>
-        <storage>/Data/tmp/messages</storage>
-
+        <storage>/data/messages</storage>
+        
         <operations>
             <GET lock="none"/>
             <PUT lock="atomic"/>

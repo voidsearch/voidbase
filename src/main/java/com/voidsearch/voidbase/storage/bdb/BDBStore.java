@@ -43,6 +43,10 @@ public class BDBStore {
     public BDBStore(String name, String path) throws StorageException {
         Environment env;
 
+        // create path recursively if it doesn't exist
+        createPath(path);
+
+        // open BDB store
         envConfig.setAllowCreate(true);
         envConfig.setSharedCache(true);
         storeConfig.setAllowCreate(true);
@@ -124,5 +128,19 @@ public class BDBStore {
             throw new StorageException("Failed to flush database: " + e.getMessage());
         }
 
+    }
+
+    protected void createPath(String path) throws StorageException {
+        File dir = new File(path);
+
+        // check if resource exists and is it a dir
+        if (dir.exists()) {
+            if (!dir.isDirectory()) {
+                throw new StorageException("Path " + path + " exists but resource is not directory.");
+            }
+        }
+        else if (!dir.mkdirs()) {
+            throw new StorageException("Failed to create directory: " + path);
+        }
     }
 }

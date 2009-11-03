@@ -76,11 +76,11 @@ simple configuration
             <resource>webapi</resource>
          </WebAPIModule>
 
-        <Cache>
+        <CacheModule>
             <class>com.voidsearch.voidbase.apps.cache.CacheModule</class>
             <status>active</status>
             <resource>cache</resource>
-         </Cache>
+         </CacheModule>
 
         <FeedQModule>
             <class>com.voidsearch.voidbase.apps.feedq.FeedQueueModule</class>
