@@ -16,9 +16,8 @@
 
 package com.voidsearch.voidbase.storage.distributed.message;
 
-public class ContentMessage extends Message {
-
-    public void process(byte[] content) throws MessageProcessorException {
-            
+public class MessageProcessorException extends Exception {
+    public MessageProcessorException(String message) {
+        super(message);
     }
 }

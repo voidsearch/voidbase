@@ -16,6 +16,16 @@
 
 package com.voidsearch.voidbase.storage.distributed.message;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public abstract class Message implements MessageProcessor {
-    
+
+    public Message() {
+        throw new NotImplementedException();
+    }
+
+    public Message(byte[] content) throws MessageProcessorException {
+        process(content);
+    }
+  
 }

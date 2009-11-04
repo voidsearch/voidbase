@@ -17,5 +17,7 @@
 package com.voidsearch.voidbase.storage.distributed.message;
 
 public interface MessageProcessor {
+
+    public void process(byte[] message) throws MessageProcessorException;
     
 }
