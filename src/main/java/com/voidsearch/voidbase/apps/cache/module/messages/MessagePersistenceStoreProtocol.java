@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.voidsearch.voidbase.apps.cache.module;
+package com.voidsearch.voidbase.apps.cache.module.messages;
 
 import com.voidsearch.voidbase.protocol.VoidBaseProtocol;
 import com.voidsearch.voidbase.protocol.VoidBaseOperationType;
