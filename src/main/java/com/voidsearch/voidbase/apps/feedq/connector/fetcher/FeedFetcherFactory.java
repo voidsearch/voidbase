@@ -18,6 +18,12 @@ package com.voidsearch.voidbase.apps.feedq.connector.fetcher;
 
 public class FeedFetcherFactory {
 
+    /**
+     * factor fetcher for a given resource
+     *
+     * @param resource
+     * @return
+     */
     public static FeedFetcher getFetcher(String resource) {
 
         int pivot = resource.indexOf(ResourceType.RESOURCE_DELIMITER);

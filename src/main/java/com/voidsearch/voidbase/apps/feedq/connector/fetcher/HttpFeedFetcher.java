@@ -17,14 +17,22 @@
 
 package com.voidsearch.voidbase.apps.feedq.connector.fetcher;
 
+import com.voidsearch.voidbase.apps.feedq.resource.FeedResource;
+import com.voidsearch.voidbase.apps.feedq.resource.FeedResourceFactory;
 import com.voidsearch.voidbase.client.VoidBaseHttpClient;
 
 
 public class HttpFeedFetcher extends VoidBaseHttpClient implements FeedFetcher {
 
-
-    public byte[] fetch(String resource) throws Exception {
-        return fetch(resource, Integer.MAX_VALUE);
+    /**
+     * get default-size byte array from the given resource
+     *
+     * @param resource  resource to fetch
+     * @return
+     * @throws Exception
+     */
+    public byte[] fetchRaw(String resource) throws Exception {
+        return fetchRaw(resource, Integer.MAX_VALUE);
     }
 
     /**
@@ -35,8 +43,22 @@ public class HttpFeedFetcher extends VoidBaseHttpClient implements FeedFetcher {
      * @return
      */
 
-    public byte[] fetch(String resource, int size) throws Exception {
+    public byte[] fetchRaw(String resource, int size) throws Exception {
         return get(resource);
     }
+
+    /**
+     *
+     *
+     * @param resource
+     * @return
+     * @throws Exception
+     */
+    public FeedResource fetch(String resourceName) throws Exception {
+        byte[] rawContent = get(resourceName);
+        return FeedResourceFactory.getResource(resourceName, rawContent);
+    }
+
+
 
 }
