@@ -16,6 +16,7 @@
 
 package com.voidsearch.voidbase.apps.feedq;
 
+import com.voidsearch.voidbase.apps.feedq.resource.FeedResource;
 import com.voidsearch.voidbase.module.VoidBaseModule;
 import com.voidsearch.voidbase.module.VoidBaseModuleException;
 import com.voidsearch.voidbase.module.VoidBaseModuleResponse;
@@ -42,7 +43,7 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
 
     VoidBaseResourceRegister resourceRegister = VoidBaseResourceRegister.getInstance();
     private LinkedList<ResourceCluster> resources = new LinkedList<ResourceCluster>();
-    private HashMap<String, byte[]> contentQueue = new HashMap<String, byte[]>();
+    private HashMap<String, FeedResource> contentQueue = new HashMap<String, FeedResource>();
 
     private Object contentLock;
 
@@ -61,7 +62,7 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
             }
             resources.add(cluster);
         }
-        
+
     }
 
     public VoidBaseModuleResponse handle(VoidBaseModuleRequest request) throws VoidBaseModuleException {
@@ -96,12 +97,13 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
 
                 for (String resource : cluster.resources()) {
                     try {
-                        byte[] newContent = fetchContent(resource);
-                        if (contentQueue.containsKey(resource)) {
-                            byte[] oldContent = contentQueue.get(resource);
-                            cluster.setStat(resource,getDelta(oldContent,newContent));
+                        FeedFetcher fetcher = FeedFetcherFactory.getFetcher(resource);
+                        FeedResource newResource = fetcher.fetch(resource);
+                       if (contentQueue.containsKey(resource)) {
+                            FeedResource oldResource = contentQueue.get(resource);
+                            cluster.setStat(resource, newResource.getDelta(oldResource));
                         }
-                        contentQueue.put(resource, newContent);
+                        contentQueue.put(resource, newResource);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -147,22 +149,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
             }
         }
         return 0;
-    }
-
-    private static byte[] fetchContent(String resource) throws Exception {
-
-        FeedFetcher fetcher = FeedFetcherFactory.getFetcher(resource);
-        if (fetcher != null) {
-          return fetcher.fetch(resource,DIFF_WINDOW_SIZE);
-        } else {
-            return null;
-        }
-
-    }
-    
-    private static int getDelta() {
-        return 1;
-
     }
 
 
