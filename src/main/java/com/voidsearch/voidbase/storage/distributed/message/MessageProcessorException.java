@@ -16,5 +16,8 @@
 
 package com.voidsearch.voidbase.storage.distributed.message;
 
-public class MessageProcessorException {
+public class MessageProcessorException extends Exception {
+    public MessageProcessorException(String message) {
+        super(message);
+    }
 }
