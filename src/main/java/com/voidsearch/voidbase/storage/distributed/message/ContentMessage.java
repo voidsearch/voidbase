@@ -16,5 +16,5 @@
 
 package com.voidsearch.voidbase.storage.distributed.message;
 
-public class ContentMessage {
+public class ContentMessage extends Message {
 }

@@ -16,5 +16,8 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.strategy;
 
-public class StrategyException {
+public class StrategyException extends Exception {
+    public StrategyException(String message) {
+        super(message);
+    }
 }

@@ -16,5 +16,6 @@
 
 package com.voidsearch.voidbase.storage.distributed.message;
 
-public class Message {
+public abstract class Message implements MessageProcessor {
+    
 }

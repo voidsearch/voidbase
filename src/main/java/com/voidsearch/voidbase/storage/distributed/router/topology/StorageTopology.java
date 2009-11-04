@@ -16,5 +16,49 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.topology;
 
+import com.voidsearch.voidbase.storage.distributed.router.strategy.Strategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.ConcurrentHashMap;
+
 public class StorageTopology {
+    protected static Strategy strategy = null;
+    protected static StorageTopology topology = null;
+    protected static final ConcurrentHashMap<String, StorageNode> nodes = new ConcurrentHashMap<String, StorageNode>();
+
+    protected static final Logger logger = LoggerFactory.getLogger(StorageTopology.class.getName());
+
+    protected StorageTopology() {
+        super();
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
+    public static synchronized StorageTopology getInstance() {
+        if (topology == null) {
+            topology = new StorageTopology();
+        }
+
+        return topology;
+    }
+
+    public synchronized void addNode(StorageNode node) throws StorageTopologyException {
+        if (node == null) {
+            throw new StorageTopologyException("Invalid node object.");
+        }
+        if (node.id == null || node.id < 0) {
+            throw new StorageTopologyException("Invalid node ID.");
+        }
+        if (node.name == null) {
+            throw new StorageTopologyException("Invalid node name.");
+        }
+        if (nodes.containsKey(node.name)) {
+            throw new StorageTopologyException("Node with name " + node.name + " already exists.");
+        }
+
+        nodes.put(node.name, node);
+    }
 }

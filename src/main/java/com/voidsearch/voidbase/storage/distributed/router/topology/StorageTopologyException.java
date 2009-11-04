@@ -16,5 +16,8 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.topology;
 
-public class StorageTopologyException {
+public class StorageTopologyException extends Exception {
+    public StorageTopologyException(String message) {
+        super(message);
+    }
 }

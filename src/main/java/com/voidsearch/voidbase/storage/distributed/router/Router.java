@@ -16,4 +16,5 @@ package com.voidsearch.voidbase.storage.distributed.router;
  */
 
 public interface Router {
+
 }

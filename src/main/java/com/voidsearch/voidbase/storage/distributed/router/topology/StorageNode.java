@@ -17,4 +17,49 @@
 package com.voidsearch.voidbase.storage.distributed.router.topology;
 
 public class StorageNode {
+
+    // node params
+    protected Integer id = null;
+    protected String name = null;
+
+    // network params
+    protected String ip = null;
+    protected String hostname = null;
+
+    public StorageNode(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public void setID(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getID() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setIP (String ip) {
+        this.ip = ip;
+    }
+
+    public String getIP() {
+        return ip;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
 }

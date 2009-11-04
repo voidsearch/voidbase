@@ -16,5 +16,26 @@
 
 package com.voidsearch.voidbase.storage.distributed;
 
+import com.sleepycat.je.DatabaseException;
+import com.sleepycat.je.Environment;
+import com.sleepycat.persist.EntityStore;
+import com.voidsearch.voidbase.storage.StorageException;
+import com.voidsearch.voidbase.storage.bdb.BDBRecord;
+import com.voidsearch.voidbase.storage.bdb.BDBStorage;
+import com.voidsearch.voidbase.util.GenericUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+
 public class DistributedStore {
+    protected static final Logger logger = LoggerFactory.getLogger(BDBStorage.class.getName());
+
+    public DistributedStore(String name, String path) throws StorageException {
+        
+    }
+
+    public void close() throws StorageException {
+        
+    }
 }

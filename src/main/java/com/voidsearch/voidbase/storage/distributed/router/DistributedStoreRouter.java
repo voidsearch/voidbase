@@ -16,5 +16,32 @@
 
 package com.voidsearch.voidbase.storage.distributed.router;
 
-public class DistributedStoreRouter {
+import com.voidsearch.voidbase.storage.distributed.DistributedStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class DistributedStoreRouter implements Router {
+    protected static DistributedStoreRouter storage = null;
+    protected static final Logger logger = LoggerFactory.getLogger(DistributedStoreRouter.class.getName());
+
+    protected DistributedStoreRouter() {
+        super();
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
+    public static synchronized DistributedStoreRouter getInstance() {
+        if (storage == null) {
+            storage = new DistributedStoreRouter();
+        }
+
+        return storage;
+    }
+
+    
 }

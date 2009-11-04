@@ -16,5 +16,27 @@
 
 package com.voidsearch.voidbase.apps.cache.module.distributed;
 
-public class DistributedPersistenceStoreProtocol {
+import com.voidsearch.voidbase.protocol.VoidBaseOperationType;
+import com.voidsearch.voidbase.protocol.VoidBaseProtocol;
+
+public class DistributedPersistenceStoreProtocol extends VoidBaseProtocol {
+
+    /**
+     * Creates a new instance of a MessagePersistenceStoreProtocol
+     */
+    public DistributedPersistenceStoreProtocol() { }
+
+    // module-specific protocol params
+    public static final String KEY = "key";
+    public static final String CONTENT = "content";
+    public static final String METHOD = "method";
+    public static final String HANDLER = "handler";
+
+    // required params rules
+    static {
+        requiredParams.put(VoidBaseOperationType.GET, new String[]    {KEY, METHOD, HANDLER});
+        requiredParams.put(VoidBaseOperationType.PUT, new String[]    {KEY, CONTENT, METHOD, HANDLER});
+        requiredParams.put(VoidBaseOperationType.DELETE, new String[] {KEY, METHOD, HANDLER});
+        requiredParams.put(VoidBaseOperationType.FLUSH, new String[]  {METHOD, HANDLER});
+    }
 }

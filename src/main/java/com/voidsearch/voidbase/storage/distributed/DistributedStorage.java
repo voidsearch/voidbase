@@ -16,5 +16,55 @@
 
 package com.voidsearch.voidbase.storage.distributed;
 
+import com.voidsearch.voidbase.storage.StorageException;
+import com.voidsearch.voidbase.storage.bdb.BDBStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class DistributedStorage {
+    protected static DistributedStorage storage = null;
+    protected Map<String, DistributedStore> stores = new ConcurrentHashMap<String, DistributedStore>();
+    protected static final Logger logger = LoggerFactory.getLogger(DistributedStorage.class.getName());
+
+    protected DistributedStorage() {
+        super();
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
+    public static synchronized DistributedStorage getInstance() {
+        if (storage == null) {
+            storage = new DistributedStorage();
+        }
+
+        return storage;
+    }
+
+    public synchronized void open(String name, String path) throws StorageException {
+        if (name == null || stores.containsKey(name))
+            return;
+
+        stores.put(name, new DistributedStore(name, path));
+    }
+
+    public synchronized void close(String name) throws StorageException {
+        if (name == null || !stores.containsKey(name))
+            return;
+
+        stores.get(name).close();
+    }
+
+    public Boolean isOpened(String name) {
+        if (name == null)
+            return false;
+
+        return stores.containsKey(name);
+    }
+
+
 }

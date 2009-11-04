@@ -16,5 +16,40 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.nio;
 
-public class RouterSocketClientHandler {
+import org.jboss.netty.channel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@ChannelPipelineCoverage("one")
+public class RouterSocketClientHandler extends SimpleChannelUpstreamHandler {
+    private static final Logger logger = LoggerFactory.getLogger(RouterSocketClientHandler.class.getName());
+
+    // properties
+    private volatile Channel channel;
+
+    @Override
+    public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
+        if (e instanceof ChannelStateEvent) {
+            logger.info(e.toString());
+        }
+        
+        super.handleUpstream(ctx, e);
+    }
+
+    @Override
+    public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        channel = e.getChannel();
+        super.channelOpen(ctx, e);
+    }
+
+    @Override
+    public void messageReceived(ChannelHandlerContext ctx, final MessageEvent e) {
+        byte[] message = (byte[])e.getMessage();
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+        logger.error("Unexpected exception from downstream.", e.getCause());
+        e.getChannel().close();
+    }
 }

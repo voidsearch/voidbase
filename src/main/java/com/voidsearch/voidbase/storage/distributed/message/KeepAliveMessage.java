@@ -16,5 +16,5 @@
 
 package com.voidsearch.voidbase.storage.distributed.message;
 
-public class KeepAliveMessage {
+public class KeepAliveMessage extends Message {
 }

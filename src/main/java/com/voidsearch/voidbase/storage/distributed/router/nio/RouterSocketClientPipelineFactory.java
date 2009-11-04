@@ -16,5 +16,33 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.nio;
 
-public class RouterSocketClientPipelineFactory {
+import org.jboss.netty.channel.ChannelHandler;
+import org.jboss.netty.channel.ChannelPipeline;
+import org.jboss.netty.channel.ChannelPipelineFactory;
+import static org.jboss.netty.channel.Channels.pipeline;
+import org.jboss.netty.handler.codec.frame.LengthFieldBasedFrameDecoder;
+import org.jboss.netty.handler.codec.string.StringDecoder;
+import org.jboss.netty.handler.codec.string.StringEncoder;
+
+public class RouterSocketClientPipelineFactory implements ChannelPipelineFactory {
+    private final ChannelHandler handler;
+    private static final Integer MAX_FRAME_SIZE = 8192;
+
+    public RouterSocketClientPipelineFactory(ChannelHandler handler) {
+        this.handler = handler;
+    }
+
+    public ChannelPipeline getPipeline() throws Exception {
+        ChannelPipeline pipeline = pipeline();
+
+        // Add the text line codec combination first,
+        pipeline.addLast("framer", new LengthFieldBasedFrameDecoder(MAX_FRAME_SIZE, 2, 3, 0, 0));
+        pipeline.addLast("decoder", new StringDecoder());
+        pipeline.addLast("encoder", new StringEncoder());
+
+        // and then business logic.
+        pipeline.addLast("handler", handler);
+
+        return pipeline;
+    }
 }

@@ -6,7 +6,8 @@
         <default_handler>store</default_handler>
 
         <handlers>
-            <store>com.voidsearch.voidbase.apps.cache.module.MessagePersistenceStore</store>
+            <store>com.voidsearch.voidbase.apps.cache.module.messages.MessagePersistenceStore</store>
+            <distributed>com.voidsearch.voidbase.apps.cache.module.messages.DistributedPersistenceStore</distributed>
         </handlers>
     </cache>
 
@@ -21,4 +22,35 @@
             <FLUSH lock="global"/>
         </operations>
     </MessagePersistenceStore>
+
+    <DistributedPersistenceStore>
+
+        <!-- I/O interface type -->
+        <io>async</io>
+
+        <!-- list of allowed operations that will be routed -->
+        <operations>
+            <GET lock="none"/>
+            <PUT lock="atomic"/>
+            <DELETE lock="atomic"/>
+            <FLUSH lock="global"/>
+        </operations>
+
+        <!-- routing strategy configuratioan -->
+        <routing>
+            <class>com.voidsearch.voidbase.storage.distributed.router.strategy.DistributedHashRingStrategy</class>
+        </routing>
+
+        <!-- static node configuration -->
+        <nodes>
+            <node1>
+                <url>store://localhost:22222</url>
+                <storage>/data/distributed/messages/node1</storage>
+            </node1>
+            <node2>
+                <url>store://localhost:22222</url>
+                <storage>/data/distributed/messages/node2</storage>
+            </node2>
+        </nodes>
+    </DistributedPersistenceStore>
 </config>

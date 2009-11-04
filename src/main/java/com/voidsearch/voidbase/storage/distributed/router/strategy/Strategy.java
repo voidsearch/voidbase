@@ -16,5 +16,5 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.strategy;
 
-public class Strategy {
+public interface Strategy {
 }
