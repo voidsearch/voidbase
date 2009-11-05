@@ -104,7 +104,6 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                         if (contentQueue.containsKey(resource)) {
                             FeedResource oldResource = contentQueue.get(resource);
                             LinkedList<ResourceEntry> delta = newResource.getDelta(oldResource);
-                            System.out.println("PUSH DELTA : " + delta);
                             cluster.setStat(resource, delta.size());
                         }
                         contentQueue.put(resource, newResource);
