@@ -16,9 +16,22 @@
 
 package com.voidsearch.voidbase.apps.feedq.metric;
 
+import com.voidsearch.voidbase.apps.feedq.resource.ResourceEntry;
+
+import java.util.LinkedList;
+
 public interface ResourceMetric {
 
 
+    /**
+     * get difference between two lists of entries
+     *
+     * @param oldEntries
+     * @param newEntries
+     * @return
+     */
+    public LinkedList<ResourceEntry> getDelta(LinkedList<ResourceEntry> oldEntries,
+                                              LinkedList<ResourceEntry> newEntries);
 
 
 }

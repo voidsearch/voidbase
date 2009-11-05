@@ -16,8 +16,39 @@
 
 package com.voidsearch.voidbase.apps.feedq.metric;
 
+import com.voidsearch.voidbase.apps.feedq.resource.ResourceEntry;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public class SimpleMetric implements ResourceMetric {
 
-    
+    /**
+     * get simple difference between two resource lists
+     * 
+     * @param oldEntries
+     * @param newEntries
+     * @return
+     */
+    public LinkedList<ResourceEntry> getDelta(LinkedList<ResourceEntry> oldEntries,
+                                              LinkedList<ResourceEntry> newEntries) {
+
+        LinkedList<ResourceEntry> result = new LinkedList<ResourceEntry>();
+        ResourceEntry lastEntry = oldEntries.getLast();
+
+        Iterator it = newEntries.descendingIterator();
+        while (it.hasNext()) {
+            ResourceEntry entry = (ResourceEntry)it.next();
+            if (!entry.equals(lastEntry)) {
+                result.add(entry);
+            } else {
+                break;
+            }
+        }
+
+        return result;
+
+    }
+
 
 }

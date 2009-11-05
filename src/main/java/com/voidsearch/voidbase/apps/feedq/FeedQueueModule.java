@@ -29,6 +29,7 @@ import com.voidsearch.voidbase.apps.feedq.resource.ResourceCluster;
 import com.voidsearch.voidbase.apps.queuetree.module.QueueTreeModule;
 import com.voidsearch.voidbase.core.VoidBaseResourceRegister;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -101,7 +102,7 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                         FeedResource newResource = fetcher.fetch(resource);
                        if (contentQueue.containsKey(resource)) {
                             FeedResource oldResource = contentQueue.get(resource);
-                            cluster.setStat(resource, newResource.getDelta(oldResource));
+                            cluster.setStat(resource, (newResource.getDelta(oldResource)).size());
                         }
                         contentQueue.put(resource, newResource);
                     } catch (Exception e) {

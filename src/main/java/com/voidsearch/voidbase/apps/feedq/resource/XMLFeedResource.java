@@ -18,34 +18,86 @@ package com.voidsearch.voidbase.apps.feedq.resource;
 
 import com.voidsearch.voidbase.apps.feedq.metric.ResourceMetric;
 import com.voidsearch.voidbase.apps.feedq.metric.SimpleMetric;
-import org.w3c.dom.Document;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.util.LinkedList;
 
 public abstract class XMLFeedResource implements FeedResource {
 
-    public XMLFeedResource() {
-        
-    }
+    private LinkedList<ResourceEntry> resourceEntries = new LinkedList<ResourceEntry>();
+    XMLInputFactory factory = XMLInputFactory.newInstance();
 
-    protected Document xmlDocument;
+    private String ENTRY_DELIMITER = "entry";
 
-    protected XMLFeedResource(byte[] content) {
-        System.out.println("INIT FROM CONTENT ");
+    protected XMLFeedResource(byte[] content, String entryDelimiter) {
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            xmlDocument = db.parse(new ByteArrayInputStream(content));
-        } catch (Exception e) {
-            e.printStackTrace();
+            setDelimiter(entryDelimiter);
+            deserialize(content);
+        } catch (ResourceDeserializationException e) {
         }
     }
 
-    public int getDelta(FeedResource resource) {
+    protected void setDelimiter(String delimiter) {
+        this.ENTRY_DELIMITER = delimiter;
+    }
+
+    /**
+     * deserialize via simple stax pull loop
+     * 
+     * @param content
+     * @throws ResourceDeserializationException
+     */
+    public void deserialize(byte[] content) throws ResourceDeserializationException {
+        try {
+
+            XMLStreamReader parser = factory.createXMLStreamReader(new ByteArrayInputStream(content));
+
+            String currentTagValue = "";
+            ResourceEntry currentEntry = new ResourceEntry();
+
+            for (int event = parser.next();
+                event != XMLStreamConstants.END_DOCUMENT; event = parser.next()) {
+                switch (event) {
+                    case XMLStreamConstants.END_DOCUMENT:
+                        parser.close();
+                        break;
+                    case XMLStreamConstants.CHARACTERS:
+                        currentTagValue = parser.getText();
+                        break;                    
+                    case XMLStreamConstants.START_ELEMENT:
+                        break;
+                    case XMLStreamConstants.END_ELEMENT:
+                        currentEntry.put(parser.getLocalName(), currentTagValue);
+                        if (parser.getLocalName().equals(ENTRY_DELIMITER)) {
+                            resourceEntries.add(currentEntry);
+                            currentEntry = new ResourceEntry();
+                        }
+                        break;
+                }
+            }
+
+        } catch (Exception e) {
+            System.exit(1);
+            e.printStackTrace();
+            throw new ResourceDeserializationException();
+        }
+    }
+
+
+    public LinkedList<ResourceEntry> getEntries() {
+        return resourceEntries;
+    }
+
+    public LinkedList<ResourceEntry> getDelta(FeedResource resource) {
         return getDelta(resource, new SimpleMetric());
     }
-    
+
+    public LinkedList<ResourceEntry> getDelta(FeedResource resource,ResourceMetric metric) {
+        return metric.getDelta(resourceEntries, resource.getEntries());
+    }
+
+
 }

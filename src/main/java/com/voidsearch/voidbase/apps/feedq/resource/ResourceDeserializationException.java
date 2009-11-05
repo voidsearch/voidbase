@@ -16,9 +16,10 @@
 
 package com.voidsearch.voidbase.apps.feedq.resource;
 
-public class FeedResourceFactory {
+public class ResourceDeserializationException extends Exception {
 
-    public static FeedResource getResource(String resource, byte[] rawContent) {
-        return new GoogleNewsFeed(rawContent);
+    public ResourceDeserializationException() {
+        super("ResourceDeserializationException");
     }
+    
 }

@@ -18,27 +18,15 @@ package com.voidsearch.voidbase.apps.feedq.resource;
 
 import com.voidsearch.voidbase.apps.feedq.metric.ResourceMetric;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class GoogleNewsFeed extends XMLFeedResource {
 
     Random rnd = new Random();
 
-    public GoogleNewsFeed() {
-        
-    }
-
     protected GoogleNewsFeed(byte[] content) {
-        super(content);
-    }
-
-    public GoogleNewsFeed deserialize(byte[] content) {
-        return new GoogleNewsFeed(content);
-    }
-
-    public int getDelta(FeedResource resource, ResourceMetric metric) {
-        System.out.println(this.xmlDocument);
-        return rnd.nextInt(10);
+        super(content,"item");
     }
 
 }

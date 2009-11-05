@@ -121,12 +121,8 @@ simple configuration
 
          <!-- news feeds -->
         <news>
-            <top>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dh%26output%3Drss</top>
-            <world>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dt%26output%3Drss</world>
-            <biz>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Db%26output%3Drss</biz>
-            <tech>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dt%26output%3Drss</tech>
-            <sports>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dm%26output%3Drss</sports>
-            <health>http://news.google.com%2Fnews%3Fned%3Dus%26topic%3Dm%26output%3Drss</health>
+            <all>http://www.financemarkets.co.uk/news/all/feed/</all>
+            <news>http://www.financemarkets.co.uk/feed/</news>
         </news>
 
     </FeedQResources>
