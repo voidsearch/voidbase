@@ -16,7 +16,6 @@
 
 package com.voidsearch.voidbase.storage.distributed.router.topology;
 
-import com.voidsearch.voidbase.storage.distributed.router.topology.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ public class ConnectionPool {
 
     public void addConnection(String name, String host, Integer port) {
         if (connections.containsKey(name)) {
-            logger.warn("Coannection " + name + " already exists, skipping...");
+            logger.warn("Connection " + name + " already exists, skipping...");
             return;
         }
 
