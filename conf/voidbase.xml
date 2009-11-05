@@ -86,7 +86,7 @@ simple configuration
             <class>com.voidsearch.voidbase.apps.feedq.FeedQueueModule</class>
             <status>active</status>
             <resource>feedq</resource>
-            <pollInterval>10000</pollInterval>
+            <pollInterval>1000</pollInterval>
             <diffWindowByteSize>4096</diffWindowByteSize>
          </FeedQModule>
 
