@@ -27,7 +27,7 @@ import java.util.LinkedList;
 
 public abstract class XMLFeedResource implements FeedResource {
 
-    private LinkedList<ResourceEntry> entries = new LinkedList<ResourceEntry>();
+    private LinkedList<ResourceEntry> resourceEntries = new LinkedList<ResourceEntry>();
     XMLInputFactory factory = XMLInputFactory.newInstance();
 
     private String ENTRY_DELIMITER = "entry";
@@ -72,7 +72,7 @@ public abstract class XMLFeedResource implements FeedResource {
                     case XMLStreamConstants.END_ELEMENT:
                         currentEntry.put(parser.getLocalName(), currentTagValue);
                         if (parser.getLocalName().equals(ENTRY_DELIMITER)) {
-                            entries.add(currentEntry);
+                            resourceEntries.add(currentEntry);
                             currentEntry = new ResourceEntry();
                         }
                         break;
@@ -86,8 +86,18 @@ public abstract class XMLFeedResource implements FeedResource {
         }
     }
 
-    public int getDelta(FeedResource resource) {
+
+    public LinkedList<ResourceEntry> getEntries() {
+        return resourceEntries;
+    }
+
+    public LinkedList<ResourceEntry> getDelta(FeedResource resource) {
         return getDelta(resource, new SimpleMetric());
     }
-    
+
+    public LinkedList<ResourceEntry> getDelta(FeedResource resource,ResourceMetric metric) {
+        return metric.getDelta(resourceEntries, resource.getEntries());
+    }
+
+
 }

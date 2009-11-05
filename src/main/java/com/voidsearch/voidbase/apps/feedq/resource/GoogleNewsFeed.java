@@ -18,6 +18,7 @@ package com.voidsearch.voidbase.apps.feedq.resource;
 
 import com.voidsearch.voidbase.apps.feedq.metric.ResourceMetric;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class GoogleNewsFeed extends XMLFeedResource {
@@ -26,10 +27,6 @@ public class GoogleNewsFeed extends XMLFeedResource {
 
     protected GoogleNewsFeed(byte[] content) {
         super(content,"item");
-    }
-
-    public int getDelta(FeedResource resource, ResourceMetric metric) {
-        return rnd.nextInt(10);
     }
 
 }

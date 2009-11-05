@@ -52,4 +52,21 @@ public class ResourceEntry {
         return sb.toString();
     }
 
+    /**
+     * get hash of the resource content
+     * 
+      * @return
+     */
+    public long getResourceHash() {
+        long hash = 0;
+        for (String key : entryContent.keySet()) {
+            hash+=entryContent.get(key).hashCode()%31;
+        }
+        return hash;
+    }
+
+    public boolean equals(ResourceEntry entry) {
+        return (getResourceHash() == entry.getResourceHash());
+    }
+
 }

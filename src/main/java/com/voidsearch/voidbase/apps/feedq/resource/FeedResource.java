@@ -18,6 +18,8 @@ package com.voidsearch.voidbase.apps.feedq.resource;
 
 import com.voidsearch.voidbase.apps.feedq.metric.ResourceMetric;
 
+import java.util.LinkedList;
+
 public interface FeedResource {
 
     /**
@@ -25,7 +27,14 @@ public interface FeedResource {
      * @param content
      * @return
      */
-    public void deserialize(byte[] content) throws ResourceDeserializationException; 
+    public void deserialize(byte[] content) throws ResourceDeserializationException;
+
+    /**
+     * return list of entries
+     * 
+     * @return
+     */
+    public LinkedList<ResourceEntry> getEntries();
 
     /**
      * get delta from other resource using default metric
@@ -33,7 +42,7 @@ public interface FeedResource {
      * @param resource
      * @return
      */
-    public int getDelta(FeedResource resource);
+    public LinkedList<ResourceEntry> getDelta(FeedResource resource);
 
 
     /**
@@ -43,6 +52,6 @@ public interface FeedResource {
      * @param metric
      * @return
      */
-    public int getDelta(FeedResource resource, ResourceMetric metric);
+    public LinkedList<ResourceEntry> getDelta(FeedResource resource, ResourceMetric metric);
 
 }
