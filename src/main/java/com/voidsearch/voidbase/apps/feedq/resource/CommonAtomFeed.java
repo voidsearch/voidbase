@@ -16,17 +16,14 @@
 
 package com.voidsearch.voidbase.apps.feedq.resource;
 
-import com.voidsearch.voidbase.apps.feedq.metric.ResourceMetric;
+public class CommonAtomFeed extends XMLFeedResource {
 
-import java.util.LinkedList;
-import java.util.Random;
+    protected CommonAtomFeed(byte[] content) {
+        super(content);
+    }
 
-public class GoogleNewsFeed extends XMLFeedResource {
-
-    Random rnd = new Random();
-
-    protected GoogleNewsFeed(byte[] content) {
-        super(content,"item");
+    protected CommonAtomFeed(byte[] content, String entryDelimiter) {
+        super(content,entryDelimiter);
     }
 
 }

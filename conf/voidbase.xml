@@ -121,9 +121,23 @@ simple configuration
 
          <!-- news feeds -->
         <news>
-            <all>http://www.financemarkets.co.uk/news/all/feed/</all>
-            <news>http://www.financemarkets.co.uk/feed/</news>
+            <!--<all>http://www.financemarkets.co.uk/news/all/feed/</all>-->
+            <!--<news>http://www.financemarkets.co.uk/feed/</news>-->
         </news>
+
+        <!-- twitter geofeed -->
+        <twitter>
+            <new_york>http://search.twitter.com/search.atom?geocode=40.709740%2C-74.003480%2C100km</new_york>
+            <london>http://search.twitter.com/search.atom?geocode=51.516700%2C-0.0833000%2C100km</london>
+            <san_francisco>http://search.twitter.com/search.atom?geocode=37.775000%2C-122.418333%2C100km</san_francisco>
+            <tokyo>http://search.twitter.com/search.atom?geocode=35.670000%2C139.770000%2C100km</tokyo>
+            <boston>http://search.twitter.com/search.atom?geocode=42.358370%2C-71.060220%2C100km</boston>
+            <chicago>http://search.twitter.com/search.atom?geocode=41.647040%2C-87.620670%2C100km</chicago>
+            <seattle>http://search.twitter.com/search.atom?geocode=47.647300%2C-122.399980%2C100km</seattle>
+            <berlin>http://search.twitter.com/search.atom?geocode=52.500000%2C13.4166667%2C100km</berlin>
+            <belgrade>http://search.twitter.com/search.atom?geocode=44.819000%2C20.46800%2C100km</belgrade>
+            <dublin>http://search.twitter.com/search.atom?geocode=53.330000%2C-6.250000%2C100km</dublin>
+        </twitter>
 
     </FeedQResources>
 

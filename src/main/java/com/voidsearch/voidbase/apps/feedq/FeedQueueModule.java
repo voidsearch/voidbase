@@ -17,6 +17,7 @@
 package com.voidsearch.voidbase.apps.feedq;
 
 import com.voidsearch.voidbase.apps.feedq.resource.FeedResource;
+import com.voidsearch.voidbase.apps.feedq.resource.ResourceEntry;
 import com.voidsearch.voidbase.module.VoidBaseModule;
 import com.voidsearch.voidbase.module.VoidBaseModuleException;
 import com.voidsearch.voidbase.module.VoidBaseModuleResponse;
@@ -57,9 +58,9 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
 
         for (String resourceCluster : VoidBaseConfiguration.getKeyList(CONF_FEED_RESOURCES)) {
             ResourceCluster cluster = new ResourceCluster(resourceCluster);
-            for (String resourceName : VoidBaseConfiguration.getKeyList(CONF_FEED_RESOURCES,resourceCluster)) {
-                String resource =  VoidBaseConfiguration.get(CONF_FEED_RESOURCES,resourceCluster,resourceName);
-                cluster.add(resourceName,resource);
+            for (String resourceName : VoidBaseConfiguration.getKeyList(CONF_FEED_RESOURCES, resourceCluster)) {
+                String resource = VoidBaseConfiguration.get(CONF_FEED_RESOURCES, resourceCluster, resourceName);
+                cluster.add(resourceName, resource);
             }
             resources.add(cluster);
         }
@@ -70,7 +71,7 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
         VoidBaseModuleResponse response = new VoidBaseModuleResponse();
 
         synchronized (contentLock) {
-             // handle content operation
+            // handle content operation
         }
 
         return response;
@@ -90,7 +91,7 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
             for (ResourceCluster cluster : resources) {
                 try {
                     if (!queue.queueExists(cluster.getName())) {
-                        queue.createQueue(cluster.getName(),100);
+                        queue.createQueue(cluster.getName(), 100);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -100,9 +101,11 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                     try {
                         FeedFetcher fetcher = FeedFetcherFactory.getFetcher(resource);
                         FeedResource newResource = fetcher.fetch(resource);
-                       if (contentQueue.containsKey(resource)) {
+                        if (contentQueue.containsKey(resource)) {
                             FeedResource oldResource = contentQueue.get(resource);
-                            cluster.setStat(resource, (newResource.getDelta(oldResource)).size());
+                            LinkedList<ResourceEntry> delta = newResource.getDelta(oldResource);
+                            System.out.println("PUSH DELTA : " + delta);
+                            cluster.setStat(resource, delta.size());
                         }
                         contentQueue.put(resource, newResource);
                     } catch (Exception e) {

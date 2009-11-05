@@ -18,7 +18,24 @@ package com.voidsearch.voidbase.apps.feedq.resource;
 
 public class FeedResourceFactory {
 
+    /**
+     * factor appropriate feed resource based on resource
+     * @param resource
+     * @param rawContent
+     * @return
+     */
     public static FeedResource getResource(String resource, byte[] rawContent) {
-        return new GoogleNewsFeed(rawContent);
+        return new CommonAtomFeed(rawContent);
     }
+
+    /**
+     * factor appropriate feed resource based on resource and given entry delimiter
+     * @param resource
+     * @param rawContent
+     * @return
+     */
+    public static FeedResource getResource(String resource, String entryDelimiter, byte[] rawContent) {
+        return new CommonAtomFeed(rawContent,entryDelimiter);
+    }
+
 }

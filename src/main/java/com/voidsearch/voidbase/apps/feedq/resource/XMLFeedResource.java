@@ -32,6 +32,13 @@ public abstract class XMLFeedResource implements FeedResource {
 
     private String ENTRY_DELIMITER = "entry";
 
+    protected XMLFeedResource(byte[] content) {
+        try {
+            deserialize(content);
+        } catch (ResourceDeserializationException e) {
+        }
+    }
+
     protected XMLFeedResource(byte[] content, String entryDelimiter) {
         try {
             setDelimiter(entryDelimiter);
