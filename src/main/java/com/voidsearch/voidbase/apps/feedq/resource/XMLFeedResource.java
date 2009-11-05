@@ -87,7 +87,6 @@ public abstract class XMLFeedResource implements FeedResource {
             }
 
         } catch (Exception e) {
-            System.exit(1);
             e.printStackTrace();
             throw new ResourceDeserializationException();
         }
