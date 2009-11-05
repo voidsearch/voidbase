@@ -7,14 +7,12 @@
 
         <handlers>
             <store>com.voidsearch.voidbase.apps.cache.module.messages.MessagePersistenceStore</store>
-            <distributed>com.voidsearch.voidbase.apps.cache.module.messages.DistributedPersistenceStore</distributed>
+            <distributed>com.voidsearch.voidbase.apps.cache.module.distributed.DistributedPersistenceStore</distributed>
         </handlers>
     </cache>
 
     <!-- individual handlers configuration -->
     <MessagePersistenceStore>
-        <storage>/data/messages</storage>
-        
         <operations>
             <GET lock="none"/>
             <PUT lock="atomic"/>
