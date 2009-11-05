@@ -86,7 +86,7 @@ simple configuration
             <class>com.voidsearch.voidbase.apps.feedq.FeedQueueModule</class>
             <status>active</status>
             <resource>feedq</resource>
-            <pollInterval>1000</pollInterval>
+            <pollInterval>10000</pollInterval>
             <diffWindowByteSize>4096</diffWindowByteSize>
          </FeedQModule>
 
@@ -127,17 +127,33 @@ simple configuration
 
         <!-- twitter geofeed -->
         <twitter>
-            <new_york>http://search.twitter.com/search.atom?geocode=40.709740%2C-74.003480%2C100km</new_york>
-            <london>http://search.twitter.com/search.atom?geocode=51.516700%2C-0.0833000%2C100km</london>
-            <san_francisco>http://search.twitter.com/search.atom?geocode=37.775000%2C-122.418333%2C100km</san_francisco>
-            <tokyo>http://search.twitter.com/search.atom?geocode=35.670000%2C139.770000%2C100km</tokyo>
-            <boston>http://search.twitter.com/search.atom?geocode=42.358370%2C-71.060220%2C100km</boston>
-            <chicago>http://search.twitter.com/search.atom?geocode=41.647040%2C-87.620670%2C100km</chicago>
-            <seattle>http://search.twitter.com/search.atom?geocode=47.647300%2C-122.399980%2C100km</seattle>
-            <berlin>http://search.twitter.com/search.atom?geocode=52.500000%2C13.4166667%2C100km</berlin>
-            <belgrade>http://search.twitter.com/search.atom?geocode=44.819000%2C20.46800%2C100km</belgrade>
-            <dublin>http://search.twitter.com/search.atom?geocode=53.330000%2C-6.250000%2C100km</dublin>
+            <new_york>http://search.twitter.com/search.atom?geocode=40.709740%2C-74.003480%2C25km</new_york>
+            <london>http://search.twitter.com/search.atom?geocode=51.516700%2C-0.0833000%2C25km</london>
+            <san_francisco>http://search.twitter.com/search.atom?geocode=37.775000%2C-122.418333%2C25km</san_francisco>
+            <tokyo>http://search.twitter.com/search.atom?geocode=35.670000%2C139.770000%2C25km</tokyo>
+            <boston>http://search.twitter.com/search.atom?geocode=42.358370%2C-71.060220%2C25km</boston>
+            <chicago>http://search.twitter.com/search.atom?geocode=41.647040%2C-87.620670%2C25km</chicago>
+            <seattle>http://search.twitter.com/search.atom?geocode=47.647300%2C-122.399980%2C25km</seattle>
+            <berlin>http://search.twitter.com/search.atom?geocode=52.500000%2C13.4166667%2C25km</berlin>
+            <belgrade>http://search.twitter.com/search.atom?geocode=44.819000%2C20.46800%2C25km</belgrade>
+            <dublin>http://search.twitter.com/search.atom?geocode=53.330000%2C-6.250000%2C25km</dublin>
         </twitter>
+
+        <!-- twitter topic query feed -->        
+        <twitter_topic>
+            <apachecon>http://search.twitter.com/search.atom?q=apachecon</apachecon>
+            <apache>http://search.twitter.com/search.atom?q=apache</apache>
+            <java>http://search.twitter.com/search.atom?q=java</java>
+            <microsoft>http://search.twitter.com/search.atom?q=microsoft</microsoft>
+            <source>http://search.twitter.com/search.atom?q=source</source>
+            <oakland>http://search.twitter.com/search.atom?q=oakland</oakland>
+            <nosql>http://search.twitter.com/search.atom?q=nosql</nosql>
+            <hadoop>http://search.twitter.com/search.atom?q=hadoop</hadoop>
+            <keynote>http://search.twitter.com/search.atom?q=keynote</keynote>
+            <ruby>http://search.twitter.com/search.atom?q=ruby</ruby>
+            <lucene>http://search.twitter.com/search.atom?q=lucene</lucene>
+            <solr>http://search.twitter.com/search.atom?q=solr</solr>
+        </twitter_topic>
 
     </FeedQResources>
 
