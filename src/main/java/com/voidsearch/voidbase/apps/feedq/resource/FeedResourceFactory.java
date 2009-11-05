@@ -19,6 +19,6 @@ package com.voidsearch.voidbase.apps.feedq.resource;
 public class FeedResourceFactory {
 
     public static FeedResource getResource(String resource, byte[] rawContent) {
-        return (new GoogleNewsFeed()).deserialize(rawContent);
+        return new GoogleNewsFeed(rawContent);
     }
 }

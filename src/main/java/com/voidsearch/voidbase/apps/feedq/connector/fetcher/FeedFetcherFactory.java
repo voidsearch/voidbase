@@ -24,7 +24,7 @@ public class FeedFetcherFactory {
      * @param resource
      * @return
      */
-    public static FeedFetcher getFetcher(String resource) {
+    public static FeedFetcher getFetcher(String resource) throws Exception {
 
         int pivot = resource.indexOf(ResourceType.RESOURCE_DELIMITER);
 
@@ -36,9 +36,12 @@ public class FeedFetcherFactory {
             else if (type.equals(ResourceType.HTTP_URI)) {
                 return new HttpFeedFetcher();
             }
+            else {
+                throw new Exception();
+            }
         }
+        throw new Exception();
 
-        return null;
     }
 
 }

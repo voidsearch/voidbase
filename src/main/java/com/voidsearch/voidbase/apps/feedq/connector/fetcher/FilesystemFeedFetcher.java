@@ -16,14 +16,16 @@
 
 package com.voidsearch.voidbase.apps.feedq.connector.fetcher;
 
+import com.voidsearch.voidbase.apps.feedq.resource.FeedResource;
+
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.File;
 
 public class FilesystemFeedFetcher implements FeedFetcher {
 
-    public byte[] fetch(String resource) throws Exception {
-        return fetch(resource, Integer.MAX_VALUE);
+    public byte[] fetchRaw(String resource) throws Exception {
+        return fetchRaw(resource, Integer.MAX_VALUE);
     }
 
     /**
@@ -34,7 +36,7 @@ public class FilesystemFeedFetcher implements FeedFetcher {
      * @return
      * @throws Exception
      */
-    public byte[] fetch(String resource, int size) throws Exception {
+    public byte[] fetchRaw(String resource, int size) throws Exception {
 
         File file = new File(getPath(resource));
 
@@ -58,6 +60,10 @@ public class FilesystemFeedFetcher implements FeedFetcher {
 
     }
 
+    public FeedResource fetch(String resource) throws Exception {
+        return null;
+    }
+    
 
     public String getPath(String resource) {
 

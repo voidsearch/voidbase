@@ -25,7 +25,7 @@ public interface FeedResource {
      * @param content
      * @return
      */
-    public FeedResource deserialize(byte[] content);
+    public void deserialize(byte[] content) throws ResourceDeserializationException; 
 
     /**
      * get delta from other resource using default metric

@@ -16,20 +16,10 @@
 
 package com.voidsearch.voidbase.apps.feedq.resource;
 
-import com.voidsearch.voidbase.apps.feedq.metric.ResourceMetric;
+public class ResourceDeserializationException extends Exception {
 
-import java.util.Random;
-
-public class GoogleNewsFeed extends XMLFeedResource {
-
-    Random rnd = new Random();
-
-    protected GoogleNewsFeed(byte[] content) {
-        super(content,"item");
+    public ResourceDeserializationException() {
+        super("ResourceDeserializationException");
     }
-
-    public int getDelta(FeedResource resource, ResourceMetric metric) {
-        return rnd.nextInt(10);
-    }
-
+    
 }
