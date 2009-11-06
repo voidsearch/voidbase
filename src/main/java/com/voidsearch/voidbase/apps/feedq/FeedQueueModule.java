@@ -141,7 +141,11 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
     public void persistToStore(LinkedList<ResourceEntry> entries, CacheModule store) {
         for (ResourceEntry entry : entries) {
             Long key = entry.getID();
-            // persist to cache module
+            try {
+                store.handle("put",key.toString(),entry.toString());
+            } catch (VoidBaseModuleException e) {
+                e.printStackTrace();                
+            }
         }
     }
 

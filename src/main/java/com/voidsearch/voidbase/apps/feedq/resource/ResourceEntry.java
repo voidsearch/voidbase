@@ -55,7 +55,7 @@ public class ResourceEntry {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (String key : entryContent.keySet()) {
-            sb.append(key).append("\t").append(entryContent.get(key)).append("\n");
+            sb.append(key).append(":").append(entryContent.get(key)).append(";");
         }
         return sb.toString();
     }
