@@ -108,6 +108,10 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                             FeedResource oldResource = contentQueue.get(resource);
                             LinkedList<ResourceEntry> delta = newResource.getDelta(oldResource);
                             cluster.setStat(resource, delta.size());
+                            persistToStore(delta,store);
+                        } else {
+                            cluster.setStat(resource,0);
+                            persistToStore(newResource.getEntries(),store);
                         }
                         contentQueue.put(resource, newResource);
                     } catch (Exception e) {
@@ -134,28 +138,11 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
         }
     }
 
-    private int getDelta(byte[] oldContent, byte[] newContent) {
-
-        if ((oldContent.length > 0) && (newContent.length > 0)) {
-            int j = 0;
-            for (int i = 0; i < newContent.length; i++) {
-                int offset = i;
-                while (newContent[i] == oldContent[j]) {
-                    i++;
-                    j++;
-                    if (j == oldContent.length) { // matched whole sequence
-                        if (offset == 0) {
-                            return (newContent.length - oldContent.length - 1);
-                        } else {
-                            return offset;
-                        }
-                    }
-                }
-                j = 0;
-            }
+    public void persistToStore(LinkedList<ResourceEntry> entries, CacheModule store) {
+        for (ResourceEntry entry : entries) {
+            Long key = entry.getID();
+            // persist to cache module
         }
-        return 0;
     }
-
 
 }
