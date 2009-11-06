@@ -16,6 +16,7 @@
 
 package com.voidsearch.voidbase.apps.cache;
 
+import com.voidsearch.voidbase.apps.cache.containers.CacheResponse;
 import com.voidsearch.voidbase.module.*;
 import com.voidsearch.voidbase.config.VoidBaseConfig;
 import com.voidsearch.voidbase.config.ConfigException;
@@ -135,6 +136,76 @@ public class CacheModule implements VoidBaseModule {
 
         return new VoidBaseModuleResponse(value.text, VoidBaseResponseStatus.OK, VoidBaseResponseType.TEXT);
     }
+
+    /**
+     * Handler for all cache requests which are further proxied down to specific cache handler
+     * @param method
+     * @param key
+     * @param content
+     * @return
+     * @throws VoidBaseModuleException
+     */
+    public CacheResponse handle(String method, String key, String content) throws VoidBaseModuleException {
+        return handle(defaultHandler, method, null, key, content);
+    }
+
+
+    /**
+     * Handler for all cache requests which are further proxied down to specific cache handler
+     * @param handler
+     * @param method
+     * @param key
+     * @param content
+     * @return
+     * @throws VoidBaseModuleException
+     */
+    public CacheResponse handle(String handler, String method, String key, String content) throws VoidBaseModuleException {
+        return handle(handler, method, null, key, content);    
+    }
+
+    /**
+     * Handler for all cache requests which are further proxied down to specific cache handler
+     * @param handler
+     * @param method
+     * @param name
+     * @param key
+     * @param content
+     * @return
+     * @throws VoidBaseModuleException
+     */
+    public CacheResponse handle(String handler, String method, String name, String key, String content) throws VoidBaseModuleException {
+        CacheModuleLockStrategy lockStrategy = new CacheModuleLockStrategy();
+
+        if (handler == null) {
+            return new CacheResponse(new CacheValue("Unknown handler"), CacheResponseStatus.ERROR);
+        }
+        if (method == null) {
+            return new CacheResponse(new CacheValue("Unknown operation"), CacheResponseStatus.ERROR);
+        }
+        if (!handlers.containsKey(handler)) {
+            return new CacheResponse(new CacheValue("Unknown handler " + handler), CacheResponseStatus.ERROR);
+        }
+
+        // initialize handler
+        VoidBaseCache cache = (VoidBaseCache)handlers.get(handler).clone();
+
+        // check if valid method
+        if (!cache.isRegistered(method)) {
+            return new CacheResponse(new CacheValue("Unknown method " + method + " for handler " + handler),
+                                     CacheResponseStatus.ERROR);
+        }
+
+        try {
+            return new CacheResponse(lockStrategy.execute(cache, method, name, key, content),
+                                     CacheResponseStatus.OK);
+        } catch (CacheException e) {
+            logger.error("Cache Exception - " + e.getMessage());
+            GenericUtil.logException(e);
+
+            return new CacheResponse(new CacheValue("Error - " + e.getMessage()), CacheResponseStatus.INTERNAL_ERROR);
+        }
+    }
+    
 
     /**
      * Currently just logs when CacheModule starts

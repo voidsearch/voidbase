@@ -75,6 +75,10 @@ public class DistributedPersistenceStore extends VoidBaseCache {
                               String key,
                               String value) throws CacheException
     {
+        return process(method, null, key, value);
+    }
+
+    public CacheValue process(String method, String name, String key, String value) throws CacheException {
         CacheValue result;
         VoidBaseOperationType type = VoidBaseOperationType.deserialize(method);
 

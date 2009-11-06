@@ -79,6 +79,42 @@ public class CacheModuleLockStrategy {
     }
 
     /**
+     * Executes cache operation with respect to operation's atomicity and proxies
+     * it down to specific executors (atomic, global lock, etc.)
+     * @param handler
+     * @param operation
+     * @param name
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
+    protected CacheValue execute(VoidBaseCache handler,
+                                 String operation,
+                                 String name,
+                                 String key,
+                                 String value) throws CacheException
+    {
+        CacheLockType lockType = handler.getLockType(operation);
+
+        try {
+            if (lockType == CacheLockType.ATOMIC)
+                return executeAtomicLockOperation(handler, operation, name, key, value);
+            if (lockType == CacheLockType.GLOBAL)
+                return executeGlobalLockOperation(handler, operation, name, key, value);
+            if (lockType == CacheLockType.NONE || lockType == CacheLockType.DEFAULT)
+                return executeOperation(handler, operation, name, key, value);
+        } catch (InterruptedException e) {
+            logger.error("Operation interrupted: " + operation);
+            GenericUtil.logException(e);
+
+            throw new CacheException("Operation interrupted: " + operation);
+        }
+
+        throw new CacheException("Cache execute lock strategy failed - unknown lock type");
+    }
+
+    /**
      * Executes atomic operation on cache
      * @param handler
      * @param operation
@@ -97,8 +133,7 @@ public class CacheModuleLockStrategy {
                                                     String key, String value) throws CacheException, InterruptedException
     {
         CacheValue result;
-        Long started = System.currentTimeMillis() / 1000;
-
+        
         // create lock
         synchronized(locks) {
             if (!locks.containsKey(key)) {
@@ -123,6 +158,49 @@ public class CacheModuleLockStrategy {
     }
 
     /**
+     * Executes atomic operation on cache
+     * @param handler
+     * @param operation
+     * @param name
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     * @throws InterruptedException
+     */
+    protected synchronized CacheValue executeAtomicLockOperation(VoidBaseCache handler,
+                                                                 String operation,
+                                                                 String name,
+                                                                 String key,
+                                                                 String value) throws CacheException, InterruptedException
+    {
+        CacheValue result;
+        
+        // create lock
+        synchronized(locks) {
+            if (!locks.containsKey(key)) {
+                locks.put(key, new ReentrantLock());
+            }
+        }
+
+        // execute operation
+        locks.get(key).lock();
+        try {
+            result = handler.process(operation, name, key, value);
+        } finally {
+            synchronized(locks) {
+                if (locks.containsKey(key)) {
+                    locks.get(key).unlock();
+                    locks.remove(key);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    /**
      * Executes globally locked operation on cache
      * @param handler
      * @param operation
@@ -137,12 +215,28 @@ public class CacheModuleLockStrategy {
                                                     String operation,
                                                     List<String> route,
                                                     Map<String, String> params,
-                                                    String key, String value) throws CacheException
+                                                    String key,
+                                                    String value) throws CacheException
     {
         CacheValue result;
 
         synchronized(handler) {
             result = handler.process(operation, route, params, key, value);
+        }
+
+        return result;
+    }
+
+    protected CacheValue executeGlobalLockOperation(VoidBaseCache handler,
+                                                    String operation,
+                                                    String name,
+                                                    String key,
+                                                    String value) throws CacheException
+    {
+        CacheValue result;
+
+        synchronized(handler) {
+            result = handler.process(operation, name, key, value);
         }
 
         return result;
@@ -166,5 +260,24 @@ public class CacheModuleLockStrategy {
                                           String key, String value) throws CacheException
     {
         return handler.process(operation, route, params, key, value);
+    }
+
+    /**
+     * Executes operation on cache without any locking
+     * @param handler
+     * @param operation
+     * @param name
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
+    protected CacheValue executeOperation(VoidBaseCache handler,
+                                          String operation,
+                                          String name,
+                                          String key,
+                                          String value) throws CacheException
+    {
+        return handler.process(operation, name, key, value);
     }
 }

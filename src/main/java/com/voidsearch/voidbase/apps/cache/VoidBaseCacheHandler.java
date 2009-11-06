@@ -25,5 +25,6 @@ import java.util.Map;
  * Interface for VoidBaseCache handlers
  */
 public interface VoidBaseCacheHandler {
+    public CacheValue process(String method, String name, String key, String value) throws CacheException;
     public CacheValue process(String method, List<String> route, Map<String, String> params, String key, String value) throws CacheException;
 }

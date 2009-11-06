@@ -105,6 +105,19 @@ public class MessagePersistenceStore extends VoidBaseCache {
                               String key,
                               String value) throws CacheException
     {
+        return process(method, null, key, value);
+    }
+
+    /**
+     *
+     * @param method
+     * @param name
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
+    public CacheValue process(String method, String name, String key, String value) throws CacheException {
         CacheValue result;
         VoidBaseOperationType type = VoidBaseOperationType.deserialize(method);
 
