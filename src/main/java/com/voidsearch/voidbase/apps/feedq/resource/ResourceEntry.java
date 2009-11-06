@@ -17,10 +17,18 @@
 package com.voidsearch.voidbase.apps.feedq.resource;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ResourceEntry {
 
+    private static AtomicLong resourceCnt = new AtomicLong(0);
+    private long resourceID;
+
     private HashMap<String, String> entryContent = new HashMap<String, String>();
+
+    public ResourceEntry() {
+        resourceID = resourceCnt.incrementAndGet();
+    }
 
     /**
      * add a tag value to resource content
@@ -67,6 +75,11 @@ public class ResourceEntry {
 
     public boolean equals(ResourceEntry entry) {
         return (getResourceHash() == entry.getResourceHash());
+    }
+
+
+    public long getID() {
+        return resourceID;
     }
 
 }

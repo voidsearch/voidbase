@@ -16,6 +16,7 @@
 
 package com.voidsearch.voidbase.apps.feedq;
 
+import com.voidsearch.voidbase.apps.cache.CacheModule;
 import com.voidsearch.voidbase.apps.feedq.resource.FeedResource;
 import com.voidsearch.voidbase.apps.feedq.resource.ResourceEntry;
 import com.voidsearch.voidbase.module.VoidBaseModule;
@@ -50,6 +51,7 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
     private Object contentLock;
 
     private QueueTreeModule queue;
+    private CacheModule store;
 
     public void initialize(String name) throws VoidBaseModuleException {
 
@@ -79,9 +81,10 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
 
     public void run() {
 
-        // blocking wait for queue to be initialized
+        // blocking wait for queue and cache to be initialized
         try {
             queue = (QueueTreeModule) resourceRegister.getHandlerBlocking("queuetree");
+            store = (CacheModule) resourceRegister.getHandlerBlocking("cache");
         } catch (Exception e) {
             e.printStackTrace();
         }
