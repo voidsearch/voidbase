@@ -266,7 +266,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var instance = new ChartEngine({
                 'canvasID':canvasId,
                 'tooltip':'scatter-tooltip',
-                'type':'line',
+                'type':'bars',
                 'xTitle':'time',
                 'yTitle':field
             });
