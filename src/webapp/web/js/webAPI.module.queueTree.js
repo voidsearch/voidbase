@@ -134,7 +134,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             
             this.globalScopeMax=0;
             this.globalScopeMin=0;
-            this.normalizeGraphs=true;
+            this.normalizeGraphs=$('normalizeGraphs').checked;
 
             // start grid updater, start from the first element
             this.gridUpdater(0);
