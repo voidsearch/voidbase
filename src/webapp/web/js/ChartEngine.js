@@ -29,8 +29,11 @@ var ChartEngine = Class.create({
         this.axisOpacity = 1;
         this.paddingFactor = 0.00;
         this.drawMinMaxLines = false;
+        this.forceScope=false;
+        this.forceMaxValue=0;
+        this.forceMinValue=0;
         this.scatterChunkSize = 1000;
-
+        this.updated=false;
         // init canvas
         this.canvas = new Visuals(options.canvasID);
         this.canvasWidth = this.canvas.containerWidth;
@@ -333,10 +336,19 @@ var ChartEngine = Class.create({
         this.yMin = this.options.chartData.min();
         this.xMax = this.options.chartData.length;
         this.yMax = this.options.chartData.max();
-
+        
+        if(this.forceScope){
+            this.yMax=this.forceMaxValue;
+            this.yMin=this.forceMinValue;
+        }
 
         if (this.yMax == this.yMin && this.yMax != 0) {
             this.yMin = 0;
+        }
+        
+        if (this.yMax == this.yMin && this.yMax == 0) {
+            this.yMin = 0;
+            this.yMax = 2;
         }
 
         this.xscope = this.xMax - this.xMin;

@@ -111,14 +111,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         drawObjectGrid:function() {
             var self = this;
             this.gridContainerWidth = $('qtView').getWidth() - (4 * 8);
-
-            // TODO move this code to the "grid generator" method
-            var tableHTML = '<table class="gridTable">';
-            tableHTML += '<tr><td id="gf_a1" class="gf bbt"></td><td id="gf_b1" class="gf bet"></td><td id="gf_bc1" class="gf bet"></td><td id="gf_bd1" class="gf bet"></td></tr>';
-            tableHTML += '<tr><td id="gf_a2" class="gf bbb"></td><td id="gf_b2" class="gf beb"></td><td id="gf_bc2" class="gf beb"></td><td id="gf_bd2" class="gf beb"></td></tr>';
-            tableHTML += '<tr><td id="gf_a3" class="gf bbb"></td><td id="gf_b3" class="gf beb"></td><td id="gf_bc3" class="gf beb"></td><td id="gf_bd3" class="gf beb"></td></tr>';
-            tableHTML += '</table><div id="gridCtrl"><input type="button" value="&laquo;" id="gridSizeReduce"/><input type="button" value="&raquo;" id="gridSizeIncrease"/></div>';
-            $('qtView').innerHTML = tableHTML;
+            
+            $('qtView').innerHTML = VOIDSEARCH.VoidBase.WebAPI.templates.gridTable;
 
             var availableGridFields = $$('td.gf');
             this.maxCellSize = this.gridContainerWidth / 4;
@@ -126,11 +120,21 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 cell.style.width = self.maxCellSize + 'px';
 
             });
+            
+            $('normalizeGraphs').observe('click',function(event){
+                var element = event.element();
+                self.normalizeGraphs=element.checked;
+                self.redrawAllGraphs();
+            });
 
             var feedName = this._queueData.response.queueMetadata.name;
             this.fieldNames.each(function(field, index) {
                 self.registerNewObject(field, feedName, availableGridFields[index].id);
             });
+            
+            this.globalScopeMax=0;
+            this.globalScopeMin=0;
+            this.normalizeGraphs=true;
 
             // start grid updater, start from the first element
             this.gridUpdater(0);
@@ -156,7 +160,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             if (index >= this.objectRegister.activeObjects.length) {
                 index = 0;
             }
-
+            
+            
             //calculate and apply timeout
             var timeout = defaultObjectRefreshRate / this.objectRegister.activeObjects.length;
             var timeoutFunc = function () {
@@ -183,19 +188,76 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var canvasContainer = canvasElement.parentNode;
             var fieldData = getFieldData(field, data);
             var containerWidth = canvasContainer.getWidth();
-
+            var scopeChanged=false; 
+            
+            if(this.normalizeGraphs){
+                scopeChanged=this.setGlobalScope(fieldData);
+            }
             //resize canvas to fit container
             canvasElement.width = containerWidth - 3;
             canvasElement.height = 150;
-
+            
+            if(this.normalizeGraphs){
+                chartInstance.forceScope=true;
+                chartInstance.forceMaxValue=this.globalScopeMax;
+                chartInstance.forceMinValue=this.globalScopeMin;
+            }        
+            
             // redraw 
-            chartInstance.options.chartData = fieldData;
-            chartInstance.resetGraph();
-            chartInstance.drawGraph();
+            if(!scopeChanged){
+                chartInstance.options.chartData = fieldData;
+                chartInstance.updated=true;
+                chartInstance.resetGraph();
+                chartInstance.drawGraph();
+            }else{
+                chartInstance.options.chartData = fieldData;
+                chartInstance.updated=true;
+                this.redrawAllGraphs();
+            }
 
         },
 
+        setGlobalScope:function(data){
+            var max=data.max();
+            var min=data.min();
+            var scopeChanged=false;
+            
+            if(max > this.globalScopeMax) {
+                this.globalScopeMax=max;
+                scopeChanged=true;
+            }
+            
+            if(min < this.globalScopeMin) {
+                this.globalScopeMin=min;
+                scopeChanged=true;
+            }
+            
+            return scopeChanged;
+        },
+        
+        redrawAllGraphs:function(){
+            
+            var self=this;
+            this.objectRegister.activeObjects.each(function(elm) {
+                
+                var chartInstance=elm[3];
+                
+                chartInstance.forceScope=self.normalizeGraphs;
 
+                if(self.normalizeGraphs){
+                    chartInstance.forceMaxValue=self.globalScopeMax;
+                    chartInstance.forceMinValue=self.globalScopeMin;
+                }
+                 
+                if(chartInstance.updated){
+                    chartInstance.resetAndRedraw();
+                    
+                }
+            });    
+            
+        },
+        
+        
         registerNewObject:function(field, queue, container) {
 
             var canvasId = 'graph-canvas-' + container;
@@ -204,7 +266,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var instance = new ChartEngine({
                 'canvasID':canvasId,
                 'tooltip':'scatter-tooltip',
-                'type':'bars',
+                'type':'line',
                 'xTitle':'time',
                 'yTitle':field
             });
