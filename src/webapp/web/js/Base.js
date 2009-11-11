@@ -16,31 +16,97 @@
 
 // BASE
 VOIDSEARCH = {};
-VOIDSEARCH.VoidBase={};
 
-
-
-
-// UTIL MODULE
-VOIDSEARCH.VoidBase.Util=function(){
-    // private variables
-    var DEFAULT_PATTERN_IMAGE='/files/img/pattern_bg_200px.png';
-
+VOIDSEARCH.VoidBase = function() {
     return{
-        addGrid:function(elementId){
-            var element=$(elementId);
-            if(element.style.background==""){
-                element.style.background="url('"+DEFAULT_PATTERN_IMAGE+"')";
-            }else{
-                element.style.background='';
+        extend:function(destination, source) {
+            for (var property in source) {
+                destination[property] = source[property];
             }
+            destination._observers = destination._observers || {};
+            return destination;
+        }
+    };
+}();
+
+VOIDSEARCH.Events = function() {
+    return{
+        addObserver:function(eventName, observer) {
+            this._observers[eventName] = this._observers[eventName] || [];
+            this._observers[eventName].push(observer)
         },
 
-        test:function(){
+        notify:function(eventName) {
+            var args = $A(arguments).slice(1);
 
-            console.log('hello from test');
-            
+            try {
+                for (var i = 0; i < this._observers[eventName].length; ++i)
+                    this._observers[eventName][i].apply(this._observers[eventName][i], args);
+            } catch(e) {
+                if (e == $break)
+                    return false;
+                else
+                    throw e;
+            }
+        }
+    };
+}();
+
+// CORE
+VOIDSEARCH.VoidBase.Core = function() {
+    return{
+        observers:[],
+
+        //get JSON data
+        AJAXGetJSON:function(url, callback) {
+            new Ajax.Request(url, {
+                method: 'get',
+                onSuccess: function(transport) {
+                    var data = transport.responseJSON;
+                    callback(data);
+                }
+            });
+        },
+
+        // get data by AJAX call and return as plain text
+        AJAXGet:function(url, callback) {
+            new Ajax.Request(url, {
+                method: 'get',
+                onSuccess: function(transport) {
+                    var data = transport.responseText;
+                    callback(data);
+                }
+            });
         }
     };
 
 }();
+
+
+// UTIL MODULE
+VOIDSEARCH.VoidBase.Util = function() {
+    // private variables
+    var DEFAULT_PATTERN_IMAGE = '/files/img/pattern_bg_200px.png';
+
+    return{
+        addGrid:function(elementId) {
+            var element = $(elementId);
+            if (element.style.background == "") {
+                element.style.background = "url('" + DEFAULT_PATTERN_IMAGE + "')";
+            } else {
+                element.style.background = '';
+            }
+        },
+
+        test:function() {
+
+            console.log('hello from test');
+
+        }
+    };
+
+}();
+
+
+
+VOIDSEARCH.VoidBase.extend(VOIDSEARCH.VoidBase.Core, VOIDSEARCH.Events);

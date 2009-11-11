@@ -20,15 +20,36 @@
 
 VOIDSEARCH.VoidBase.WebAPI=function(){
     return {
-
+        baseNode:'main-ajax-content',
         modules: {},
         timers:{},
+        core:VOIDSEARCH.VoidBase.Core,  
 
         init: function () {
             this.app = {};
+            var self=this;
+            this.templates=VOIDSEARCH.VoidBase.Views.loadTemplates({
+                onAllLoaded:function(){
+                    //wait fot all templates to be loaded
+                    self.registerListeners();
+                    self.parseURI();
+                },
 
-            this.uri = "[*******]";
-            this.parseURI();
+                onFailure:function(){
+                    //@todo add error handling for missing templates
+                }
+            });
+        },
+
+        registerListeners:function(){
+            var self=this;
+
+            // QUEUE TREE MODULE EVENTS
+            this.addObserver('queueTree:fetchQueueList',function(){
+                self.core.AJAXGetJSON('/webapi/queuetree/?method=LIST', function(data) {
+                    VOIDSEARCH.VoidBase.WebAPI.modules.queuetree.listHandler(data);
+                });
+            });
         },
 
         parseURI: function () {
@@ -178,19 +199,10 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
 
         },
 
-        includeTemplate:function(targetElement, templatePath, callbackFunction) {
-            var self = this;
-            new Ajax.Request(templatePath, {
-                method: 'get',
-                onSuccess: function(transport) {
-                    var ret = transport.responseText;
-                    $(targetElement).innerHTML = ret;
-                    if (callbackFunction != null) {
-                        callbackFunction();
-                    }
-                    self.parseIncludes(targetElement);
-                }
-            });
+        includeTemplate:function(targetElement, templateName) {
+            $(targetElement).innerHTML = VOIDSEARCH.VoidBase.Views.templates[templateName];
+            this.parseIncludes(targetElement);
+
         },
         requiresNode:function(nodeId, moduleReference) {
             var contains = false;
@@ -228,6 +240,7 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
     };
 }();
 
+VOIDSEARCH.VoidBase.extend(VOIDSEARCH.VoidBase.WebAPI,VOIDSEARCH.Events);
 
 //
 // home module
@@ -240,7 +253,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.home = {
 
     // home action that shows welcome text
     defaultAction: function (params) {
-        this.API.includeTemplate($('main-ajax-content'), '/files/html/webapi/homeTemplate.html');
+        $('main-ajax-content').innerHTML=VOIDSEARCH.VoidBase.Views.templates['homeTemplate']
     }
 }
 
@@ -263,7 +276,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.modules = function(){
         },
 
         defaultAction: function (params) {
-            this.API.includeTemplate($('main-ajax-content'), '/files/html/webapi/modulesTemplate.html');
+            $('main-ajax-content').innerHTML=VOIDSEARCH.VoidBase.Views.templates['modulesTemplate'];
         }
     };
 }();
@@ -330,3 +343,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.test = function() {
 
 
 
+$$('li.menu').each(function(liElement){
+    liElement.hide();
+});
