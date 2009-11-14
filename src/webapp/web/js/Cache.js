@@ -16,17 +16,26 @@
 
 VOIDSEARCH.VoidBase.Cache = function() {
     //private properties and methods
+    //@todo this shold be passed by engine, somehow
+    var cacheHost='http://localhost:8080';
 
-
+    var Core=VOIDSEARCH.VoidBase.Core;
     //public properties and methods
     return{
 
-        get:function(key){
-
+        get:function(key,callback){
+            var url=cacheHost+'/cache?handler=store&method=get&key='+key
+            Core.AJAXGet(url,function(data){
+                callback(data);        
+            });
 
         },
 
         post:function(key, value){
+
+        },
+
+        flush:function(key){
 
         },
 
