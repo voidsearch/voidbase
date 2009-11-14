@@ -28,14 +28,14 @@ VOIDSEARCH.VoidBase.Cache = function() {
     return{
 
         get:function(key,callback){
-            var url=protocol+cacheHost+cachePort+'/cache?handler=store&method=get&key='+key
+            var url=protocol+cacheHost+cachePort+'/cache?handler=store&method=get&key='+key;
             Core.AJAXGet(url,function(data){
                 callback(data);        
             });
         },
 
         put:function(key, value,callback){
-            var url=protocol+cacheHost+cachePort++'/cache?handler=store&method=put&key='+key
+            var url=protocol+cacheHost+cachePort++'/cache?handler=store&method=put&key='+key;
             Core.AJAXPostBody(url,value,function(data){
                 callback(data);
             });
