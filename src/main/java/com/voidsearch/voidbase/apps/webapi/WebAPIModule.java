@@ -65,11 +65,13 @@ public class WebAPIModule implements VoidBaseModule {
     }
 
     private void generateJavascriptConfig(){
-
+        //get port from config file
         String port = VoidBaseConfiguration.get(Config.GLOBAL, Config.DISPATCHER, Config.PORT);
 
+        //generate file content
         StringBuilder sb=new StringBuilder();
-        sb.append("VOIDSEARCH.VoidBase.Config=function(){\n")
+        sb.append("// do not write any new code here, see Config.README for details\n")
+        .append("VOIDSEARCH.VoidBase.Config=function(){\n")
                 .append("\treturn{\n")
                 .append("\t\thostName:'localhost',\n")  //@todo add hostname  to config
                 .append("\t\tprotocol:'http://',\n")    //@todo add protocol  to config
@@ -78,6 +80,7 @@ public class WebAPIModule implements VoidBaseModule {
                 .append("}();");
 
         try {
+            //write to file
 			BufferedWriter out = new BufferedWriter(new FileWriter(jsConfigPath));
             out.write(sb.toString());
             out.close();
