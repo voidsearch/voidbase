@@ -31,8 +31,11 @@ VOIDSEARCH.VoidBase.Cache = function() {
 
         },
 
-        post:function(key, value){
-
+        put:function(key, value,callback){
+            var url=cacheHost+'/cache?handler=store&method=put&key='+key
+            Core.AJAXPostBody(url,function(data){
+                callback(data);
+            });
         },
 
         flush:function(key){
