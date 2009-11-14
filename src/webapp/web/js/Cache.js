@@ -17,7 +17,7 @@
 VOIDSEARCH.VoidBase.Cache = function() {
     //private properties and methods
     //@todo this shold be passed by engine, somehow
-    var cacheHost='http://192.168.2.203:8080';
+    var cacheHost='http://localhost:8080';
 
     var Core=VOIDSEARCH.VoidBase.Core;
     //public properties and methods
@@ -33,7 +33,7 @@ VOIDSEARCH.VoidBase.Cache = function() {
 
         put:function(key, value,callback){
             var url=cacheHost+'/cache?handler=store&method=put&key='+key
-            Core.AJAXPostBody(url,function(data){
+            Core.AJAXPostBody(url,value,function(data){
                 callback(data);
             });
         },

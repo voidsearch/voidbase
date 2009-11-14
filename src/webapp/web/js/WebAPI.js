@@ -23,7 +23,8 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
         baseNode:'main-ajax-content',
         modules: {},
         timers:{},
-        core:VOIDSEARCH.VoidBase.Core,  
+        core:VOIDSEARCH.VoidBase.Core,
+        cache:VOIDSEARCH.VoidBase.Cache,
 
         init: function () {
             this.app = {};
@@ -33,6 +34,7 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
                     //wait fot all templates to be loaded
                     self.registerListeners();
                     self.parseURI();
+                    self.cache.put('VoidSearch.WebAPI.message','All OK!, starting Web API!',function(){});
                 },
 
                 onFailure:function(){
