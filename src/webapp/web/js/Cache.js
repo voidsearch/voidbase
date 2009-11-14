@@ -15,39 +15,37 @@
  */
 
 VOIDSEARCH.VoidBase.Cache = function() {
-    //private properties and methods
-    //@todo this shold be passed by engine, somehow
-    var cacheHost='http://localhost:8080';
 
+    //private properties and methods
+    var cacheHost=VOIDSEARCH.VoidBase.Config.hostName;
+    var cachePort=VOIDSEARCH.VoidBase.Config.port;
+    var protocol=VOIDSEARCH.VoidBase.Config.protocol;
     var Core=VOIDSEARCH.VoidBase.Core;
+
     //public properties and methods
     return{
 
         get:function(key,callback){
-            var url=cacheHost+'/cache?handler=store&method=get&key='+key
+            var url=protocol+cacheHost+cachePort+'/cache?handler=store&method=get&key='+key
             Core.AJAXGet(url,function(data){
                 callback(data);        
             });
-
         },
 
         put:function(key, value,callback){
-            var url=cacheHost+'/cache?handler=store&method=put&key='+key
+            var url=protocol+cacheHost+cachePort++'/cache?handler=store&method=put&key='+key
             Core.AJAXPostBody(url,value,function(data){
                 callback(data);
             });
         },
 
         flush:function(key){
-
+            // @todo implement this
         },
 
 
         readMetadata:function(key){
-
-
+            // @todo implement this
         }
-
-
     };
 }();
