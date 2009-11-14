@@ -22,6 +22,8 @@ VOIDSEARCH.VoidBase.Cache = function() {
     var protocol=VOIDSEARCH.VoidBase.Config.protocol;
     var Core=VOIDSEARCH.VoidBase.Core;
 
+    //NOTE: VOIDSEARCH.VoidBase.Config is dynamicaly created during voidbase engine init
+
     //public properties and methods
     return{
 
