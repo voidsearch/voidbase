@@ -1,76 +1,81 @@
 VOIDSEARCH.VoidBase.Views=function(){
-    // private variables
 
-    
-        
+    // private variables
+    var templateSources=[
+        {
+            url:'/files/html/webapi/homeTemplate.html',
+            name:'homeTemplate'
+        },
+        {
+            url:'/files/html/webapi/modulesTemplate.html',
+            name:'modulesTemplate'
+        },
+        {
+            url:'/files/html/webapi/queueTreeDebugSplatter.html',
+            name:'queueTreeDebugSplatter'
+        },
+        {
+            url:'/files/html/webapi/queueTreeMenu.html',
+            name:'queueTreeMenu'
+        },
+        {
+            url:'/files/html/webapi/queueTreeStats.html',
+            name:'queueTreeStats'
+        },
+        {
+            url:'/files/html/webapi/queuetreeTemplate.html',
+            name:'queueTreeTemplate'
+        },
+        {
+            url:'/files/html/webapi/gridTable.html',
+            name:'gridTable'
+        },
+        {
+            url:'/files/html/webapi/queueTreeNewGrid.html',
+            name:'queueTreeNewGrid'
+        }    
+
+    ];
+
+    //public methods
     return{
         templates:{},
-        totalTemplates:7,
+        totalTemplates:templateSources.length,
         templatesLoaded:0,
 
-        loadComplete:function(app){
-
+        loadComplete:function(){
             this.templatesLoaded+=1;
 
+            var percentage=Math.round(this.templatesLoaded/this.totalTemplates*100);
+            var percengageHTML='<h5>loaded '+percentage+' %</h5>';
 
-                var percentage=Math.round(this.templatesLoaded/this.totalTemplates*100);
-                var percengageHTML='<h5>loaded '+percentage+' %</h5>';
-
-                $(VOIDSEARCH.VoidBase.WebAPI.baseNode).update(percengageHTML);
-                console.log("loaded "+percentage+" %");
+            $(VOIDSEARCH.VoidBase.WebAPI.baseNode).update(percengageHTML);
             if(this.templatesLoaded==this.totalTemplates){
-
-                app.onAllLoaded();
-            }else{
-
-
-
+                this.app.onAllLoaded();
             }
         },
 
         loadTemplates:function(app){
+            this.app=app;
+            this.load(0);
+        },
+
+        load:function(index){
             var self=this;
+            var elm=templateSources[index];
 
-
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/homeTemplate.html',function(data){
-                self.templates.homeTemplate=data;
-                self.loadComplete(app);
+            VOIDSEARCH.VoidBase.Core.AJAXGet(elm.url,function(data){
+                self.templates[elm.name]=data;
+                self.loadComplete();
             });
 
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/modulesTemplate.html',function(data){
-                self.templates['modulesTemplate']=data;
-                self.loadComplete(app);
-            });
-
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/queueTreeDebugSplatter.html',function(data){
-                self.templates['queueTreeDebugSplatter']=data;
-                self.loadComplete(app);
-            });
-
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/queueTreeMenu.html',function(data){
-                self.templates['queueTreeMenu']=data;
-                self.loadComplete(app);
-            });
-
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/queueTreeStats.html',function(data){
-                self.templates['queueTreeStats']=data;
-                self.loadComplete(app);
-            });
-
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/queuetreeTemplate.html',function(data){
-                self.templates['queueTreeTemplate']=data;
-                self.loadComplete(app);
-
-            });
-
-            VOIDSEARCH.VoidBase.Core.AJAXGet('/files/html/webapi/gridTable.html',function(data){
-                self.templates['gridTable']=data;
-                self.loadComplete(app);
-            });
-
+            if(index < (templateSources.length-1)){
+                index+=1;
+                var timeoutFunc = function () {
+                    self.load(index);
+                };
+                this.timer = setTimeout(timeoutFunc, 40);
+            }
         }
-
-
     };
-
 }();

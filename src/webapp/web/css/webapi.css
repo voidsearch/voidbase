@@ -191,6 +191,7 @@ div#padder{
 
 #qtCanvas {
     padding-top: 20px;
+    position:relative;
 }
 
 /*
@@ -485,5 +486,51 @@ table.gridTable td:hover {
 
 table.gridTable td:hover canvas{
         border:dashed 1px #d4d4d4;
+
+}
+
+
+div#girdControlBar{
+    background:#f1f1f1;
+    color:#616161;
+    padding:10px;
+    border:solid 1px #e1e1e1;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+
+div#girdControlBar input.btn{
+    font-size:10px;
+    padding:4px;
+    background:#fafafa;
+    margin:0px 0px 0px 0px;
+    color:#717171;
+    border:solid 1px #e1e1e1;
+    text-shadow: 0 -1px 1px #fff;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.0);
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.0);
+
+}
+
+div#girdControlBar input.btn:hover{
+    cursor:pointer;
+    background:#fff;
+    color:#717171;
+    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+
+    background-image:
+         -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            color-stop(0, #fff),
+            color-stop(1, #e1e1e1)
+          );
+
+
+    background-image:-moz-linear-gradient(top,bottom,from(rgba(255,255,255,1)),to(rgba(225,225,225,225)));
 
 }

@@ -58,13 +58,18 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         home:function(params) {
             this.homeParams = params;
             this.API.includeTemplate($('main-ajax-content'),'queueTreeTemplate');
-            //$('main-ajax-content').innerHTML=VOIDSEARCH.VoidBase.Views.templates['queueTreeTemplate'];
         },
 
 
         stats:function() {
             if (this.API.requiresNode('qtCanvas', this)) {
                 this.API.includeTemplate($('qtCanvas'), 'queueTreeStats');
+            }
+        },
+
+        newGrid:function(){
+            if (this.API.requiresNode('qtCanvas', this)) {
+                this.API.includeTemplate($('qtCanvas'),'queueTreeNewGrid');    
             }
         },
 
