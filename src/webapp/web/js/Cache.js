@@ -17,7 +17,7 @@
 VOIDSEARCH.VoidBase.Cache = function() {
     //private properties and methods
     //@todo this shold be passed by engine, somehow
-    var cacheHost='http://localhost:8080';
+    var cacheHost='http://192.168.2.203:8080';
 
     var Core=VOIDSEARCH.VoidBase.Core;
     //public properties and methods

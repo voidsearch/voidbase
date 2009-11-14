@@ -53,6 +53,7 @@ VOIDSEARCH.Events = function() {
 }();
 
 // CORE
+//@todo add onFailure handlers for all methods
 VOIDSEARCH.VoidBase.Core = function() {
     return{
         observers:[],
@@ -72,6 +73,17 @@ VOIDSEARCH.VoidBase.Core = function() {
         AJAXGet:function(url, callback) {
             new Ajax.Request(url, {
                 method: 'get',
+                onSuccess: function(transport) {
+                    var data = transport.responseText;
+                    callback(data);
+                }
+            });
+        },
+        //post data to url as postBody
+        AJAXPostBody:function(url,data,callback){
+             new Ajax.Request(url, {
+                method: 'post',
+                postBody: data,
                 onSuccess: function(transport) {
                     var data = transport.responseText;
                     callback(data);
