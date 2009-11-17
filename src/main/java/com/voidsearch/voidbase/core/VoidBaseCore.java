@@ -23,6 +23,9 @@ import com.voidsearch.voidbase.module.VoidBaseModuleRequest;
 import com.voidsearch.voidbase.supervision.StorageSupervisor;
 import com.voidsearch.voidbase.config.VoidBaseConfiguration;
 import com.voidsearch.voidbase.config.Config;
+import com.voidsearch.voidbase.tcp.TCPServerContainer;
+import com.voidsearch.voidbase.tcp.TCPServerException;
+import com.voidsearch.voidbase.util.GenericUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +74,6 @@ public class VoidBaseCore implements VoidBaseModule {
             throw new VoidBaseModuleException("Missing dispatcher module in configuration");
         }
         
-
         // initialize user modules
 
         LinkedList<String> modules = VoidBaseConfiguration.getKeyList(Config.MODULES);
@@ -123,10 +125,18 @@ public class VoidBaseCore implements VoidBaseModule {
                             ((Thread)childModule).start();
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        GenericUtil.logException(e);
                     }
                 }
             }
+        }
+
+        // initialize tcp connection handlers
+
+        try {
+            TCPServerContainer.getInstance();
+        } catch (TCPServerException e) {
+            GenericUtil.logException(e);
         }
     }
 

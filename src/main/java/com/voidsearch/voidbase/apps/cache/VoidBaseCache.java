@@ -16,6 +16,7 @@
 
 package com.voidsearch.voidbase.apps.cache;
 
+import com.voidsearch.voidbase.apps.cache.containers.CacheValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.voidsearch.voidbase.apps.cache.VoidBaseCacheHandler;
@@ -25,6 +26,7 @@ import com.voidsearch.voidbase.apps.cache.containers.CacheOperation;
 import com.voidsearch.voidbase.config.VoidBaseConfig;
 import com.voidsearch.voidbase.config.ConfigException;
 import com.voidsearch.voidbase.util.GenericUtil;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -116,4 +118,32 @@ public abstract class VoidBaseCache implements VoidBaseCacheHandler, Cloneable {
         return operations.getLockType(operation);
     }
 
+    /**
+     * One is not required to implement byte array implementation for key/value cache handler - if it's not provided
+     * NotImplementedException will be thrown in case it is being used
+     * @param method
+     * @param route
+     * @param params
+     * @param key
+     * @param value
+     * @return
+     * @throws CacheException
+     */
+    public CacheValue process(String method, List<String> route, Map<String, String> params, byte[] key, byte[] value) throws CacheException {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * One is not required to implement cache handler for binary content - if it's not provided by cache implementeation
+     * NotImplementedException will be thrown
+     * @param method
+     * @param route
+     * @param params
+     * @param content
+     * @return
+     * @throws CacheException
+     */
+    public CacheValue process(String method, List<String> route, Map<String, String> params, byte[] content) throws CacheException {
+        throw new NotImplementedException();    
+    }
 }
