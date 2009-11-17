@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <tcp>
+        <cache>
+            <port>33334</port>
+            <codec>line</codec>
+            <message_handler>com.voidsearch.voidbase.tcp.message.CacheMessage</message_handler>
+        </cache>
+    </tcp>
+
+</config>

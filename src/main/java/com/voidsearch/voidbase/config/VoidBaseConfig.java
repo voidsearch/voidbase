@@ -59,7 +59,7 @@ public class VoidBaseConfig {
     }
 
     public void init() throws ConfigException {
-        init(null);    
+        init(null);
     }
 
     public void init(String files) throws ConfigException {
@@ -84,7 +84,7 @@ public class VoidBaseConfig {
     protected XMLConfiguration mergeConfiguration(List<String> files) throws ConfigException {
         XMLConfiguration config = new XMLConfiguration();
 
-        for (String file: files) {
+        for (String file : files) {
             Iterator<String> keys;
             XMLConfiguration fragment;
 
@@ -92,12 +92,12 @@ public class VoidBaseConfig {
                 logger.info("Loading configuration file: " + file);
                 fragment = new XMLConfiguration(file);
                 keys = fragment.getKeys();
-            } catch(ConfigurationException e) {
+            } catch (ConfigurationException e) {
                 GenericUtil.logException(e);
                 throw new ConfigException("Failed to load configuration from: " + file);
             }
 
-            while(keys.hasNext()) {
+            while (keys.hasNext()) {
                 String key = keys.next();
 
                 // sanity check
@@ -109,15 +109,15 @@ public class VoidBaseConfig {
                 config.addProperty(key, fragment.getProperty(key));
             }
         }
-        
+
         return config;
     }
 
-    protected void setXMLConfig(XMLConfiguration config)  {
+    protected void setXMLConfig(XMLConfiguration config) {
         this.config = config;
     }
 
-    protected XMLConfiguration getXMLConfig()  {
+    protected XMLConfiguration getXMLConfig() {
         return config;
     }
 
@@ -240,7 +240,7 @@ public class VoidBaseConfig {
     }
 
 
-    public List<String> getList(String key)  {
+    public List<String> getList(String key) {
         Iterator iterator;
         ArrayList<String> list = new ArrayList<String>();
 
@@ -248,20 +248,35 @@ public class VoidBaseConfig {
             return null;
 
         iterator = config.getKeys(key);
-        
-        while (iterator.hasNext()) {
-            String subKey = (String)iterator.next();
-            List elements = config.getList(subKey);
 
-            for (Object element: elements) {
-                list.add(element.toString());
+        while (iterator.hasNext()) {
+            Integer rpos = 0;
+            String newKey = null;
+            String subKey = (String) iterator.next();
+
+            // sanity check
+            if (!subKey.startsWith(key)) {
+                logger.error("Bad key: " + key);
+                continue;
+            } else if (subKey.length() <= key.length()) {
+                continue;
+            }
+
+            // get key cutoff
+            rpos = subKey.indexOf(".", key.length() + 1);
+            rpos = rpos < 0 ? subKey.length() : rpos;
+
+            newKey = subKey.substring(key.length() + 1, rpos);
+
+            if (!list.contains(newKey)) {
+                list.add(newKey);
             }
         }
 
         return list;
     }
 
-    public Set<String> getKeys(String key)  {
+    public Set<String> getKeys(String key) {
         Iterator iterator;
         Set<String> list = new HashSet<String>();
 
@@ -271,14 +286,14 @@ public class VoidBaseConfig {
         iterator = config.getKeys(key);
 
         while (iterator.hasNext()) {
-            String subKey = cleanKey((String)iterator.next());
+            String subKey = cleanKey((String) iterator.next());
             list.add(subKey);
         }
 
         return list;
     }
 
-    public Map<String, String> getMap(String key)  {
+    public Map<String, String> getMap(String key) {
         Iterator iterator;
         HashMap<String, String> map = new HashMap<String, String>();
 
@@ -288,10 +303,10 @@ public class VoidBaseConfig {
         iterator = config.getKeys(key);
 
         while (iterator.hasNext()) {
-            String subKey = (String)iterator.next();
+            String subKey = (String) iterator.next();
             List elements = config.getList(subKey);
 
-            for (Object element: elements) {
+            for (Object element : elements) {
                 map.put(cleanKey(subKey), element.toString());
             }
         }
@@ -305,28 +320,28 @@ public class VoidBaseConfig {
         if (key == null)
             return null;
 
-        attributeKey . append("[@") . append(attribute) . append("]");
+        attributeKey.append("[@").append(attribute).append("]");
 
         return config.getString(attributeKey.toString());
     }
 
     public List<String> getAttributes(String key, String attribute) {
-       Iterator iterator;
-       ArrayList<String> list = new ArrayList<String>();
-       StringBuilder attributeKey = new StringBuilder(key);
+        Iterator iterator;
+        ArrayList<String> list = new ArrayList<String>();
+        StringBuilder attributeKey = new StringBuilder(key);
 
         if (key == null)
             return null;
 
-        attributeKey . append("@") . append(attribute);
+        attributeKey.append("@").append(attribute);
 
         iterator = config.getKeys(attributeKey.toString());
 
         while (iterator.hasNext()) {
-            String subKey = (String)iterator.next();
+            String subKey = (String) iterator.next();
             List elements = config.getList(subKey);
 
-            for (Object element: elements) {
+            for (Object element : elements) {
                 list.add(element.toString());
             }
         }
@@ -335,7 +350,7 @@ public class VoidBaseConfig {
     }
 
     protected String getPath(String name, String key) {
-       StringBuilder path = new StringBuilder();
+        StringBuilder path = new StringBuilder();
 
         // sanity check
         if (name == null || key == null) {
@@ -348,17 +363,17 @@ public class VoidBaseConfig {
         }
 
         // build a path
-        path . append(name) . append(".")
-             . append(key);
+        path.append(name).append(".")
+                .append(key);
 
         return path.toString();
     }
 
     protected ArrayList<String> getConfigFiles() {
         File dir = new File(DEFAULT_PATH);
-        ArrayList<String> files = new ArrayList<String>();          
+        ArrayList<String> files = new ArrayList<String>();
 
-        for (File file: dir.listFiles()) {
+        for (File file : dir.listFiles()) {
             if (file.isFile()) {
                 files.add(file.getAbsolutePath());
             }

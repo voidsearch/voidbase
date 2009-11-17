@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "RoutedMessage",
+  "fields" : [
+    {"vector_clock": "value", "type": "long" }, // vector clock value
+    {"timestamp": "value", "type": "long" },    // timestamp
+    {"metadata": "value", "type": "string"},    // message metadata
+    {"content": "value", "type": "bytes"},      // message content
+  ]
+}
