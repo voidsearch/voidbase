@@ -19,13 +19,20 @@ package com.voidsearch.voidbase.apps.webapi;
 import com.voidsearch.voidbase.module.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.voidsearch.voidbase.config.VoidBaseConfiguration;
+import com.voidsearch.voidbase.config.Config;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
+
+
 
 public class WebAPIModule implements VoidBaseModule {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private String jsConfigPath="./src/webapp/web/js/Config.js"; //@todo put this into config
 
     public void initialize(String name) throws VoidBaseModuleException {
+        generateJavascriptConfig();
     }
 
     public VoidBaseModuleResponse handle(VoidBaseModuleRequest request) throws VoidBaseModuleException {
@@ -55,6 +62,32 @@ public class WebAPIModule implements VoidBaseModule {
     }
 
     public void run() {
+    }
+
+    private void generateJavascriptConfig(){
+        //get port from config file
+        String port = VoidBaseConfiguration.get(Config.GLOBAL, Config.DISPATCHER, Config.PORT);
+
+        //generate file content
+        StringBuilder sb=new StringBuilder();
+        sb.append("// do not write any new code here, see Config.README for details\n")
+        .append("VOIDSEARCH.VoidBase.Config=function(){\n")
+                .append("\treturn{\n")
+                .append("\t\thostName:'localhost',\n")  //@todo add hostname  to config
+                .append("\t\tprotocol:'http://',\n")    //@todo add protocol  to config
+                .append("\t\tport:").append(port).append("\n")
+                .append("\t}\n")
+                .append("}();");
+
+        try {
+            //write to file
+			BufferedWriter out = new BufferedWriter(new FileWriter(jsConfigPath));
+            out.write(sb.toString());
+            out.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

@@ -1,0 +1,25 @@
+File Config.js is dynamically generated on VoidBase initialization
+Code in Config.js minimum of config options that WebAPI need to bootstrap it self.
+
+**Please don't write any new code there because it is likely to be OVERWRITTEN 
+on next VoidBase initialization**
+
+if you still need some config you can make ConfigLocal.js
+and write your local configuration there.
+
+At the moment this is the content of Config.js file:
+
+----------------------------------------------------------------
+
+// do not write any new code here, see Config.README for details
+VOIDSEARCH.VoidBase.Config=function(){
+	return{
+		hostName:'localhost',
+		protocol:'http://',
+		port:8080
+	}
+}();
+
+----------------------------------------------------------------
+
+You can use this pattern to make your ConfigLocal file.
