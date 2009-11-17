@@ -342,9 +342,3 @@ VOIDSEARCH.VoidBase.WebAPI.modules.test = function() {
     }// end return
 
 }();
-
-
-
-$$('li.menu').each(function(liElement){
-    liElement.hide();
-});

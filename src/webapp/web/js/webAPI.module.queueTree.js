@@ -24,6 +24,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
     var defaultObjectRefreshRate = 8000; //miliseconds
 
+    var ADD_NEW_GRID_ELEMENT='addNewGridElement';
+    var QT_CANVAS='qtCanvas';
+    var QT_VIEW='qtView';
+    var GRID_CONTAINER='gridContainer';
+
     getFieldData = function(fieldName, JSONData) {
 
         var entries = [];
@@ -63,14 +68,34 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         stats:function() {
             if (this.API.requiresNode('qtCanvas', this)) {
-                this.API.includeTemplate($('qtCanvas'), 'queueTreeStats');
+                this.API.includeTemplate($(QT_CANVAS), 'queueTreeStats');
             }
         },
 
         newGrid:function(){
             if (this.API.requiresNode('qtCanvas', this)) {
-                this.API.includeTemplate($('qtCanvas'),'queueTreeNewGrid');    
+                var self=this;
+
+                this.objectRegister.activeObjects = [];
+
+                this.API.includeTemplate($(QT_CANVAS),'queueTreeNewGrid');
+
+                // add button events
+                $(ADD_NEW_GRID_ELEMENT).observe('click',function(){
+                    self.insertNewGridCell();
+                    $(ADD_NEW_GRID_ELEMENT).blur();
+                });
+
+
             }
+        },
+
+        insertNewGridCell:function(){
+
+
+            var HTML=VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
+
+            $(GRID_CONTAINER).insert(HTML);
         },
 
         viewGrid:function(params) {

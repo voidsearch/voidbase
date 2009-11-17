@@ -31,9 +31,13 @@ VOIDSEARCH.VoidBase.Views=function(){
             name:'gridTable'
         },
         {
+            url:'/files/html/webapi/queueTreeEmptyGridCell.html',
+            name:'queueTreeEmptyGridCell'
+        },
+        {
             url:'/files/html/webapi/queueTreeNewGrid.html',
             name:'queueTreeNewGrid'
-        }    
+        }
 
     ];
 

@@ -151,6 +151,24 @@ body {
     font-size: 12px;
 }
 
+/* *** Float containers fix:
+http://www.csscreator.com/attributes/containedfloat.php *** */
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix{display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix{height: 1%;}
+.clearfix{display: block;}
+/* End hide from IE-mac */
+
+
 /*
 // STRUCTURE/CONTAINERS
 */
@@ -533,4 +551,42 @@ div#girdControlBar input.btn:hover{
 
     background-image:-moz-linear-gradient(top,bottom,from(rgba(255,255,255,1)),to(rgba(225,225,225,225)));
 
+}
+
+#gridTitle{
+    margin:20px 0 0 0;
+    
+}
+
+#gridContainer{
+    margin:20px 0 0 0;
+
+}
+
+
+
+div.gridCell{
+    float:left;
+    display:inline;
+    border:dotted 1px #e1e1e1;
+    height:150px;
+    width:300px;
+    margin:4px 4px 0px 0px;
+    position:relative;
+}
+.editGridCellButton{
+
+    display:none;
+}
+
+
+div.gridCell:hover{
+
+    border:dotted 1px #717171;
+}
+
+div.gridCell:hover div.editGridCellButton{
+    
+    display:block;
+    cursor:pointer;
 }
