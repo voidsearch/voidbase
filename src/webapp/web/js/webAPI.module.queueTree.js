@@ -29,6 +29,33 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     var QT_VIEW='qtView';
     var GRID_CONTAINER='gridContainer';
 
+    var GRID_CELL='gridCell';
+    var GRID_CELL_EDIT='gridCellEdit';
+    var GRID_CELL_CANVAS_CONTAINER='gridCellCanvasContainer';
+
+    var testFields=[
+        {
+            field:'san_francisco',
+            queue:'twitter'
+        },
+        {
+            field:'new_york',
+            queue:'twitter'
+        },
+        {
+            field:'microsoft',
+            queue:'twitter_topic'
+        },
+        {
+            field:'berlin',
+            queue:'twitter'
+        },
+        {
+            field:'belgrade',
+            queue:'twitter'
+        }
+    ];
+
     getFieldData = function(fieldName, JSONData) {
 
         var entries = [];
@@ -80,6 +107,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
                 this.API.includeTemplate($(QT_CANVAS),'queueTreeNewGrid');
 
+
+                this.gridUpdater(0);
+
                 // add button events
                 $(ADD_NEW_GRID_ELEMENT).observe('click',function(){
                     self.insertNewGridCell();
@@ -92,10 +122,21 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         insertNewGridCell:function(){
 
-
+            var nextId=this.objectRegister.activeObjects.length + 1;
             var HTML=VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
 
+            HTML=HTML.replace(/\%id\%/g,nextId);
+            console.log('Inserting ID: '+nextId);
             $(GRID_CONTAINER).insert(HTML);
+
+            var gridCellCanvasContainer=GRID_CELL_CANVAS_CONTAINER+'_'+nextId;
+            var gridCell=GRID_CELL+'_'+nextId;
+            var gridCellEdit=GRID_CELL+'_'+nextId;
+            var field=testFields[nextId-1].field;
+            var queue=testFields[nextId-1].queue;
+
+            this.registerNewObject(field, queue, gridCellCanvasContainer);
+
         },
 
         viewGrid:function(params) {
@@ -174,25 +215,31 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         // 
 
         gridUpdater:function(index) {
+
+
             var self = this;
+            var timeout=1000;
+            
+            if(self.objectRegister.activeObjects.length>0){
+                // fetch field, queue and chart instance from active objects array
+                var field = self.objectRegister.activeObjects[index][0];
+                var queue = self.objectRegister.activeObjects[index][1];
+                var objectInstance = self.objectRegister.activeObjects[index][3];
 
-            // fetch field, queue and chart instance from active objects array
-            var field = self.objectRegister.activeObjects[index][0];
-            var queue = self.objectRegister.activeObjects[index][1];
-            var objectInstance = self.objectRegister.activeObjects[index][3];
+                this.fetchSize = 259;
+                this.updateSingleObject(field, queue, objectInstance);
 
-            this.fetchSize = 259;
-            this.updateSingleObject(field, queue, objectInstance);
+                //console.log(this.gridContainerWidth);
+                index += 1;
+                if (index >= this.objectRegister.activeObjects.length) {
+                    index = 0;
+                }
 
-            //console.log(this.gridContainerWidth);
-            index += 1;
-            if (index >= this.objectRegister.activeObjects.length) {
-                index = 0;
+
+                //calculate and apply timeout
+                timeout = defaultObjectRefreshRate / this.objectRegister.activeObjects.length;
             }
-
-
-            //calculate and apply timeout
-            var timeout = defaultObjectRefreshRate / this.objectRegister.activeObjects.length;
+            
             var timeoutFunc = function () {
                 self.gridUpdater(index);
             };
