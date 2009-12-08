@@ -36,15 +36,15 @@ public class SimpleMetric implements ResourceMetric {
         LinkedList<ResourceEntry> result = new LinkedList<ResourceEntry>();
         ResourceEntry lastEntry = oldEntries.getLast();
 
-        Iterator it = newEntries.descendingIterator();
-        while (it.hasNext()) {
-            ResourceEntry entry = (ResourceEntry)it.next();
-            if (!entry.equals(lastEntry)) {
-                result.add(entry);
-            } else {
-                break;
-            }
-        }
+//        Iterator it = newEntries.descendingIterator();
+//        while (it.hasNext()) {
+//            ResourceEntry entry = (ResourceEntry)it.next();
+//            if (!entry.equals(lastEntry)) {
+//                result.add(entry);
+//            } else {
+//                break;
+//            }
+//        }
 
         return result;
 
