@@ -30,6 +30,7 @@ public class QueueTreeHooks implements StorageOperationHooks {
 
         if (metadata.getType().equals(VoidBaseSerialization.NUMERIC)) {
             try {
+                dupValue(metadata,value);
                 updateMinMax(metadata,value);
                 updateAverage(metadata,queue,value);
                 updateVariance(metadata,queue,value);
@@ -50,6 +51,11 @@ public class QueueTreeHooks implements StorageOperationHooks {
             }
         }
 
+    }
+
+    // copy value to metadata
+    public static void dupValue(QueueMetadata metadata, Object value) throws NumberFormatException {
+        metadata.set(QueueTreeProtocol.CURRENT,value);
     }
 
     // update minimum and maximum for single value

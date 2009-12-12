@@ -26,6 +26,11 @@ public class QueueMetadata {
     private LinkedHashMap<String, Object> metadata = new LinkedHashMap<String,Object>();
     private VoidBaseSerialization type = VoidBaseSerialization.UNKNOWN;
 
+    public QueueMetadata(QueueMetadata other) {
+        setType(other.getType());
+        setMetadata((LinkedHashMap<String,Object>)other.getMetadata().clone());
+    }
+
     public QueueMetadata(String name, int size) {
         set(QueueTreeProtocol.NAME,name);
         set(QueueTreeProtocol.TIMESTAMP,System.currentTimeMillis());
@@ -52,8 +57,20 @@ public class QueueMetadata {
         return metadata.containsKey(key);
     }
 
+    public void setMetadata(LinkedHashMap<String,Object> metadata) {
+        this.metadata = metadata;
+    }
+
     public LinkedHashMap<String, Object> getMetadata() {
         return metadata;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (String key : metadata.keySet()) {
+            sb.append("<").append(key).append(">").append(metadata.get(key)).append("</").append(key).append(">\n");
+        }
+        return sb.toString();
     }
 
 }

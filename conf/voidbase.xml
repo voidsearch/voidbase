@@ -90,6 +90,12 @@ simple configuration
             <diffWindowByteSize>4096</diffWindowByteSize>
          </FeedQModule>
 
+        <StreamsModule>
+            <class>com.voidsearch.voidbase.apps.streams.StreamsModule</class>
+            <status>active</status>
+            <resource>streams</resource>
+         </StreamsModule>
+
     </modules>
 
 

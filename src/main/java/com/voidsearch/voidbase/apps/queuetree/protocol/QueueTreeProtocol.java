@@ -33,6 +33,7 @@ public class QueueTreeProtocol extends VoidBaseProtocol {
     public static String TIME_START = "time_start";
 
     // metadata values
+    public static String CURRENT        = "current";
     public static String NAME           = "name";
     public static String TIMESTAMP      = "timestamp";
     public static String MIN            = "min";

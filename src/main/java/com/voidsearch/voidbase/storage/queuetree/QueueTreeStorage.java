@@ -223,16 +223,22 @@ public class QueueTreeStorage implements SupervisedStorage {
         incrementMemorySize(value);
 
         if (queueTree.containsKey(queueName)) {
+
             ArrayBlockingQueue queue = queueTree.get(queueName);
 
-            // lazy types - first inserted element defines queue type
-            if (queueMedatada.containsKey(queueName)) {
-                QueueMetadata metadata = queueMedatada.get(queueName);
-                if (metadata.getType().equals(VoidBaseSerialization.UNKNOWN))
-                    metadata.setType(VoidBaseSerialization.getType(value));
+            if (!(value instanceof QueueMetadata)) {
+
+                // lazy types - first inserted element defines queue type
+                if (queueMedatada.containsKey(queueName)) {
+                    QueueMetadata metadata = queueMedatada.get(queueName);
+                    if (metadata.getType().equals(VoidBaseSerialization.UNKNOWN))
+                        metadata.setType(VoidBaseSerialization.getType(value));
+                }
+
             }
 
             synchronized (queue) {
+
                 if (queue.remainingCapacity() == 0) {
                     try {
                         decrementMemorySize(queue.take());
@@ -240,14 +246,25 @@ public class QueueTreeStorage implements SupervisedStorage {
                         e.printStackTrace();
                     }
                 }
+
                 queue.add(new QueueEntry(value));
-                // update metadata with hooks
-                QueueTreeHooks.handlePut(queueMedatada.get(queueName),queue,value);
+
+                if (!(value instanceof QueueMetadata)) {
+                    // update metadata with hooks
+                    QueueTreeHooks.handlePut(queueMedatada.get(queueName),queue,value);
+                }
+
+                    // a bit of controlled recursion
+                putFIFO(queueName + "_metadata", new QueueMetadata(queueMedatada.get(queueName)));
+
             }
 
         }
         else {
-            throw new InvalidQueueException();
+            // handle missing metadata queue gracefull
+            if (!(value instanceof QueueMetadata)) {
+                throw new InvalidQueueException();
+            }
         }
 
     }
