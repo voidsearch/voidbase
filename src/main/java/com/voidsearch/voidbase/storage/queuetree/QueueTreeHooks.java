@@ -34,6 +34,7 @@ public class QueueTreeHooks implements StorageOperationHooks {
                 updateMinMax(metadata,value);
                 updateAverage(metadata,queue,value);
                 updateVariance(metadata,queue,value);
+                //testUpdate(metadata,queue,value);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -121,6 +122,11 @@ public class QueueTreeHooks implements StorageOperationHooks {
         else {
             metadata.set(QueueTreeProtocol.VAR, 0.0);
         }
+    }
+
+    public static void testUpdate(QueueMetadata metadata, ArrayBlockingQueue queue, Object value) throws NumberFormatException {
+        double val = VoidBaseSerialization.getDouble(value);
+        metadata.set("test",Math.sqrt(val));
     }
 
     // update deviation
