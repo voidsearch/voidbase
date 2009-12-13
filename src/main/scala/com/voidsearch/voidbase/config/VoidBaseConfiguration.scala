@@ -1,5 +1,3 @@
-package com.voidsearch.voidbase.config
-
 /*
  * Copyright 2009 VoidSearch.com
  *
@@ -16,6 +14,7 @@ package com.voidsearch.voidbase.config
  * the License.
  */
 
+package com.voidsearch.voidbase.config
 
 import collection.mutable.{ListBuffer, HashMap}
 import io.Source
