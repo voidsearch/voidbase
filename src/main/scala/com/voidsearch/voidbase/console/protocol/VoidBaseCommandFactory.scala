@@ -16,8 +16,7 @@
 
 package com.voidsearch.voidbase.console.protocol
 
-
-import commands.{HelpCommand, ExitCommand, InvalidCommand}
+import commands.{VoidBaseConsoleCommand, HelpCommand, ExitCommand, InvalidCommand}
 import console.syntax.ConsoleSyntax
 
 object VoidBaseCommandFactory {

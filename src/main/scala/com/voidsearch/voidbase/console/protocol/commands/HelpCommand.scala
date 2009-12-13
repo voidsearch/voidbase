@@ -30,9 +30,4 @@ class HelpCommand extends VoidBaseConsoleCommand {
     println()
   }
 
-  def getResult() : String = {
-    return ""
-  }
-
-
 }

@@ -18,7 +18,8 @@ package com.voidsearch.voidbase.console.session
 
 
 import collection.mutable.ListBuffer
-import protocol.{VoidBaseCommandFactory, VoidBaseConsoleCommand}
+import protocol.commands.VoidBaseConsoleCommand
+import protocol.VoidBaseCommandFactory
 
 class VoidBaseConsoleSession {
 

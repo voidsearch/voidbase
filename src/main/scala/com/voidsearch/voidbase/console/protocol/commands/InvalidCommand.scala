@@ -20,9 +20,5 @@ class InvalidCommand extends VoidBaseConsoleCommand {
 
   def exec() = {
   }
-
-  def getResult() : String = {
-    return ""
-  }
   
 }

@@ -22,8 +22,4 @@ class ExitCommand extends VoidBaseConsoleCommand {
     println("Bye")
   }
 
-  def getResult() : String = {
-    return ""
-  }
-
 }
