@@ -16,21 +16,42 @@
 
 package com.voidsearch.voidbase.console.protocol
 
-import commands.{VoidBaseConsoleCommand, HelpCommand, ExitCommand, InvalidCommand}
+import commands._
 import console.syntax.ConsoleSyntax
+
+import scala.util.matching.Regex
+import session.VoidBaseConsoleSession
 
 object VoidBaseCommandFactory {
 
-  def getCommand(commandText : String) : VoidBaseConsoleCommand = {
+  /**
+   * factor appropriate command object instance
+   * based on passed command string 
+   *
+   */
+  def getCommand(commandText : String, session : VoidBaseConsoleSession) : VoidBaseConsoleCommand = {
 
-    if (commandText.equals(ConsoleSyntax.EXIT_COMMAND)) {
-      return new ExitCommand()
-    }
-    else if (commandText.equals(ConsoleSyntax.HELP_COMMAND)) {
-      return new HelpCommand()
-    }
-    else {
-      return new InvalidCommand()      
+    return commandText match {
+
+      case ConsoleSyntax.EXIT()
+        => ExitCommand(session)
+      case ConsoleSyntax.QUIT()
+        => ExitCommand(session)
+      case ConsoleSyntax.HELP()
+        => HelpCommand(session)
+      case ConsoleSyntax.GET_DOMAIN()
+        => GetDomainCommand(session)
+      case ConsoleSyntax.SET_DOMAIN(domain)
+        => SetDomainCommand(session,domain)
+      case ConsoleSyntax.LIST()
+        => ListCommand(session)
+      case ConsoleSyntax.CREATE_SEQUENCE(variable,sequenceClass)
+        => CreateSequenceCommand(session,variable,sequenceClass)
+      case ConsoleSyntax.CREATE_QUEUE(name,size)
+        => CreateQueueCommand(session, name, size) 
+
+      case _ => InvalidCommand(commandText)
+
     }
 
   }

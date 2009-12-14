@@ -22,8 +22,15 @@ package com.voidsearch.voidbase.console.syntax
 
 object ConsoleSyntax {
 
-  val QUIT_COMMAND = "quit"
-  val EXIT_COMMAND = "exit"
-  val HELP_COMMAND = "help"
+  val EXIT             = """exit""".r
+  val QUIT             = """quit""".r
+  val HELP             = """help""".r
+  val LIST             = """list""".r
+
+  val SET_DOMAIN       = """domain (.*)""".r
+  val GET_DOMAIN       = """domain""".r
+  val CREATE_SEQUENCE  = """seq (.*) <- (.*)""".r
+  val CREATE_QUEUE     = """create queue (.*) size (\d+)""".r
+  
   
 }

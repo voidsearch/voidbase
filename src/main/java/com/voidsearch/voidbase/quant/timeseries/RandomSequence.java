@@ -16,18 +16,11 @@
 
 package com.voidsearch.voidbase.quant.timeseries;
 
-public abstract class NumericalSequenceGenerator implements SequenceGenerator {
+import java.util.Random;
 
-    protected double increment = DEFAULT_INCREMENT;
-    protected double counter = 0.0;
-    
-    public void setIncrement(double increment) {
-        this.increment = increment;
-    }
+public class RandomSequence {
 
-    public void incrementCounter() {
-        counter += increment;
-    }
+    protected static Random random = new Random();
 
 
 }

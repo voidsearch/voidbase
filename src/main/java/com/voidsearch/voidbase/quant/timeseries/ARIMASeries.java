@@ -16,27 +16,9 @@
 
 package com.voidsearch.voidbase.quant.timeseries;
 
-public class GaussianSequenceGenerator extends RandomSequenceGenerator implements SequenceGenerator {
+public class ARIMASeries {
 
-    private static double NORMAL_MEAN = 0.0;
-    private static double NORMAL_DEVIATION = 1.0;
 
-    private double mean;
-    private double deviation;
-
-    public GaussianSequenceGenerator() {
-        this.mean = NORMAL_MEAN;
-        this.deviation = NORMAL_DEVIATION;
-    }
-
-    public GaussianSequenceGenerator(int mean, int deviation) {
-        this.mean = mean;
-        this.deviation = deviation;
-    }
-
-    public double next() {
-        return random.nextGaussian()*deviation;
-    }
-
+    
 
 }

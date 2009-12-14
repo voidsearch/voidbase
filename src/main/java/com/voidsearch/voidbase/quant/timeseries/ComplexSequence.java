@@ -16,24 +16,31 @@
 
 package com.voidsearch.voidbase.quant.timeseries;
 
-public class RandomWalkGenerator extends RandomSequenceGenerator implements SequenceGenerator {
+import java.util.ArrayList;
 
-    double current = 0.0;
+public class ComplexSequence extends NumericalSequence implements SequenceGenerator {
 
-    /**
-     * simple random walk generator
-     *
-     * x_t+1 = x_t + e | e ~ N(0,1) 
-     */
-    public RandomWalkGenerator() {
+    private ArrayList<SequenceGenerator> generators;
 
+    public ComplexSequence() {
+        generators = new ArrayList<SequenceGenerator>();
+    }
+
+    public void addGenerator(SequenceGenerator generator) {
+        synchronized (generators) {
+            generators.add(generator);
+        }
     }
 
     public double next() {
-        current+=random.nextGaussian();
-        return current;
+        double val = 0.0;
+        synchronized (generators) {
+            for (SequenceGenerator generator : generators) {
+                val += generator.next();
+            }
+        }
+        return val;
     }
-
 
 
 }

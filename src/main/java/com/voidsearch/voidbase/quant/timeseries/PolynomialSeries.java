@@ -19,7 +19,7 @@ package com.voidsearch.voidbase.quant.timeseries;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PolynomialSeriesGenerator extends NumericalSequenceGenerator implements SequenceGenerator {
+public class PolynomialSeries extends NumericalSequence implements SequenceGenerator {
 
     // polynomial coefficients
     private List<Double> coefficients;
@@ -27,7 +27,7 @@ public class PolynomialSeriesGenerator extends NumericalSequenceGenerator implem
     /**
      * default constructor - generates simple linear (y=x) polynomial
      */
-    public PolynomialSeriesGenerator() {
+    public PolynomialSeries() {
         coefficients = new ArrayList<Double>();
         coefficients.add(0.0);
         coefficients.add(1.0);
@@ -37,7 +37,7 @@ public class PolynomialSeriesGenerator extends NumericalSequenceGenerator implem
      *
      * @param coefficients - array of polynomial coefficients
      */
-    public PolynomialSeriesGenerator(List<Double> coefficients) {
+    public PolynomialSeries(List<Double> coefficients) {
         this.coefficients = coefficients;
     }
 

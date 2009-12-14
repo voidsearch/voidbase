@@ -26,7 +26,6 @@ import com.voidsearch.voidbase.quant.timeseries.*;
 
 import java.lang.StringBuilder;
 import java.lang.Double;
-import java.util.LinkedList;
 
 public class StreamsModule extends Thread implements VoidBaseModule {
 
@@ -48,10 +47,10 @@ public class StreamsModule extends Thread implements VoidBaseModule {
             e.printStackTrace();
         }
 
-        ComplexSequenceGenerator generator = new ComplexSequenceGenerator();
-//        generator.addGenerator(new LinearSeriesGenerator());
-//        generator.addGenerator(new GaussianSequenceGenerator(0,1));
-        generator.addGenerator(new RandomWalkGenerator());
+        ComplexSequence generator = new ComplexSequence();
+//        generator.addGenerator(new LinearSeries());
+//        generator.addGenerator(new GaussianSequence(0,1));
+        generator.addGenerator(new RandomWalk());
 
         while(true) {
 

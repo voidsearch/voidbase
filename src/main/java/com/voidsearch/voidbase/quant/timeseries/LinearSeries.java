@@ -16,7 +16,7 @@
 
 package com.voidsearch.voidbase.quant.timeseries;
 
-public class LinearSeriesGenerator extends NumericalSequenceGenerator implements SequenceGenerator {
+public class LinearSeries extends NumericalSequence implements SequenceGenerator {
 
     // intercept and slope coefficients
     // default : (y=x)
@@ -27,7 +27,7 @@ public class LinearSeriesGenerator extends NumericalSequenceGenerator implements
      * default constructor
      * create simple y=x linear function generator
      */
-    public LinearSeriesGenerator() {
+    public LinearSeries() {
         this.intercept = 0.0;
         this.slope = 1.0;
     }
@@ -37,7 +37,7 @@ public class LinearSeriesGenerator extends NumericalSequenceGenerator implements
      * @param intercept - intercept of linear function
      * @param slope - slope of linear function
      */
-    public LinearSeriesGenerator(double intercept, double slope) {
+    public LinearSeries(double intercept, double slope) {
         this.intercept = intercept;
         this.slope = slope;
     }

@@ -34,12 +34,18 @@ object VoidBaseConsole {
     ConsoleProtocol.printHeader()
     ConsoleProtocol.printCursor()
 
-    var session = new VoidBaseConsoleSession();
+    var session = new VoidBaseConsoleSession("localhost:8080");
     var cmd = session.getCommand();
 
     while (!(cmd.isInstanceOf[ExitCommand])) {
 
-      cmd.exec()
+      try {
+
+        cmd.exec()
+
+      } catch {
+        case e => e.printStackTrace()
+      }
 
       ConsoleProtocol.printCursor()
       cmd = session.getCommand();

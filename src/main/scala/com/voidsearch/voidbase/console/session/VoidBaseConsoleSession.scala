@@ -17,18 +17,32 @@
 package com.voidsearch.voidbase.console.session
 
 
-import collection.mutable.ListBuffer
+import collection.mutable.{HashMap, ListBuffer}
 import protocol.commands.VoidBaseConsoleCommand
 import protocol.VoidBaseCommandFactory
 
-class VoidBaseConsoleSession {
+class VoidBaseConsoleSession(_hostname: String) {
 
+  // session-level variables
+  var hostname = _hostname
+  var domain   = ""
+  var startTime = System.currentTimeMillis
+
+  // command queue
   var commandQueue = new ListBuffer[VoidBaseConsoleCommand]();
+
+  // session symbol table
+  var symTable = new HashMap[String, String]();
+
+
+  def containsVariable(variable : String) {
+    return symTable.contains(variable)
+  }
 
   def getCommand() : VoidBaseConsoleCommand = {
 
     var commandText = Console.readLine();
-    var cmd = VoidBaseCommandFactory.getCommand(commandText)
+    var cmd = VoidBaseCommandFactory.getCommand(commandText, this)
     commandQueue += cmd;
     return cmd;
 

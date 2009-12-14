@@ -16,7 +16,10 @@
 
 package com.voidsearch.voidbase.console.protocol.commands
 
-class HelpCommand extends VoidBaseConsoleCommand {
+
+import session.VoidBaseConsoleSession
+
+case class HelpCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 
   def exec() = {
     println()

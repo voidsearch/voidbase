@@ -16,10 +16,20 @@
 
 package com.voidsearch.voidbase.console.protocol.commands
 
-class ExitCommand extends VoidBaseConsoleCommand {
+import scala.util.matching.Regex
+import session.VoidBaseConsoleSession
+
+case class ExitCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 
   def exec() = {
-    println("Bye")
+    println("Terminating session | total time elapsed : " + getElapsedTimeString())
+  }
+
+  def getElapsedTimeString(): String = {
+    return (System.currentTimeMillis - session.startTime)/1000 + " s"
   }
 
 }
+
+
+

@@ -16,9 +16,18 @@
 
 package com.voidsearch.voidbase.quant.timeseries;
 
-public class ARIMASeriesGenerator {
+public abstract class NumericalSequence implements SequenceGenerator {
 
-
+    protected double increment = DEFAULT_INCREMENT;
+    protected double counter = 0.0;
     
+    public void setIncrement(double increment) {
+        this.increment = increment;
+    }
+
+    public void incrementCounter() {
+        counter += increment;
+    }
+
 
 }

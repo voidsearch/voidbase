@@ -16,30 +16,26 @@
 
 package com.voidsearch.voidbase.quant.timeseries;
 
-import java.util.ArrayList;
+public class GaussianSequence extends RandomSequence implements SequenceGenerator {
 
-public class ComplexSequenceGenerator extends NumericalSequenceGenerator implements SequenceGenerator {
+    private static double NORMAL_MEAN = 0.0;
+    private static double NORMAL_DEVIATION = 1.0;
 
-    private ArrayList<SequenceGenerator> generators;
+    private double mean;
+    private double deviation;
 
-    public ComplexSequenceGenerator() {
-        generators = new ArrayList<SequenceGenerator>();
+    public GaussianSequence() {
+        this.mean = NORMAL_MEAN;
+        this.deviation = NORMAL_DEVIATION;
     }
 
-    public void addGenerator(SequenceGenerator generator) {
-        synchronized (generators) {
-            generators.add(generator);
-        }
+    public GaussianSequence(int mean, int deviation) {
+        this.mean = mean;
+        this.deviation = deviation;
     }
 
     public double next() {
-        double val = 0.0;
-        synchronized (generators) {
-            for (SequenceGenerator generator : generators) {
-                val += generator.next();
-            }
-        }
-        return val;
+        return random.nextGaussian()*deviation;
     }
 
 

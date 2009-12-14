@@ -16,9 +16,10 @@
 
 package com.voidsearch.voidbase.console.protocol.commands
 
-class InvalidCommand extends VoidBaseConsoleCommand {
+case class InvalidCommand(cmd: String) extends VoidBaseConsoleCommand {
 
   def exec() = {
+    println("ERROR | invalid syntax: " + cmd)
   }
   
 }
