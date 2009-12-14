@@ -32,11 +32,14 @@ class VoidBaseConsoleSession(_hostname: String) {
   var commandQueue = new ListBuffer[VoidBaseConsoleCommand]();
 
   // session symbol table
-  var symTable = new HashMap[String, String]();
+  var symTable = new HashMap[SessionObject, Any]();
 
-
-  def containsVariable(variable : String) {
+  def containsVariable(variable : SessionObject):boolean = {
     return symTable.contains(variable)
+  }
+
+  def addVariable(variable: SessionObject, value: Any) = {
+    symTable.put(variable,value);
   }
 
   def getCommand() : VoidBaseConsoleCommand = {
@@ -47,7 +50,6 @@ class VoidBaseConsoleSession(_hostname: String) {
     return cmd;
 
   }
-
 
 }
 

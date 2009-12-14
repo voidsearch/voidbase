@@ -14,23 +14,24 @@
  * the License.
  */
 
-package com.voidsearch.voidbase.console.syntax
+package com.voidsearch.voidbase.console.session
 
-/**
- * single-object aggregate of all reserved keywords
- */
+case class SessionObject(name : String, _type: String) {
 
-object ConsoleSyntax {
+  def getName(): String = {
+    return name;
+  }
 
-  val EXIT             = """exit|EXIT""".r
-  val QUIT             = """quit|QUIT""".r
-  val HELP             = """help|HELP""".r
-  val LIST             = """list|LIST""".r
+  def getType(): String = {
+    return _type;
+  }
 
-  val SET_DOMAIN       = """domain|DOMAIN (.*)""".r
-  val GET_DOMAIN       = """domain|DOMAIN""".r
-  val CREATE_SEQUENCE  = """seq (.*) <- (.*)""".r
-  val CREATE_QUEUE     = """create queue (.*) size (\d+)""".r
-  val SYMBOL_TABLE     = """symtable|SYMTABLE""".r
-  
+  def isType(otherType : String): boolean = {
+    return _type.equals(otherType)
+  }
+
+  override def hashCode(): Int = {
+    return name.hashCode()
+  }
+
 }
