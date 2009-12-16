@@ -33,9 +33,13 @@ class VoidBaseConsoleSession(_hostname: String) {
 
   // session symbol table
   var symTable = new HashMap[SessionObject, Any]();
-
+  
   def containsVariable(variable : SessionObject):boolean = {
     return symTable.contains(variable)
+  }
+
+  def getVariable(variable : SessionObject):Any = {
+    return symTable.get(variable)
   }
 
   def addVariable(variable: SessionObject, value: Any) = {

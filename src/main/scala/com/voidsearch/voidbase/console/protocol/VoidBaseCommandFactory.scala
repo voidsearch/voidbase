@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 VoidSearch.com
+  * Copyright 2009 VoidSearch.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,38 +22,86 @@ import console.syntax.ConsoleSyntax
 import scala.util.matching.Regex
 import session.VoidBaseConsoleSession
 
+/**
+ * note - chunked structure due to the workaround of scala bug :
+ * http://lampsvn.epfl.ch/trac/scala/ticket/1133
+ * 
+ */
+
 object VoidBaseCommandFactory {
 
   /**
    * factor appropriate command object instance
    * based on passed command string 
-   *
    */
   def getCommand(commandText : String, session : VoidBaseConsoleSession) : VoidBaseConsoleCommand = {
 
-    return commandText match {
+    try { return matchSystemCommand(commandText,session)  } catch {case e => }
+    try { return matchCommonCommand(commandText,session)  } catch {case e => }
+    try { return matchSessionCommand(commandText,session) } catch {case e => }
+    try { return matchQTreeCommand(commandText,session)   } catch {case e => }
+    return InvalidCommand(commandText)
 
+  }
+
+  /**
+   * get system commands
+   */
+  def matchSystemCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
+    return commandText match {
+      case ConsoleSyntax.TEST()
+      => TestCommand(session)
       case ConsoleSyntax.EXIT()
-        => ExitCommand(session)
+      => ExitCommand(session)
       case ConsoleSyntax.QUIT()
-        => ExitCommand(session)
+      => ExitCommand(session)
       case ConsoleSyntax.HELP()
-        => HelpCommand(session)
-      case ConsoleSyntax.GET_DOMAIN()
-        => GetDomainCommand(session)
-      case ConsoleSyntax.SET_DOMAIN(domain)
-        => SetDomainCommand(session,domain)
+      => HelpCommand(session)
+      case ConsoleSyntax.SYMBOL_TABLE()
+        => DumpSymbolTableCommand(session)
+      case _ => throw new Exception()
+    }
+  }
+
+  /**
+   * get commands common for all apps
+   */
+  def matchCommonCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
+    return commandText match {
       case ConsoleSyntax.LIST()
         => ListCommand(session)
-      case ConsoleSyntax.CREATE_SEQUENCE(variable,sequenceClass)
-        => CreateSequenceCommand(session,variable,sequenceClass)
-      case ConsoleSyntax.CREATE_QUEUE(name,size)
-        => CreateQueueCommand(session, name, size) 
-
-      case _ => InvalidCommand(commandText)
-
+      case _ => throw new Exception()
     }
 
+  }
+
+  /**
+   * get session-manipulation commands
+   */
+  def matchSessionCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
+    return commandText match {
+      case ConsoleSyntax.GET_DOMAIN()
+        => GetDomainCommand(session)
+      case ConsoleSyntax.SET_DOMAIN(cmd,domain)
+        => SetDomainCommand(session,domain)
+      case _ => throw new Exception()
+    }
+  }
+
+
+  /**
+   * get qtree-specific commands
+   */
+  def matchQTreeCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
+    return commandText match {
+      case ConsoleSyntax.CREATE_SEQUENCE(cmd,variable,sequenceClass)
+        => CreateSequenceCommand(session,variable,sequenceClass)
+      case ConsoleSyntax.SEQUENCE_NEXT_VALUE(variable)
+        => NextSequenceValueCommand(session,variable)
+      case ConsoleSyntax.CREATE_QUEUE(name,size)
+        => CreateQueueCommand(session, name, size)
+      case _ => throw new Exception()
+    }
   }
 
 

@@ -29,7 +29,13 @@ case class HelpCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleC
     println("List of all voidbase commands: ")
     println()
     println("DOMAIN   : domain to use (QUEUE|CACHE|BROKER)")
+    println("SYMTABLE : list contents of symbol table")
     println("LIST     : list all entries within given DOMAIN")
+    println("SEQ      : create sequence [ SEQ [SequenceName] <- [SequenceGenerator]")
+    println("           example : (SEQ test <- GaussianSequence())")
+    println("CREATE   : create element")
+    println("DELETE   : delete element")
+    println("QUIT     : exit console")
     println()
   }
 

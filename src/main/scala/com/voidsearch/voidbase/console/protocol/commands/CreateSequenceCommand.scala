@@ -16,7 +16,9 @@
 
 package com.voidsearch.voidbase.console.protocol.commands
 
-import session.VoidBaseConsoleSession
+
+import quant.timeseries.{GaussianSequence, SequenceGenerator}
+import session.{SessionObject, VoidBaseConsoleSession}
 
 case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: String, sequenceClass : String) extends VoidBaseConsoleCommand {
 
@@ -32,14 +34,18 @@ case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: 
     var canonicalPath = SEQUENCE_GENERATOR_PACKAGE + "." + className 
 
     try {
-      val obj = Class.forName(canonicalPath);
+//      val obj = Class.forName(canonicalPath);
+//      var seqGenerator = obj.newInstance()
+//      println("||||||||||||||| : " + seqGenerator + "\tnext: " + seqGenerator)
+
+      var seqGenerator = new GaussianSequence()
+      println("NEXT: " + seqGenerator.next())
+
+      session.addVariable(SessionObject(variableName,"SequenceGenerator"),seqGenerator)
+      println("sequence: (" + variableName + ") ; generator: (" + canonicalPath + ")")
     }  catch {
-        case e => println("error creating sequence: " + className)
+        case e => println("ERROR: failed to create sequence: " + className)
     }
-
-    println("creating sequence: " + canonicalPath)
-
-
   }
 
 }
