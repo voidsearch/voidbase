@@ -17,7 +17,7 @@
 package com.voidsearch.voidbase.console.protocol.commands
 
 import collection.mutable.HashMap
-import quant.timeseries.GaussianSequence
+import quant.timeseries.{SequenceGenerator, GaussianSequence}
 import scala.util.matching.Regex
 import session.VoidBaseConsoleSession
 
@@ -26,11 +26,21 @@ case class TestCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleC
   def exec() = {
 
     var symTable = new HashMap[String, Any]();
-    symTable.put("bla", new GaussianSequence())
-    var seq = symTable.get("bla")
-    println("NEXT : " + seq + "\t")
-    println("Test Command")
+    symTable.put("bla",new GaussianSequence())
+
+    var seq = symTable.get("bla") match {
+      case Some(s) => s
+      case None => ""
+    }
+
+    println("NEXT : " + seq)
+    println("CAST : " + seq)
+
   }
+
+  
+
+
 
 }
 

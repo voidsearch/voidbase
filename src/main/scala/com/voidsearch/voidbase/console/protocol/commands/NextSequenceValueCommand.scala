@@ -27,14 +27,14 @@ case class NextSequenceValueCommand(session: VoidBaseConsoleSession, variable: S
     var generatorVariable = SessionObject(variable,"SequenceGenerator")
     if (session.containsVariable(generatorVariable)) {
       
-      var generator = session.getVariable(generatorVariable)
-    //.asInstanceOf[com.voidsearch.voidbase.quant.timeseries.GaussianSequence]
-      println(generator)
-
-      println("RENDER NEXT !!!!!!!!!! : " + variable + "\t" + generatorVariable + "\t" + generator + "\t");
+      var generator = session.getVariable(generatorVariable) match {
+        case Some(s) => s
+        case None => ""
+      }
 
       if (generator.isInstanceOf[SequenceGenerator]) {
         println(generator.asInstanceOf[SequenceGenerator].next())
+
       } else {
         println("NOT INSTANCE OF SequenceGenerator : " + generator)
         println("SOME : " + generator.asInstanceOf[Some[SequenceGenerator]])

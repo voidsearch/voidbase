@@ -34,15 +34,11 @@ case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: 
     var canonicalPath = SEQUENCE_GENERATOR_PACKAGE + "." + className 
 
     try {
-//      val obj = Class.forName(canonicalPath);
-//      var seqGenerator = obj.newInstance()
-//      println("||||||||||||||| : " + seqGenerator + "\tnext: " + seqGenerator)
 
-      var seqGenerator = new GaussianSequence()
-      println("NEXT: " + seqGenerator.next())
-
+      val obj = Class.forName(canonicalPath);
+      var seqGenerator = obj.newInstance()
       session.addVariable(SessionObject(variableName,"SequenceGenerator"),seqGenerator)
-      println("sequence: (" + variableName + ") ; generator: (" + canonicalPath + ")")
+
     }  catch {
         case e => println("ERROR: failed to create sequence: " + className)
     }
