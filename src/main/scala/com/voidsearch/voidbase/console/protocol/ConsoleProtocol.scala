@@ -24,6 +24,7 @@ import jline.{Completor, ArgumentCompletor, SimpleCompletor, ConsoleReader}
 object ConsoleProtocol {
 
   val keywords = List(
+                      // reserved keywords
                       "HELP",
                       "DOMAIN",
                       "SYMTABLE",
@@ -33,6 +34,9 @@ object ConsoleProtocol {
                       "DELETE",
                       "EXIT",
                       "QUIT"
+                      // queue-specific
+//                      "ARIMASeries","ComplexSequence","GaussianSequence","LinearSeries","NumericalSequence",
+//                      "PolynomialSeries","RandomSequence","RandomWalk"
                       )
 
   def printHeader(out : PrintWriter) {
