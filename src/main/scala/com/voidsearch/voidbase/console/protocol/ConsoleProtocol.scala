@@ -18,8 +18,22 @@ package com.voidsearch.voidbase.console.protocol
 
 
 import java.io.PrintWriter
+import java.util.LinkedList
+import jline.{Completor, ArgumentCompletor, SimpleCompletor, ConsoleReader}
 
 object ConsoleProtocol {
+
+  val keywords = List(
+                      "HELP",
+                      "DOMAIN",
+                      "SYMTABLE",
+                      "LIST",
+                      "SEQ",
+                      "CREATE",
+                      "DELETE",
+                      "EXIT",
+                      "QUIT"
+                      )
 
   def printHeader(out : PrintWriter) {
 
@@ -35,5 +49,23 @@ object ConsoleProtocol {
   def getCursor() : String = {
     return "void> "
   }
+
+  def setCompetors(reader : ConsoleReader) = {
+
+    var keywordCompletors: Array[String] = new Array[String](keywords.size)
+    var pos = 0
+
+    for (keyword <- keywords) {
+      keywordCompletors(pos) = keyword
+      pos += 1
+    }
+
+    var completors = new LinkedList[Completor]();
+    completors.add(new SimpleCompletor(keywordCompletors))
+    
+    reader.addCompletor(new ArgumentCompletor(completors));
+    
+  }
+
   
 }

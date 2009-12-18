@@ -48,9 +48,9 @@ class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
 
   def getCommand() : VoidBaseConsoleCommand = {
 
-    //var commandText = Console.readLine();
-
     var commandText = reader.readLine(ConsoleProtocol.getCursor())
+    commandText = commandText.trim()
+    
     var cmd = VoidBaseCommandFactory.getCommand(commandText, this)
     commandQueue += cmd;
     return cmd;

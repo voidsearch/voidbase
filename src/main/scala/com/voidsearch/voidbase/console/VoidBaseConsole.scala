@@ -24,7 +24,7 @@ package com.voidsearch.voidbase.console
 
 import java.io.PrintWriter
 import java.util.LinkedList
-import jline.{ArgumentCompletor, ConsoleReader}
+import jline.{Completor, SimpleCompletor, ArgumentCompletor, ConsoleReader}
 import protocol.ConsoleProtocol
 import session.VoidBaseConsoleSession
 import syntax.ConsoleSyntax
@@ -36,10 +36,10 @@ object VoidBaseConsole {
 
     var reader = new ConsoleReader();
     reader.setBellEnabled(false);
-    var completors = new LinkedList();
-    reader.addCompletor(new ArgumentCompletor(completors));
-    var out = new PrintWriter(System.out);
 
+    ConsoleProtocol.setCompetors(reader)
+
+    var out = new PrintWriter(System.out);
     ConsoleProtocol.printHeader(out)
 
     var session = new VoidBaseConsoleSession("localhost:8080",reader);
