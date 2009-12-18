@@ -22,6 +22,9 @@
 
 package com.voidsearch.voidbase.console
 
+import java.io.PrintWriter
+import java.util.LinkedList
+import jline.{ArgumentCompletor, ConsoleReader}
 import protocol.ConsoleProtocol
 import session.VoidBaseConsoleSession
 import syntax.ConsoleSyntax
@@ -31,10 +34,15 @@ object VoidBaseConsole {
 
   def main(args: Array[String]) {
 
-    ConsoleProtocol.printHeader()
-    ConsoleProtocol.printCursor()
+    var reader = new ConsoleReader();
+    reader.setBellEnabled(false);
+    var completors = new LinkedList();
+    reader.addCompletor(new ArgumentCompletor(completors));
+    var out = new PrintWriter(System.out);
 
-    var session = new VoidBaseConsoleSession("localhost:8080");
+    ConsoleProtocol.printHeader(out)
+
+    var session = new VoidBaseConsoleSession("localhost:8080",reader);
     var cmd = session.getCommand();
 
     while (!(cmd.isInstanceOf[ExitCommand])) {
@@ -47,9 +55,9 @@ object VoidBaseConsole {
         case e => e.printStackTrace()
       }
 
-      ConsoleProtocol.printCursor()
+      out.write(ConsoleProtocol.getCursor() + "\n")
       cmd = session.getCommand();
-      
+
     }
 
     cmd.exec()

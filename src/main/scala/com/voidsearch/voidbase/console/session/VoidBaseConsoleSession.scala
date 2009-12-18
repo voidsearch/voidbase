@@ -18,10 +18,10 @@ package com.voidsearch.voidbase.console.session
 
 
 import collection.mutable.{HashMap, ListBuffer}
+import jline.ConsoleReader
 import protocol.commands.VoidBaseConsoleCommand
-import protocol.VoidBaseCommandFactory
-
-class VoidBaseConsoleSession(_hostname: String) {
+import protocol.{ConsoleProtocol, VoidBaseCommandFactory}
+class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
 
   // session-level variables
   var hostname = _hostname
@@ -48,7 +48,9 @@ class VoidBaseConsoleSession(_hostname: String) {
 
   def getCommand() : VoidBaseConsoleCommand = {
 
-    var commandText = Console.readLine();
+    //var commandText = Console.readLine();
+
+    var commandText = reader.readLine(ConsoleProtocol.getCursor())
     var cmd = VoidBaseCommandFactory.getCommand(commandText, this)
     commandQueue += cmd;
     return cmd;

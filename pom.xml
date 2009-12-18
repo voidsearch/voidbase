@@ -264,7 +264,12 @@
       <groupId>org.apache.hadoop</groupId>
       <artifactId>avro</artifactId>
       <version>1.2.0</version>
-    </dependency> 
+    </dependency>
+    <dependency>
+      <groupId>jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>0.9.94</version>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>

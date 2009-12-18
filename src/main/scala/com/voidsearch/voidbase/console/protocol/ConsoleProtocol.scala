@@ -16,21 +16,24 @@
 
 package com.voidsearch.voidbase.console.protocol
 
+
+import java.io.PrintWriter
+
 object ConsoleProtocol {
 
-  def printHeader() {
+  def printHeader(out : PrintWriter) {
 
     println()
-    println("Welcome to voidbase console")
-    println("voidbase version: 0.017")
+    println("Welcome to voidbase console\r\n")
+    println("voidbase version: 0.017\r\n")
     println()
     println("type 'help' for help")
     println()
 
   }
 
-  def printCursor() {
-    print("void> ")
+  def getCursor() : String = {
+    return "void> "
   }
   
 }
