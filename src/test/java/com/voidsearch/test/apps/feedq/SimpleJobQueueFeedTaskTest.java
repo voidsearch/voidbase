@@ -5,7 +5,6 @@ import com.voidsearch.voidbase.storage.jobqueue.JobQueue;
 import com.voidsearch.voidbase.storage.jobqueue.JobRequest;
 import com.voidsearch.voidbase.storage.jobqueue.JobResult;
 import com.voidsearch.voidbase.storage.jobqueue.SimpleJobResult;
-import com.voidsearch.voidbase.apps.feedq.connector.twitter.TwitterGeoFeedFetcher;
 import com.voidsearch.voidbase.supervision.SupervisionException;
 
 /**
@@ -31,8 +30,6 @@ public class SimpleJobQueueFeedTaskTest {
     public class TwitterGeoFeedRequest extends JobRequest {
         public JobResult execute() {
             JobResult result = new SimpleJobResult();
-            TwitterGeoFeedFetcher fetcher = new TwitterGeoFeedFetcher();
-            result.setResult(fetcher.fetch());
             return result;
         }
 

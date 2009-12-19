@@ -22,18 +22,25 @@ package com.voidsearch.voidbase.console.syntax
 
 object ConsoleSyntax {
 
+  // system commands
   val TEST                  = """test|TEST""".r
   val EXIT                  = """exit|EXIT""".r
   val QUIT                  = """quit|QUIT""".r
   val HELP                  = """help|HELP""".r
   val LIST                  = """list|LIST""".r
 
+  // environment operations
   val SET_DOMAIN            = """(domain|DOMAIN) (.*)""".r
   val GET_DOMAIN            = """domain|DOMAIN""".r
-  val CREATE_SEQUENCE       = """(seq|SEQ) (.*) <- (.*)""".r
-  val SEQUENCE_NEXT_VALUE   = """(.*)\.next\(\)""".r
-  val CREATE_QUEUE          = """create queue (.*) size (\d+)""".r
   val SYMBOL_TABLE          = """symtable|SYMTABLE""".r
 
+  // sequence manipulation
+  val CREATE_SEQUENCE       = """(seq|SEQ) (.*) <- (.*)""".r
+  val SEQUENCE_NEXT_VALUE   = """(.*)\.next\(\)""".r
+  val DIRECT_SEQUENCE       = """(seq|SEQ) (.*) <- \[(.*)\]""".r
+
+  // queue manipulation
+  val CREATE_QUEUE          = """create queue (.*) size (\d+)""".r
   
+
 }
