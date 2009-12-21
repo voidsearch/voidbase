@@ -16,12 +16,16 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.quant
 
+import collection.mutable.ListBuffer
+import console.syntax.SequenceMapping
+import java.util.ArrayList
 import session.{SessionObject, VoidBaseConsoleSession}
 import voidbase.quant.timeseries.DirectSequence
+import voidbase.util.GenericUtil
 
 case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: String, sequenceString : String) extends VoidBaseConsoleCommand {
 
-  val SEQUENCE_GENERATOR_PACKAGE = "com.voidsearch.voidbase.quant.timeseries"
+  val VOIDBASE_PACKAGE = "com.voidsearch.voidbase"
   
   def exec() = {
 
@@ -50,23 +54,68 @@ case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: 
   // reqister sequence generator class
   def registerClass() = {
 
-    var className = sequenceString
-    if (className.indexOf("(") > -1) {
-      className = className.substring(0,(className.indexOf("(")))
+    var className = getClassName(sequenceString)
+
+    if (SequenceMapping.map.contains(className)) {
+      className = SequenceMapping.map(className)
     }
 
-    var canonicalPath = SEQUENCE_GENERATOR_PACKAGE + "." + className
+    var classParams: ListBuffer[String] = getClassParams(sequenceString)
+
+    var canonicalPath = VOIDBASE_PACKAGE + "." + className
 
     try {
 
       val obj = Class.forName(canonicalPath);
-      var seqGenerator = obj.newInstance()
-      session.addVariable(SessionObject(variableName,"SequenceGenerator"),seqGenerator)
 
-    }  catch {
-        case e => println("ERROR: failed to create sequence: " + className)
+      if (classParams.size == 0) {
+
+        var seqGenerator = obj.newInstance()
+        session.addVariable(SessionObject(variableName, "SequenceGenerator"), seqGenerator)
+
+      } else {
+
+        var constructors = obj.getDeclaredConstructors()
+        for (constructor <- constructors) {
+
+          var params = new ArrayList[String]()
+          for (param <- classParams) {
+            params.add(param)
+          }
+
+          var paramTypes = constructor.getParameterTypes()
+
+          if (paramTypes.size == classParams.size) {
+
+            var seqGenerator = GenericUtil.getInstance(constructor, params);
+            session.addVariable(SessionObject(variableName, "SequenceGenerator"), seqGenerator)
+
+          }
+
+        }
+
+      }      
+
+    } catch {
+      case e => println("ERROR: failed to create sequence: " + className)
     }
 
+  }
+
+  def getClassName(_classString: String) : String = {
+    return _classString.substring(0,_classString.indexOf("("))
+  }
+
+  def getClassParams(_classText: String) : ListBuffer[String] = {
+    var result = new ListBuffer[String]()
+    var content = _classText.substring(_classText.indexOf("(") + 1,_classText.indexOf(")"))
+    if (content.length > 0) {
+      var parts = content.split(",")
+      for (part:String <- parts) {
+        result += part.replaceAll("\"","")
+      }
+    }
+    return result
   }
 
 }

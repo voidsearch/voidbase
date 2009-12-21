@@ -50,5 +50,5 @@ object ConsoleSyntax {
   // queue manipulation
   val CREATE_QUEUE          = """create queue (.*) size (\d+)""".r
   
-
+  
 }

@@ -34,7 +34,7 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
     protected HttpClient client = new HttpClient();
 
     protected static String hostname;
-    protected static String module;
+    protected static String module;     // depreciate this
 
     public VoidBaseHttpClient() {
     }

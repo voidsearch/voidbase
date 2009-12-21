@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.lang.reflect.Constructor;
 
 public class GenericUtil {
   protected static final Logger logger = LoggerFactory.getLogger(GenericUtil.class.getName());
@@ -111,4 +113,11 @@ public class GenericUtil {
 
     return false;
   }
+
+  // reflection
+
+   public static Object getInstance(Constructor constructor, List params) throws Exception {
+       return constructor.newInstance(params.toArray());
+   }
+
 }
