@@ -27,6 +27,15 @@ object ConsoleSyntax {
   val EXIT                  = """exit|EXIT""".r
   val QUIT                  = """quit|QUIT""".r
   val HELP                  = """help|HELP""".r
+
+  val RESTORE_SESSION       = """session.restore\(\"(.*)\"\)""".r
+  val SAVE_SESSION          = """session.save\(\"(.*)\"\)""".r
+  val EXEC_SCRIPT           = """script.exec\((.*)\)""".r
+
+  // void global commands
+  val MODULES               = """modules|MODULES""".r
+
+  // common
   val LIST                  = """list|LIST""".r
 
   // environment operations
@@ -37,7 +46,6 @@ object ConsoleSyntax {
   // sequence manipulation
   val CREATE_SEQUENCE       = """(seq|SEQ) (.*) <- (.*)""".r
   val SEQUENCE_NEXT_VALUE   = """(.*)\.next\(\)""".r
-  val DIRECT_SEQUENCE       = """(seq|SEQ) (.*) <- \[(.*)\]""".r
 
   // queue manipulation
   val CREATE_QUEUE          = """create queue (.*) size (\d+)""".r

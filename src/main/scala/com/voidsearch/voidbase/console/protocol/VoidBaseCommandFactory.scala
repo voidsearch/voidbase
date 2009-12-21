@@ -17,7 +17,16 @@
 package com.voidsearch.voidbase.console.protocol
 
 import commands._
+import common.ListCommand
+import quant.{CreateSequenceCommand, NextSequenceValueCommand}
+
+import queue.CreateQueueCommand
+import system.{ExitCommand, HelpCommand}
+
+import environment._
 import console.syntax.ConsoleSyntax
+
+
 
 import scala.util.matching.Regex
 import session.VoidBaseConsoleSession
@@ -39,6 +48,7 @@ object VoidBaseCommandFactory {
     try { return matchSystemCommand(commandText,session)  } catch {case e => }
     try { return matchCommonCommand(commandText,session)  } catch {case e => }
     try { return matchSessionCommand(commandText,session) } catch {case e => }
+    try { return matchSequenceCommand(commandText,session) } catch {case e => }
     try { return matchQTreeCommand(commandText,session)   } catch {case e => }
     return InvalidCommand(commandText)
 
@@ -84,20 +94,32 @@ object VoidBaseCommandFactory {
         => GetDomainCommand(session)
       case ConsoleSyntax.SET_DOMAIN(cmd,domain)
         => SetDomainCommand(session,domain)
+      case ConsoleSyntax.SAVE_SESSION(outFile)
+        => SaveSessionCommand(session,outFile)
+      case ConsoleSyntax.RESTORE_SESSION(inFile)
+        => RestoreSessionCommand(session,inFile)
       case _ => throw new Exception()
     }
   }
 
-
   /**
-   * get qtree-specific commands
+   * get sequence-creation commands
    */
-  def matchQTreeCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
+  def matchSequenceCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
     return commandText match {
       case ConsoleSyntax.CREATE_SEQUENCE(cmd,variable,sequenceClass)
         => CreateSequenceCommand(session,variable,sequenceClass)
       case ConsoleSyntax.SEQUENCE_NEXT_VALUE(variable)
         => NextSequenceValueCommand(session,variable)
+      case _ => throw new Exception()
+    }
+  }
+
+  /**
+   *  get qtree-specific commands
+   */
+  def matchQTreeCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
+    return commandText match {
       case ConsoleSyntax.CREATE_QUEUE(name,size)
         => CreateQueueCommand(session, name, size)
       case _ => throw new Exception()

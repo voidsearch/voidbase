@@ -17,9 +17,9 @@
 package com.voidsearch.voidbase.console.protocol.commands
 
 import collection.mutable.HashMap
-import quant.timeseries.{SequenceGenerator, GaussianSequence}
 import scala.util.matching.Regex
 import session.VoidBaseConsoleSession
+import voidbase.quant.timeseries.GaussianSequence
 
 case class TestCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

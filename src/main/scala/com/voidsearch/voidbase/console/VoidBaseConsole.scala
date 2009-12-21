@@ -25,10 +25,10 @@ package com.voidsearch.voidbase.console
 import java.io.PrintWriter
 import java.util.LinkedList
 import jline.{Completor, SimpleCompletor, ArgumentCompletor, ConsoleReader}
+import protocol.commands.system.ExitCommand
 import protocol.ConsoleProtocol
 import session.VoidBaseConsoleSession
 import syntax.ConsoleSyntax
-import protocol.commands.ExitCommand
 
 object VoidBaseConsole {
 

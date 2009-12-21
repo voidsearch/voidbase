@@ -28,7 +28,8 @@ class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
   var domain   = ""
   var startTime = System.currentTimeMillis
 
-  // command queue
+  // command history queues
+  var commandTextQueue = new ListBuffer[String]();
   var commandQueue = new ListBuffer[VoidBaseConsoleCommand]();
 
   // session symbol table
@@ -46,12 +47,20 @@ class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
     symTable.put(variable,value);
   }
 
+  // get command from stdin
   def getCommand() : VoidBaseConsoleCommand = {
 
     var commandText = reader.readLine(ConsoleProtocol.getCursor())
     commandText = commandText.trim()
-    
-    var cmd = VoidBaseCommandFactory.getCommand(commandText, this)
+    commandTextQueue += commandText
+    return getCommand(commandText)
+
+  }
+
+  // get command object from given command text
+  def getCommand(commandText : String) : VoidBaseConsoleCommand = {
+
+    var cmd = VoidBaseCommandFactory.getCommand(commandText.trim, this)
     commandQueue += cmd;
     return cmd;
 
