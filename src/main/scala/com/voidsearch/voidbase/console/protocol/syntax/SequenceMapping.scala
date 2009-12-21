@@ -25,15 +25,16 @@ object SequenceMapping {
 
     // quant
 
-    "gaussian"    -> "quant.timeseries.GaussianSequence",
-    "arima"       -> "quant.timeseries.ARIMASeries",
-    "linear"      -> "quant.timeseries.LinearSeries",
-    "polynomial"  -> "quant.timeseries.PolynomialSeries",
-    "random_walk" -> "quant.timeseries.RandomWalk",
+    "gaussian"      -> "quant.timeseries.GaussianSequence",
+    "arima"         -> "quant.timeseries.ARIMASeries",
+    "linear"        -> "quant.timeseries.LinearSeries",
+    "polynomial"    -> "quant.timeseries.PolynomialSeries",
+    "random_walk"   -> "quant.timeseries.RandomWalk",
 
     // feed processing
 
-    "http_load"   -> "quant.feed.HttpLoadTime" 
+    "http.load"     -> "quant.feed.HttpLoadTime",
+    "http.bytes"    -> "quant.feed.HttpByteCount"
 
     )
 
