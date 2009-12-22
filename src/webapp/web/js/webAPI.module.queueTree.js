@@ -38,11 +38,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     var testFields=[
         {
             field:false,
-            queue:'test_series'
+            queue:'zika'
         },
         {
-            field:'mean',
-            queue:'test_series_metadata'
+            field:'entry',
+            queue:'kodi_test'
         },
         {
             field:'microsoft',
@@ -95,6 +95,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             this.API = apiObjectReference;
             this.objectRegister = {};
             this.objectRegister.activeObjects = [];
+            this.objectRegister.objectCounter=0;
             this.registerListeners();
 
         },
@@ -144,7 +145,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         insertNewGridCell:function(){
             var self=this;
-            var nextId=this.objectRegister.activeObjects.length + 1;
+            var nextId=this.objectRegister.objectCounter + 1;
             var HTML=VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
 
 
@@ -159,8 +160,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var queue=testFields[nextId-1].queue;
             var options={};
             options.fetchSize=DEFAULT_FETCH_SIZE;
-            this.registerNewObject(field, queue, gridCellCanvasContainer,options);
 
+            //this.registerNewObject(field, queue, gridCellCanvasContainer,options);
 
             $(gridCellEdit).observe('click',function(event){
                 var element=event.element();
@@ -183,6 +184,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 var qs = self.getComplexData(data.queue, 'queueList');
 
                  var HTML='<select id="cellSettings-queueName">';
+                 HTML+='<option value"-1">-- choose queue --</option>';
                  qs.each(function(queueName){
                     HTML+='<option value="'+queueName+'">'+queueName+'</option>';
                  });
