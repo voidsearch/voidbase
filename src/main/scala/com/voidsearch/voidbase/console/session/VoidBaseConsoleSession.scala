@@ -26,7 +26,7 @@ class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
 
   // session-level variables
   var hostname = _hostname
-  var domain   = ""
+  var domain   = "queue"    // default domain
   var startTime = System.currentTimeMillis
 
   var scheduler = new VoidBaseTaskScheduler()

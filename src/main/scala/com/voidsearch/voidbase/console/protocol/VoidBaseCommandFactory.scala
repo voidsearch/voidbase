@@ -17,7 +17,7 @@
 package com.voidsearch.voidbase.console.protocol
 
 import commands._
-import common.{ProcessListCommand, DetachCommand, ListCommand}
+import common.{KillProcessCommand, ProcessListCommand, DetachCommand, ListCommand}
 import quant.{CreateSequenceCommand, NextSequenceValueCommand}
 
 import queue.{InsertToQueueCommand, CreateQueueCommand}
@@ -96,6 +96,8 @@ object VoidBaseCommandFactory {
     return commandText match {
       case ConsoleSyntax.PROCESS_LIST()
         => ProcessListCommand(session)
+      case ConsoleSyntax.KILL_PROCESS(pid)
+        => KillProcessCommand(session,pid.toInt) 
       case ConsoleSyntax.GET_DOMAIN()
         => GetDomainCommand(session)
       case ConsoleSyntax.SET_DOMAIN(cmd,domain)

@@ -57,7 +57,7 @@ class VoidBaseTaskScheduler extends Actor {
         sched(pool_interval)
         act()
       case ("STOP") =>
-        controller ! ("STOP")
+        controller.stop = true
         exit()
       case msg =>
         act()
@@ -66,6 +66,12 @@ class VoidBaseTaskScheduler extends Actor {
 
   def sched(poll_interval: Int) {
 
+    // process tasks from task queue
+    for (task <- taskQueue) {
+      task.exec()
+    }
+
+    // process scheduled tasks
     for (pid <- scheduledTasks.keys) {
       if ((poll_interval % taskIntervals(pid)) == 0) {
         scheduledTasks(pid).exec()
@@ -84,6 +90,13 @@ class VoidBaseTaskScheduler extends Actor {
     }
   }
 
+  // remove single pid from task queue
+  // (todo : add synchronization blocks)
+  def killPid(pid : Int) {
+    scheduledTasks -= pid
+    taskIntervals -= pid
+    taskDescription -= pid
+  }
 
 }
 
@@ -94,16 +107,16 @@ class VoidBaseTaskSchedulerController(scheduler: VoidBaseTaskScheduler) extends 
   val MAX_COUNTER   = 1000000
   var counter = 0
 
+  var stop = false
+
   def act() {
     while(true) {
       counter = (counter + POLL_INTERVAL)%MAX_COUNTER
       scheduler ! ("SCHED",counter)
       Thread.sleep(POLL_INTERVAL)
-
-      react {
-        case ("STOP") => exit()
+      if (stop) {
+        exit()
       }
-      
     }
   }
   

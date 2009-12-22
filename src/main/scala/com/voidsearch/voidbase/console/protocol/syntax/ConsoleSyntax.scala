@@ -39,6 +39,7 @@ object ConsoleSyntax {
   // void global commands
   val MODULES               = """modules|MODULES""".r
   val PROCESS_LIST          = """ps""".r
+  val KILL_PROCESS          = """kill (\d+)""".r 
 
   // common
   val LIST                  = """list|LIST""".r
