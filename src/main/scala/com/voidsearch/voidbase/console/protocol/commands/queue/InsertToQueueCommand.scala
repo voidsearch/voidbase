@@ -54,7 +54,7 @@ case class InsertToQueueCommand (session: VoidBaseConsoleSession, queue: String,
 
   def getQueueEntry(value : Any): String = {
     //return "<entry>" + value + "</entry>"
-    return value
+    return value.toString();
   }
 
 

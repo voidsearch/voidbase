@@ -24,18 +24,18 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     // private properties
     var defaultObjectRefreshRate = 8000; //miliseconds
 
-    var ADD_NEW_GRID_ELEMENT='addNewGridElement';
-    var QT_CANVAS='qtCanvas';
-    var QT_VIEW='qtView';
-    var GRID_CONTAINER='gridContainer';
+    var ADD_NEW_GRID_ELEMENT = 'addNewGridElement';
+    var QT_CANVAS = 'qtCanvas';
+    var QT_VIEW = 'qtView';
+    var GRID_CONTAINER = 'gridContainer';
 
-    var GRID_CELL='gridCell';
-    var GRID_CELL_EDIT='gridCellEdit';
-    var GRID_CELL_CANVAS_CONTAINER='gridCellCanvasContainer';
-    var GRID_CELL_SETTINGS='gridCellSettings';
-    var GRID_CELL_SETTINGS_SOURCE_QUEUE='cellChartSourceQueue';
-    var DEFAULT_FETCH_SIZE=500;
-    var testFields=[
+    var GRID_CELL = 'gridCell';
+    var GRID_CELL_EDIT = 'gridCellEdit';
+    var GRID_CELL_CANVAS_CONTAINER = 'gridCellCanvasContainer';
+    var GRID_CELL_SETTINGS = 'gridCellSettings';
+    var GRID_CELL_SETTINGS_SOURCE_QUEUE = 'cellChartSourceQueue';
+    var DEFAULT_FETCH_SIZE = 500;
+    var testFields = [
         {
             field:false,
             queue:'zika'
@@ -57,7 +57,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             queue:'twitter'
         }
     ];
-
+    /**
+     * @param fieldName
+     * @param JSONData
+     * @return Array
+     */
     var getFieldData = function(fieldName, JSONData) {
 
         var entries = [];
@@ -95,12 +99,13 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             this.API = apiObjectReference;
             this.objectRegister = {};
             this.objectRegister.activeObjects = [];
-            this.objectRegister.objectCounter=0;
+            this.objectRegister.activeContainers = {};
+            this.objectRegister.objectCounter = 0;
             this.registerListeners();
 
         },
 
-        //requre map
+        //require map
         requireMap:{
             'qtCanvas':'queuetree::home'
         },
@@ -108,7 +113,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         home:function(params) {
             this.homeParams = params;
-            this.API.includeTemplate($('main-ajax-content'),'queueTreeTemplate');
+            this.API.includeTemplate($('main-ajax-content'), 'queueTreeTemplate');
         },
 
 
@@ -118,154 +123,194 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             }
         },
 
-        newGrid:function(){
+        newGrid:function() {
             if (this.API.requiresNode('qtCanvas', this)) {
-                var self=this;
+                var self = this;
 
                 this.objectRegister.activeObjects = [];
 
-                this.API.includeTemplate($(QT_CANVAS),'queueTreeNewGrid');
+                this.API.includeTemplate($(QT_CANVAS), 'queueTreeNewGrid');
 
 
                 this.gridUpdater(0);
 
                 // add button events
-                $(ADD_NEW_GRID_ELEMENT).observe('click',function(){
+                $(ADD_NEW_GRID_ELEMENT).observe('click', function() {
                     self.insertNewGridCell();
                     $(ADD_NEW_GRID_ELEMENT).blur();
                 });
 
-                $('cellSettingsClose').observe('click',function(event){
+                $('cellSettingsClose').observe('click', function() {
                     $(GRID_CELL_SETTINGS).hide();
                 });
 
-                $('cellSettingsCloseButton').observe('click',function(event){
+                $('cellSettingsCloseButton').observe('click', function() {
                     $(GRID_CELL_SETTINGS).hide();
                 });
 
-                $('cellSettingsSave').observe('click',function(event){
-                    self.saveGridCellSettings();       
+                $('cellSettingsSave').observe('click', function() {
+                    self.saveGridCellSettings();
                 });
-
 
 
             }
         },
 
-        saveGridCellSettings:function(){
-           var queue=$('cellSettings-queueName').value;
-           var queueChartType=$('cellSettings-chartType').value;
+        saveGridCellSettings:function() {
+            var queue = $('cellSettings-queueName').value;
+            var queueChartType = $('cellSettings-chartType').value;
+            var fieldName = false;
+            try {
+                if ($('cellSettings-field') != null) {
+                    fieldName = $('cellSettings-field').value;
+                } else {
+                    throw "no such DOM element";
+                }
+            } catch (e) {
+                console.log(e);
+            }
 
-            console.log(queue, queueChartType);
+            if (queue != '-1') {
+
+                var gridCellCanvasContainer = GRID_CELL_CANVAS_CONTAINER + '_' + this.cellSettingsId;
+                var options = {};
+                options.fetchSize = DEFAULT_FETCH_SIZE;
+                options.cellId = this.cellSettingsId;
+                options.type = queueChartType;
+
+                // insert new or update existing cell
+                this.registerNewObject(fieldName, queue, gridCellCanvasContainer, options);
+                // hide settings window
+                $(GRID_CELL_SETTINGS).hide();
+
+            }
+            console.log(this.cellSettingsId, queue + '-' + queueChartType + '-' + fieldName);
 
         },
 
-        insertNewGridCell:function(){
-            var self=this;
-            var nextId=this.objectRegister.objectCounter + 1;
+        insertNewGridCell:function() {
+            var self = this;
+            var nextId = this.objectRegister.objectCounter + 1;
             this.objectRegister.objectCounter += 1;
-            var HTML=VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
+            var HTML = VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
 
 
-
-            HTML=HTML.replace(/\%id\%/g,nextId);
+            HTML = HTML.replace(/\%id\%/g, nextId);
             $(GRID_CONTAINER).insert(HTML);
 
-            var gridCellCanvasContainer=GRID_CELL_CANVAS_CONTAINER+'_'+nextId;
-            var gridCell=GRID_CELL+'_'+nextId;
-            var gridCellEdit=GRID_CELL_EDIT+'_'+nextId;
-            var field=testFields[nextId-1].field;
-            var queue=testFields[nextId-1].queue;
-            var options={};
-            options.fetchSize=DEFAULT_FETCH_SIZE;
+            var gridCellCanvasContainer = GRID_CELL_CANVAS_CONTAINER + '_' + nextId;
+            var gridCell = GRID_CELL + '_' + nextId;
+            var gridCellEdit = GRID_CELL_EDIT + '_' + nextId;
+            var field = testFields[nextId - 1].field;
+            var queue = testFields[nextId - 1].queue;
+            var options = {};
+            options.fetchSize = DEFAULT_FETCH_SIZE;
 
             //this.registerNewObject(field, queue, gridCellCanvasContainer,options);
 
-            $(gridCellEdit).observe('click',function(event){
-                var element=event.element();
-                self.gridCellEditHandler(element,event);
+            $(gridCellEdit).observe('click', function(event) {
+                var element = event.element();
+                self.gridCellEditHandler(element, event);
 
             });
 
 
-
         },
 
-        gridCellEditHandler:function(element,event){
-            var self=this;
-            var gridContainerOffset=$(GRID_CONTAINER).cumulativeOffset();
-            var buttonOffset=$(element).cumulativeOffset();
-            var gridContainerWidth=$(GRID_CONTAINER).getWidth();
-            var gridCellSettingsBoxWidth=$(GRID_CELL_SETTINGS).getWidth();
+        gridCellEditHandler:function(element, event) {
+            var self = this;
+            var gridContainerOffset = $(GRID_CONTAINER).cumulativeOffset();
+            var buttonOffset = $(element).cumulativeOffset();
+            var gridContainerWidth = $(GRID_CONTAINER).getWidth();
+            var gridCellSettingsBoxWidth = $(GRID_CELL_SETTINGS).getWidth();
 
             this.API.core.AJAXGetJSON('/webapi/queuetree/?method=LIST', function(data) {
                 var qs = self.getComplexData(data.queue, 'queueList');
 
-                 var HTML='<select id="cellSettings-queueName">';
-                 HTML+='<option value="-1">-- choose queue --</option>';
-                 qs.each(function(queueName){
-                    HTML+='<option value="'+queueName+'">'+queueName+'</option>';
-                 });
-                 HTML+='</select >';
+                var HTML = '<select id="cellSettings-queueName">';
+                HTML += '<option value="-1">-- choose queue --</option>';
+                qs.each(function(queueName) {
+                    HTML += '<option value="' + queueName + '">' + queueName + '</option>';
+                });
+                HTML += '</select >';
 
                 $(GRID_CELL_SETTINGS_SOURCE_QUEUE).update(HTML);
 
-                $('cellSettings-queueName').observe('change',function(event){
-                    var queueName=$('cellSettings-queueName').value;
+                $('cellSettings-queueName').observe('change', function() {
+                    var queueName = $('cellSettings-queueName').value;
                     self.gridCellEditFetchFields(queueName);
                 });
 
             });
 
             $(GRID_CELL_SETTINGS_SOURCE_QUEUE).update('Loading...');
-            
 
-            var id=element.id.split('_');
-            id=id[1];
 
-            if($(GRID_CELL_SETTINGS).style.display=='none'){
-                $(GRID_CELL_SETTINGS).show();                                                   
-                $(GRID_CELL_SETTINGS).style.top=  (buttonOffset[1] - gridContainerOffset[1]) +'px';
+            var id = element.id.split('_');
+            id = id[1];
+            this.cellSettingsId = id;
 
-                var left=event.pointerX() - 150;
+            if ($(GRID_CELL_SETTINGS).style.display == 'none') {
+                $(GRID_CELL_SETTINGS).show();
+                $(GRID_CELL_SETTINGS).style.top = (buttonOffset[1] - gridContainerOffset[1]) + 'px';
+
+                var left = event.pointerX() - 150;
 
                 //compensate if out of screen
-                if((left+gridCellSettingsBoxWidth) > gridContainerWidth){
-                    left=(gridContainerWidth - gridCellSettingsBoxWidth);
+                if ((left + gridCellSettingsBoxWidth) > gridContainerWidth) {
+                    left = (gridContainerWidth - gridCellSettingsBoxWidth);
                 }
 
-                $(GRID_CELL_SETTINGS).style.left=left+'px';
-            }else{
+                $(GRID_CELL_SETTINGS).style.left = left + 'px';
+            } else {
                 $(GRID_CELL_SETTINGS).hide();
             }
-            
+
         },
 
 
-        gridCellEditFetchFields:function(queueName){
+        gridCellEditFetchFields:function(queueName) {
 
-            var self=this;
+            var self = this;
 
-            if(queueName!='-1'){
+            if (queueName != '-1') {
                 $('cellSettings-message').update("");
                 //fetch queue to examin type and/or field names
                 //one entry should be enough
-                var url='/webapi/queuetree/?method=GET&queue=' + queueName + '&size=1';
+                var url = '/webapi/queuetree/?method=GET&queue=' + queueName + '&size=1';
                 this.API.core.AJAXGetJSON(url, function(data) {
-                    if(typeof(data.queue.response.queueElements.entry)!='undefined'){
+                    if (typeof(data.queue.response.queueElements.entry) != 'undefined') {
 
-                       var value=data.queue.response.queueElements.entry.val;
-                       var valueType=self._detectType(value);
-                       console.log(value,valueType);
+                        var value = data.queue.response.queueElements.entry.val;
+                        var valueType = self._detectType(value);
+                        //console.log(value,valueType);
 
+                        // IF OBJECT
+                        if (valueType == 'object') {
+                            var fields = self.getComplexData(data.queue, 'queueElements');
+                            console.log(fields);
+                            var HTML = 'Field <select id="cellSettings-field">';
 
-                    }else{
-                       console.log("UNDEFINED QUEUE!!");
+                            $H(fields[0]).each(function(field) {
+                                HTML += '<option value="' + field[0] + '">' + field[0] + '</option>';
+                            });
+                            HTML += '</select>';
+                            $('cellFieldSourceHolder').update(HTML);
+                        }
+
+                        // IF NUMBER
+                        if (valueType == 'number') {
+                            $('cellFieldSourceHolder').update('');
+                        }
+                    } else {
+                        console.log("UNDEFINED QUEUE!!");
+                        $('cellFieldSourceHolder').update('');
                     }
                 });
-                
-            }else{
+
+            } else {
                 $('cellSettings-message').update("Please Choose Queue!");
+                $('cellFieldSourceHolder').update('');
             }
 
         },
@@ -279,11 +324,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                         this.fetchSize = 100;
                     }
                     this.API.core.AJAXGetJSON('/webapi/queuetree/?method=GET&queue=' + params.name + '&size=' + this.fetchSize, function(data) {
-                            // create simple list html
-                            var HTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
-                            $('qtCanvas').innerHTML = HTML;
-                            // leave more advanced stuff to hanfler funciton
-                            self._viewGridDispatcher(data);
+                        // create simple list html
+                        $('qtCanvas').innerHTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
+
+                        // leave more advanced stuff to handler function
+                        self._viewGridDispatcher(data);
                     });
                 }
             }
@@ -301,7 +346,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var dataType = this._detectType(firstElement);
             this._queueData = data.queue;
 
-            // hanfle according to type
+            // handle according to type
             if (dataType == 'object') {
                 this.fieldNames = this._getPropertyNames(firstElement);
                 this.drawObjectGrid();
@@ -330,9 +375,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
             var feedName = this._queueData.response.queueMetadata.name;
             this.fieldNames.each(function(field, index) {
-                var queueOptions={};
-                queueOptions.fetchSize=DEFAULT_FETCH_SIZE;
-                self.registerNewObject(field, feedName, availableGridFields[index].id,queueOptions);
+                var queueOptions = {};
+                queueOptions.fetchSize = DEFAULT_FETCH_SIZE;
+                self.registerNewObject(field, feedName, availableGridFields[index].id, queueOptions);
             });
 
             this.globalScopeMax = 0;
@@ -351,9 +396,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
 
             var self = this;
-            var timeout=1000;
-            
-            if(self.objectRegister.activeObjects.length>0){
+            var timeout = 1000;
+
+            if (self.objectRegister.activeObjects.length > 0) {
                 // fetch field, queue and chart instance from active objects array
                 var field = self.objectRegister.activeObjects[index][0];
                 var queue = self.objectRegister.activeObjects[index][1];
@@ -362,7 +407,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
                 this.fetchSize = 500;
 
-                this.updateSingleObject(field, queue, objectInstance,queueOptions);
+                this.updateSingleObject(field, queue, objectInstance, queueOptions);
                 //console.log(this.gridContainerWidth);
                 index += 1;
                 if (index >= this.objectRegister.activeObjects.length) {
@@ -373,7 +418,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 //calculate and apply timeout
                 timeout = defaultObjectRefreshRate / this.objectRegister.activeObjects.length;
             }
-            
+
             var timeoutFunc = function () {
                 self.gridUpdater(index);
             };
@@ -381,9 +426,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         },
 
-        updateSingleObject:function(field, queue, chartInstance,queueOptions) {
+        updateSingleObject:function(field, queue, chartInstance, queueOptions) {
             var self = this;
-            var url='/webapi/queuetree/?method=GET&queue=' + queue + '&size=' + queueOptions.fetchSize;
+            var url = '/webapi/queuetree/?method=GET&queue=' + queue + '&size=' + queueOptions.fetchSize;
             this.API.core.AJAXGetJSON(url, function(data) {
                 // leave more advanced stuff to hanfler funciton
                 self.updateSingleObjectHandler(field, queue, chartInstance, data);
@@ -394,21 +439,21 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             //fetch data
             var canvasElement = $(chartInstance.canvas.ctx.canvas.id);
             var canvasContainer = canvasElement.parentNode;
-            var fieldData=[]
-            if(field===false){
+            var fieldData = [];
+            if (field === false) {
                 fieldData = getSimpleFieldData(data);
-                chartInstance.options.yTitle=data.queue.response.queueMetadata.name;
-            }else{
+                chartInstance.options.yTitle = data.queue.response.queueMetadata.name;
+            } else {
                 //complex object queue
                 fieldData = getFieldData(field, data);
             }
-                var containerWidth = canvasContainer.getWidth();
+            var containerWidth = canvasContainer.getWidth();
             var scopeChanged = false;
 
             if (this.normalizeGraphs) {
                 scopeChanged = this.setGlobalScope(fieldData);
             }
-            //resize canvas to fit container
+            //re size canvas to fit container
             canvasElement.width = containerWidth - 3;
             canvasElement.height = 150;
 
@@ -467,31 +512,60 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         },
 
 
-        registerNewObject:function(field, queue, container,queueOptions) {
+        registerNewObject:function(field, queue, container, queueOptions) {
+            if (typeof(this.objectRegister.activeContainers[queueOptions.cellId]) == 'undefined') {
 
-            var canvasId = 'graph-canvas-' + container;
-            $(container).innerHTML = '<canvas id="' + canvasId + '" width="250" height="150"></canvas>';
-            
-            queueOptions.canvasId=canvasId;
-            var instance = new ChartEngine({
-                'canvasID':canvasId,
-                'tooltip':'scatter-tooltip',
-                'type':'bars',
-                'xTitle':'time',
-                'yTitle':field
-            });
 
+                var canvasId = 'graph-canvas-' + container;
+                $(container).innerHTML = '<canvas id="' + canvasId + '" width="250" height="150"></canvas>';
+
+                queueOptions.canvasId = canvasId;
+                var instance = new ChartEngine({
+                    'canvasID':canvasId,
+                    'tooltip':'scatter-tooltip',
+                    'type':queueOptions.type,
+                    'xTitle':'time',
+                    'yTitle':field
+                });
+
+                var self = this;
+                $(canvasId).observe('click', function(event) {
+                    var elem = event.element();
+                    self.switchType(elem.id);
+                });
+                this.objectRegister.activeObjects.push([field,queue,container,instance,queueOptions]);
+                this.objectRegister.activeContainers[queueOptions.cellId] = 1;
+
+                self.updateSingleObject(field, queue, instance, queueOptions);
+                
+            } else {
+                this.updateExistingGridCellSettings(queueOptions, field, queue);
+            }
+        },
+
+        updateExistingGridCellSettings:function(queueOptions, field, queue) {
             var self = this;
-            $(canvasId).observe('click', function(event) {
-                var elem = event.element();
-                self.switchType(elem.id);
+            this.objectRegister.activeObjects.each(function(elm, index) {
+                var cId = elm[4].cellId;
+                if (queueOptions.cellId == cId) {
+
+                    var instance = elm[3];
+                    instance.options.yTitle = field;
+                    instance.options.type = queueOptions.type;
+
+                    self.objectRegister.activeObjects[index][0] = field;
+                    self.objectRegister.activeObjects[index][1] = queue;
+
+                    self.updateSingleObject(field, queue, instance, elm[4]);
+
+                    throw $break;
+                }
             });
-            this.objectRegister.activeObjects.push([field,queue,container,instance,queueOptions]);
         },
 
         switchType:function(containerId) {
             this.objectRegister.activeObjects.each(function(elm) {
-                var canvasId=elm[4].canvasId;
+                var canvasId = elm[4].canvasId;
                 if (canvasId == containerId) {
 
                     var instance = elm[3];
@@ -518,10 +592,10 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             }
             if (this.API.requiresNode('qtCanvas', this)) {
                 if (typeof(params.name) !== undefined) {
-                    this.API.core.AJAXGetJSON('/webapi/queuetree/?method=GET&queue=' + params.name + '&size=' + this.fetchSize,function(data) {
-                            // create simple list html
-                            $('qtCanvas').innerHTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
-                            self._view(data);
+                    this.API.core.AJAXGetJSON('/webapi/queuetree/?method=GET&queue=' + params.name + '&size=' + this.fetchSize, function(data) {
+                        // create simple list html
+                        $('qtCanvas').innerHTML = '<h4>Queue "' + params.name + '"</h4><div id="qtView"></div>';
+                        self._view(data);
                     });
                 }
             }
@@ -541,9 +615,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var URI = '/webapi/queuetree/?method=GET&queue=' + params.name + '&size=' + this.fetchSize;
 
             this.API.core.AJAXGetJSON(URI, function(data) {
-                    self._queueData = data;
-                    self._queueData = self._queueData.queue;
-                    self._drawObjectGraph(this.fieldToDraw);
+                self._queueData = data;
+                self._queueData = self._queueData.queue;
+                self._drawObjectGraph(this.fieldToDraw);
             });
 
             var timeoutFunc = function() {
@@ -572,7 +646,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var dataType = this._detectType(firstElement);
             this._queueData = data.queue;
 
-            // hanfle according to type
+            // handle according to type
             if (dataType == 'object') {
                 this._viewObject();
             }
@@ -591,11 +665,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             $('qtView').insert(selectHTML);
 
             //attach event to select field change
-            $('qtViewSelectField').observe('change', function(event) {
+            $('qtViewSelectField').observe('change', function() {
                 self._selectFieldNameHandler();
             });
 
-            $('fetchSizeSelect').observe('change', function(event) {
+            $('fetchSizeSelect').observe('change', function() {
                 self._selectSizeChange();
             });
 
@@ -719,8 +793,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         },
 
-        registerListeners:function(){
-            
+        registerListeners:function() {
+
 
         },
 
@@ -796,4 +870,4 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     }; // end return
 }();
 
-VOIDSEARCH.VoidBase.extend(VOIDSEARCH.VoidBase.WebAPI.modules.queuetree,VOIDSEARCH.Events);
+VOIDSEARCH.VoidBase.extend(VOIDSEARCH.VoidBase.WebAPI.modules.queuetree, VOIDSEARCH.Events);

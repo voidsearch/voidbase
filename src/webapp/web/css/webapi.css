@@ -599,7 +599,7 @@ div.gridCell:hover div.editGridCellButton{
     -webkit-border-radius:4px;
     -moz-box-shadow: 0px 0px 10px #ccc;
     -webkit-box-shadow: 0px 0px 10px #ccc;
-    height:250px;
+    height:290px;
     width:300px;
     position:absolute;
     z-index:10;
