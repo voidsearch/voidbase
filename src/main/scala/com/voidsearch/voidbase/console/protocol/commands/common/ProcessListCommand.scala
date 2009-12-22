@@ -14,27 +14,15 @@
  * the License.
  */
 
-package com.voidsearch.voidbase.console.protocol.commands.system
+package com.voidsearch.voidbase.console.protocol.commands.common
 
-import scala.util.matching.Regex
+
 import session.VoidBaseConsoleSession
 
-case class ExitCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
+case class ProcessListCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 
   def exec() = {
-
-    // terminate process scheduler
-    session.scheduler ! ("STOP")
-
-    // finalize
-    println("Terminating session | total time elapsed : " + getElapsedTimeString())
-  }
-
-  def getElapsedTimeString(): String = {
-    return (System.currentTimeMillis - session.startTime)/1000 + " s"
+    session.scheduler.listProcesses()
   }
 
 }
-
-
-

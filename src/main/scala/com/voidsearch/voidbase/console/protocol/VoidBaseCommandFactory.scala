@@ -17,10 +17,10 @@
 package com.voidsearch.voidbase.console.protocol
 
 import commands._
-import common.ListCommand
+import common.{ProcessListCommand, DetachCommand, ListCommand}
 import quant.{CreateSequenceCommand, NextSequenceValueCommand}
 
-import queue.CreateQueueCommand
+import queue.{InsertToQueueCommand, CreateQueueCommand}
 import system.{ExitCommand, HelpCommand}
 
 import environment._
@@ -80,6 +80,10 @@ object VoidBaseCommandFactory {
     return commandText match {
       case ConsoleSyntax.LIST()
         => ListCommand(session)
+      case ConsoleSyntax.DETACH_PROCESS(process)
+        => DetachCommand(session,process,0)
+      case ConsoleSyntax.DETACH_REPEATED(process,interval)
+        => DetachCommand(session,process,interval.toInt)
       case _ => throw new Exception()
     }
 
@@ -90,6 +94,8 @@ object VoidBaseCommandFactory {
    */
   def matchSessionCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
     return commandText match {
+      case ConsoleSyntax.PROCESS_LIST()
+        => ProcessListCommand(session)
       case ConsoleSyntax.GET_DOMAIN()
         => GetDomainCommand(session)
       case ConsoleSyntax.SET_DOMAIN(cmd,domain)
@@ -122,6 +128,8 @@ object VoidBaseCommandFactory {
     return commandText match {
       case ConsoleSyntax.CREATE_QUEUE(name,size)
         => CreateQueueCommand(session, name, size)
+      case ConsoleSyntax.INSERT_TO_QUEUE(queue,content)
+        => InsertToQueueCommand(session, queue, content)
       case _ => throw new Exception()
     }
   }

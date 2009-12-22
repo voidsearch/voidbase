@@ -25,25 +25,40 @@ case class NextSequenceValueCommand(session: VoidBaseConsoleSession, variable: S
 
   def exec() = {
 
+    try {
+      println(getNextValue())
+    } catch {
+      case e:VariableNotAllocatedException => println("sequence : " + variable + " not allocated")
+      case e:CastSequenceGeneratorException => println("sequence object not instance of SequenceGenerator")
+    }
+
+  }
+
+  def getNextValue(): Double = {
     var generatorVariable = SessionObject(variable,"SequenceGenerator")
     if (session.containsVariable(generatorVariable)) {
-      
+
       var generator = session.getVariable(generatorVariable) match {
         case Some(s) => s
         case None => ""
       }
 
       if (generator.isInstanceOf[SequenceGenerator]) {
-        println(generator.asInstanceOf[SequenceGenerator].next())
+        return generator.asInstanceOf[SequenceGenerator].next()
 
       } else {
-        println("NOT INSTANCE OF SequenceGenerator : " + generator)
-        println("SOME : " + generator.asInstanceOf[Some[SequenceGenerator]])
-        println("NEXT : " + (generator.asInstanceOf[Some[SequenceGenerator]]).asInstanceOf[SequenceGenerator])
+        throw new CastSequenceGeneratorException()
       }
-
+      
     } else {
-      println("sequence : " + variable + " not allocated")
+      throw new VariableNotAllocatedException()
     }
   }
+
+
 }
+
+// exception hierarchy
+
+class VariableNotAllocatedException()  extends Throwable { }
+class CastSequenceGeneratorException() extends Throwable { }

@@ -42,7 +42,9 @@ case class ListCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleC
     println()
 
     var res = client.list()
+    println("-------------")
     processList(VoidBaseConsoleUtil.getXML(res))
+    println("-------------")
 
   }
 

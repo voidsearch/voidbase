@@ -61,7 +61,6 @@ public class QueueTreeClient extends VoidBaseHttpClient {
 
         QueueTreeQuery query = new QueueTreeQuery(hostname);
         query.set(QueueTreeProtocol.METHOD, "LIST");
-
         return new String(get(query));
 
     }

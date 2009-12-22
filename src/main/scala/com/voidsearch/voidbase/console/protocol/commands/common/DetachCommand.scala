@@ -14,27 +14,34 @@
  * the License.
  */
 
-package com.voidsearch.voidbase.console.protocol.commands.system
+package com.voidsearch.voidbase.console.protocol.commands.common
 
-import scala.util.matching.Regex
+
+import console.syntax.ConsoleSyntax
+import queue.InsertToQueueCommand
 import session.VoidBaseConsoleSession
 
-case class ExitCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
+case class DetachCommand(session: VoidBaseConsoleSession, process: String, interval: Int) extends VoidBaseConsoleCommand {
 
   def exec() = {
 
-    // terminate process scheduler
-    session.scheduler ! ("STOP")
+    process match {
 
-    // finalize
-    println("Terminating session | total time elapsed : " + getElapsedTimeString())
-  }
+      // detach commands that support detaching
 
-  def getElapsedTimeString(): String = {
-    return (System.currentTimeMillis - session.startTime)/1000 + " s"
+      case ConsoleSyntax.INSERT_TO_QUEUE(queue,content)
+        =>
+        var cmd = InsertToQueueCommand(session, queue, content)
+        if (interval > 0) {
+          session.scheduler.submitTask(cmd,interval,process)
+        } else {
+          session.scheduler.submitTask(cmd)
+        }
+      
+      case _ =>
+    }
+
   }
+  
 
 }
-
-
-

@@ -92,7 +92,7 @@ simple configuration
 
         <StreamsModule>
             <class>com.voidsearch.voidbase.apps.streams.StreamsModule</class>
-            <status>active</status>
+            <status>disabled</status>
             <resource>streams</resource>
          </StreamsModule>
 
