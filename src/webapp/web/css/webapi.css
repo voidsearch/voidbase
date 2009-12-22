@@ -570,9 +570,10 @@ div.gridCell{
     display:inline;
     border:dotted 1px #e1e1e1;
     height:150px;
-    width:300px;
+    width:403px;
     margin:4px 4px 0px 0px;
     position:relative;
+
 }
 .editGridCellButton{
 
@@ -586,7 +587,42 @@ div.gridCell:hover{
 }
 
 div.gridCell:hover div.editGridCellButton{
-    
+    opacity:0.8;
     display:block;
+    cursor:pointer;
+}
+
+#gridCellSettings{
+    
+    border:solid 1px #cacaca;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-box-shadow: 0px 0px 10px #ccc;
+    -webkit-box-shadow: 0px 0px 10px #ccc;
+    height:250px;
+    width:300px;
+    position:absolute;
+    z-index:10;
+    top:120px;
+    left:0px;
+    background:#313131;
+    color:white;
+    opacity:0.9;
+
+}
+
+
+div.hBorder{
+    height:0px;
+    border-top:solid 1px #121212;
+    border-bottom:solid 1px  #676767;
+
+
+}
+
+#cellSettingsClose{
+    position:absolute;
+    top:5px;
+    right:5px;  
     cursor:pointer;
 }

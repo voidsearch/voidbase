@@ -6,5 +6,26 @@
 </div>
 
 <div id="gridTitle"><h3>Grid Title</h3></div>        
+<div id="gridCellSettings" style="display:none;">
+    <div style="height:100%;width:100%;padding:20px;">
+        <h6>Cell Settings</h6>
+        <div id="cellSettingsClose">[X]</div>
+        <div style="position:absolute;top:60px;width:260px;">
+            <div id="cellChartSourceHolder">Queue <span id="cellChartSourceQueue"></span> </div>
+            <br />
+            <div class="hBorder" ></div>
+            <br />
+            Graph Type: <select>
+                <option value="bars">Bars</option>
+                <option value="line">Line</option>
+            </select>
+            <br /><br />
+            <div class="hBorder" ></div>
 
+            <br /><br /><br /><br />
+            <input type="button" value="Save" />
+            <input type="button" value="Close" /> 
+        </div>
+    </div>
+</div>
 <div id="gridContainer" style="position:relative;" class="clearfix"></div>        
