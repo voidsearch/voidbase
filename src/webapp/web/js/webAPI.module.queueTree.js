@@ -139,13 +139,31 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                     $(GRID_CELL_SETTINGS).hide();
                 });
 
+                $('cellSettingsCloseButton').observe('click',function(event){
+                    $(GRID_CELL_SETTINGS).hide();
+                });
+
+                $('cellSettingsSave').observe('click',function(event){
+                    self.saveGridCellSettings();       
+                });
+
+
 
             }
+        },
+
+        saveGridCellSettings:function(){
+           var queue=$('cellSettings-queueName').value;
+           var queueChartType=$('cellSettings-chartType').value;
+
+            console.log(queue, queueChartType);
+
         },
 
         insertNewGridCell:function(){
             var self=this;
             var nextId=this.objectRegister.objectCounter + 1;
+            this.objectRegister.objectCounter += 1;
             var HTML=VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
 
 
@@ -184,13 +202,18 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 var qs = self.getComplexData(data.queue, 'queueList');
 
                  var HTML='<select id="cellSettings-queueName">';
-                 HTML+='<option value"-1">-- choose queue --</option>';
+                 HTML+='<option value="-1">-- choose queue --</option>';
                  qs.each(function(queueName){
                     HTML+='<option value="'+queueName+'">'+queueName+'</option>';
                  });
                  HTML+='</select >';
 
                 $(GRID_CELL_SETTINGS_SOURCE_QUEUE).update(HTML);
+
+                $('cellSettings-queueName').observe('change',function(event){
+                    var queueName=$('cellSettings-queueName').value;
+                    self.gridCellEditFetchFields(queueName);
+                });
 
             });
 
@@ -216,6 +239,35 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 $(GRID_CELL_SETTINGS).hide();
             }
             
+        },
+
+
+        gridCellEditFetchFields:function(queueName){
+
+            var self=this;
+
+            if(queueName!='-1'){
+                $('cellSettings-message').update("");
+                //fetch queue to examin type and/or field names
+                //one entry should be enough
+                var url='/webapi/queuetree/?method=GET&queue=' + queueName + '&size=1';
+                this.API.core.AJAXGetJSON(url, function(data) {
+                    if(typeof(data.queue.response.queueElements.entry)!='undefined'){
+
+                       var value=data.queue.response.queueElements.entry.val;
+                       var valueType=self._detectType(value);
+                       console.log(value,valueType);
+
+
+                    }else{
+                       console.log("UNDEFINED QUEUE!!");
+                    }
+                });
+                
+            }else{
+                $('cellSettings-message').update("Please Choose Queue!");
+            }
+
         },
 
         viewGrid:function(params) {
