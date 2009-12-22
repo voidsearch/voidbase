@@ -159,6 +159,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         saveGridCellSettings:function() {
             var queue = $('cellSettings-queueName').value;
             var queueChartType = $('cellSettings-chartType').value;
+            var lineWidth = $('cellSettings-lineWidth').value;
             var fieldName = false;
             try {
                 if ($('cellSettings-field') != null) {
@@ -177,11 +178,13 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 options.fetchSize = DEFAULT_FETCH_SIZE;
                 options.cellId = this.cellSettingsId;
                 options.type = queueChartType;
+                options.lineWidth = lineWidth;
 
                 // insert new or update existing cell
                 this.registerNewObject(fieldName, queue, gridCellCanvasContainer, options);
                 // hide settings window
                 $(GRID_CELL_SETTINGS).hide();
+                console.log(options);
 
             }
             console.log(this.cellSettingsId, queue + '-' + queueChartType + '-' + fieldName);
@@ -525,6 +528,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                     'tooltip':'scatter-tooltip',
                     'type':queueOptions.type,
                     'xTitle':'time',
+                    'lineWidth':queueOptions.lineWidth,
                     'yTitle':field
                 });
 

@@ -280,6 +280,8 @@ var ChartEngine = Class.create({
         var y = 0;
         var yNext = 0;
 
+        self.canvas.setLineWidth(self.options.lineWidth);
+        
         data.each(function(elm, index) {
 
             if(index < len-1){
