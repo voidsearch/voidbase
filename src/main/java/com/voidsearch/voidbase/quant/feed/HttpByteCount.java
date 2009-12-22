@@ -22,10 +22,11 @@ import com.voidsearch.voidbase.quant.timeseries.SequenceGenerator;
 
 public class HttpByteCount extends NumericalSequence implements SequenceGenerator {
 
-    static SimpleHttpClient client = new SimpleHttpClient();
+    SimpleHttpClient client;
     String url;
 
     public HttpByteCount(String requestURL) {
+        client = new SimpleHttpClient();
         url = requestURL;
     }
 

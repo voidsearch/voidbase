@@ -33,8 +33,9 @@ object SequenceMapping {
 
     // feed processing
 
-    "http.load"     -> "quant.feed.HttpLoadTime",
-    "http.bytes"    -> "quant.feed.HttpByteCount"
+    "http.load"         -> "quant.feed.HttpLoadTime",
+    "http.bytes"        -> "quant.feed.HttpByteCount",
+    "simplexml.element" -> "quant.feed.SimpleXMLFeedElement" 
 
     )
 

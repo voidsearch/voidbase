@@ -21,10 +21,11 @@ import com.voidsearch.voidbase.client.SimpleHttpClient;
 
 public class HttpLoadTime extends NumericalSequence implements SequenceGenerator {
 
-    static SimpleHttpClient client = new SimpleHttpClient();
+    static SimpleHttpClient client;
     String url;
 
     public HttpLoadTime(String requestURL) {
+        client = new SimpleHttpClient();
         url = requestURL;
     }
 
