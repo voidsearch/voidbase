@@ -20,7 +20,7 @@ import commands._
 import common.{KillProcessCommand, ProcessListCommand, DetachCommand, ListCommand}
 import quant.{CreateSequenceCommand, NextSequenceValueCommand}
 
-import queue.{InsertToQueueCommand, CreateQueueCommand}
+import queue.{DeleteQueueCommand, InsertToQueueCommand, CreateQueueCommand}
 import system.{ExitCommand, HelpCommand}
 
 import environment._
@@ -130,6 +130,8 @@ object VoidBaseCommandFactory {
     return commandText match {
       case ConsoleSyntax.CREATE_QUEUE(name,size)
         => CreateQueueCommand(session, name, size)
+      case ConsoleSyntax.DELETE_QUEUE(name)
+        => DeleteQueueCommand(session, name)
       case ConsoleSyntax.INSERT_TO_QUEUE(queue,content)
         => InsertToQueueCommand(session, queue, content)
       case _ => throw new Exception()

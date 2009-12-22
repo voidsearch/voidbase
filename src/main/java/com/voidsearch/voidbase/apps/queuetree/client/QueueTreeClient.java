@@ -36,6 +36,16 @@ public class QueueTreeClient extends VoidBaseHttpClient {
         get(query);
     }
 
+    public void delete(String queue) throws Exception {
+
+        QueueTreeQuery query = new QueueTreeQuery(hostname);
+        query.set(QueueTreeProtocol.METHOD, "DELETE");
+        query.set(QueueTreeProtocol.QUEUE, queue);
+
+        get(query);
+    }
+
+
     public void put(String queue, String content) throws Exception {
 
         QueueTreeQuery query = new QueueTreeQuery(hostname);
