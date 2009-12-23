@@ -152,8 +152,39 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                     self.saveGridCellSettings();
                 });
 
+                $('cellSettingsDelete').observe('click', function() {
+                    self.deleteGridCell();
+                });
+
 
             }
+        },
+
+        deleteGridCell:function(){
+
+            var self=this;
+            console.log(this.objectRegister.activeContainers,this.objectRegister.activeObjects);
+            var gridCell = GRID_CELL + '_' + this.cellSettingsId;
+            $(gridCell).remove();
+            delete(this.objectRegister.activeContainers[this.cellSettingsId]);
+
+
+            this.objectRegister.activeObjects.each(function(elm, index) {
+                var cId = elm[4].cellId;
+                if (self.cellSettingsId == cId) {
+
+
+
+                    self.objectRegister.activeObjects.splice(index,1);
+
+
+                    throw $break;
+                }
+            });
+
+            console.log(this.objectRegister.activeContainers,this.objectRegister.activeObjects);
+            $(GRID_CELL_SETTINGS).hide();
+
         },
 
         saveGridCellSettings:function() {
