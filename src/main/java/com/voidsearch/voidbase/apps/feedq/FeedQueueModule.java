@@ -101,17 +101,24 @@ public class FeedQueueModule extends Thread implements VoidBaseModule {
                 }
 
                 for (String resource : cluster.resources()) {
+
                     try {
                         FeedFetcher fetcher = FeedFetcherFactory.getFetcher(resource);
                         FeedResource newResource = fetcher.fetch(resource);
+                        
                         if (contentQueue.containsKey(resource)) {
+
                             FeedResource oldResource = contentQueue.get(resource);
                             LinkedList<ResourceEntry> delta = newResource.getDelta(oldResource);
+
                             cluster.setStat(resource, delta.size());
                             persistToStore(delta,store);
+
                         } else {
+
                             cluster.setStat(resource,0);
                             persistToStore(newResource.getEntries(),store);
+
                         }
                         contentQueue.put(resource, newResource);
                     } catch (Exception e) {

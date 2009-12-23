@@ -20,6 +20,8 @@ import com.voidsearch.voidbase.apps.feedq.resource.ResourceEntry;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class SimpleMetric implements ResourceMetric {
 
@@ -34,17 +36,18 @@ public class SimpleMetric implements ResourceMetric {
                                               LinkedList<ResourceEntry> newEntries) {
 
         LinkedList<ResourceEntry> result = new LinkedList<ResourceEntry>();
-        ResourceEntry lastEntry = oldEntries.getLast();
 
-//        Iterator it = newEntries.descendingIterator();
-//        while (it.hasNext()) {
-//            ResourceEntry entry = (ResourceEntry)it.next();
-//            if (!entry.equals(lastEntry)) {
-//                result.add(entry);
-//            } else {
-//                break;
-//            }
-//        }
+        HashSet<Long> oldEntriesSet = new HashSet<Long>();
+
+        for (ResourceEntry entry : oldEntries) {
+            oldEntriesSet.add(entry.getResourceHash());
+        }
+
+        for (ResourceEntry entry : newEntries) {
+            if (!oldEntriesSet.contains(entry.getResourceHash())) {
+                result.add(entry);
+            }
+        }
 
         return result;
 
