@@ -558,6 +558,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                     var instance = elm[3];
                     instance.options.yTitle = field;
                     instance.options.type = queueOptions.type;
+                    instance.options.lineWidth = queueOptions.lineWidth;
 
                     self.objectRegister.activeObjects[index][0] = field;
                     self.objectRegister.activeObjects[index][1] = queue;
