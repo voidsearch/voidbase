@@ -35,6 +35,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     var GRID_CELL_SETTINGS = 'gridCellSettings';
     var GRID_CELL_SETTINGS_SOURCE_QUEUE = 'cellChartSourceQueue';
     var DEFAULT_FETCH_SIZE = 500;
+    var DEFAULT_LINE_WIDTH = 2;
+    var DEFAULT_CHART_TYPE = 'line';
     var testFields = [
         {
             field:false,
@@ -411,6 +413,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             this.fieldNames.each(function(field, index) {
                 var queueOptions = {};
                 queueOptions.fetchSize = DEFAULT_FETCH_SIZE;
+                queueOptions.lineWidth = DEFAULT_LINE_WIDTH;
+                queueOptions.type = DEFAULT_CHART_TYPE;
+                queueOptions.cellId = index;
                 self.registerNewObject(field, feedName, availableGridFields[index].id, queueOptions);
             });
 
@@ -747,6 +752,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 'type':'bars',
                 'xTitle':'time',
                 'yTitle':this.fieldToDraw,
+                
                 'chartData':data
             });
 
