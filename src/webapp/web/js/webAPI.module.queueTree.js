@@ -217,8 +217,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var gridCellCanvasContainer = GRID_CELL_CANVAS_CONTAINER + '_' + nextId;
             var gridCell = GRID_CELL + '_' + nextId;
             var gridCellEdit = GRID_CELL_EDIT + '_' + nextId;
-            var field = testFields[nextId - 1].field;
-            var queue = testFields[nextId - 1].queue;
             var options = {};
             options.fetchSize = DEFAULT_FETCH_SIZE;
 
