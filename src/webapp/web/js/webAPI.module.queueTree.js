@@ -37,28 +37,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     var DEFAULT_FETCH_SIZE = 500;
     var DEFAULT_LINE_WIDTH = 2;
     var DEFAULT_CHART_TYPE = 'line';
-    var testFields = [
-        {
-            field:false,
-            queue:'zika'
-        },
-        {
-            field:'entry',
-            queue:'kodi_test'
-        },
-        {
-            field:'microsoft',
-            queue:'twitter_topic'
-        },
-        {
-            field:'berlin',
-            queue:'twitter'
-        },
-        {
-            field:'belgrade',
-            queue:'twitter'
-        }
-    ];
+
+    
     /**
      * @param fieldName
      * @param JSONData
