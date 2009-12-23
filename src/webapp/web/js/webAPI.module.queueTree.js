@@ -28,7 +28,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     var QT_CANVAS = 'qtCanvas';
     var QT_VIEW = 'qtView';
     var GRID_CONTAINER = 'gridContainer';
-
     var GRID_CELL = 'gridCell';
     var GRID_CELL_EDIT = 'gridCellEdit';
     var GRID_CELL_CANVAS_CONTAINER = 'gridCellCanvasContainer';
@@ -39,11 +38,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
     var DEFAULT_CHART_TYPE = 'line';
 
     
-    /**
-     * @param fieldName
-     * @param JSONData
-     * @return Array
-     */
     var getFieldData = function(fieldName, JSONData) {
 
         var entries = [];
@@ -110,10 +104,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 var self = this;
 
                 this.objectRegister.activeObjects = [];
-
                 this.API.includeTemplate($(QT_CANVAS), 'queueTreeNewGrid');
-
-
                 this.gridUpdater(0);
 
                 // add button events
@@ -143,23 +134,18 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
         },
 
         deleteGridCell:function(){
-
             var self=this;
-            console.log(this.objectRegister.activeContainers,this.objectRegister.activeObjects);
+
             var gridCell = GRID_CELL + '_' + this.cellSettingsId;
             $(gridCell).remove();
             delete(this.objectRegister.activeContainers[this.cellSettingsId]);
-
 
             this.objectRegister.activeObjects.each(function(elm, index) {
                 var cId = elm[4].cellId;
                 if (self.cellSettingsId == cId) {
 
-
-
+                    //remove element from active objects
                     self.objectRegister.activeObjects.splice(index,1);
-
-
                     throw $break;
                 }
             });
@@ -195,12 +181,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
                 // insert new or update existing cell
                 this.registerNewObject(fieldName, queue, gridCellCanvasContainer, options);
+
                 // hide settings window
                 $(GRID_CELL_SETTINGS).hide();
-                console.log(options);
 
             }
-            console.log(this.cellSettingsId, queue + '-' + queueChartType + '-' + fieldName);
 
         },
 
@@ -209,7 +194,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var nextId = this.objectRegister.objectCounter + 1;
             this.objectRegister.objectCounter += 1;
             var HTML = VOIDSEARCH.VoidBase.Views.templates['queueTreeEmptyGridCell'];
-
 
             HTML = HTML.replace(/\%id\%/g, nextId);
             $(GRID_CONTAINER).insert(HTML);
@@ -220,8 +204,9 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             var options = {};
             options.fetchSize = DEFAULT_FETCH_SIZE;
 
-            //this.registerNewObject(field, queue, gridCellCanvasContainer,options);
-
+            //
+            // OBSERVER ON EDIT BUTTON
+            //
             $(gridCellEdit).observe('click', function(event) {
                 var element = event.element();
                 self.gridCellEditHandler(element, event);
@@ -243,13 +228,17 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
                 var HTML = '<select id="cellSettings-queueName">';
                 HTML += '<option value="-1">-- choose queue --</option>';
+
+                //iterate queues
                 qs.each(function(queueName) {
                     HTML += '<option value="' + queueName + '">' + queueName + '</option>';
                 });
                 HTML += '</select >';
 
+                //update selectc box with queue names
                 $(GRID_CELL_SETTINGS_SOURCE_QUEUE).update(HTML);
 
+                // listener for second drop down box (field names for complex queues)
                 $('cellSettings-queueName').observe('change', function() {
                     var queueName = $('cellSettings-queueName').value;
                     self.gridCellEditFetchFields(queueName);
@@ -259,22 +248,23 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
             $(GRID_CELL_SETTINGS_SOURCE_QUEUE).update('Loading...');
 
-
+            // GET ID FROM CURRENT ELEMENT
             var id = element.id.split('_');
             id = id[1];
             this.cellSettingsId = id;
 
             if ($(GRID_CELL_SETTINGS).style.display == 'none') {
+
                 $(GRID_CELL_SETTINGS).show();
                 $(GRID_CELL_SETTINGS).style.top = (buttonOffset[1] - gridContainerOffset[1]) + 'px';
-
                 var left = event.pointerX() - 150;
 
+                //
                 //compensate if out of screen
+                //
                 if ((left + gridCellSettingsBoxWidth) > gridContainerWidth) {
                     left = (gridContainerWidth - gridCellSettingsBoxWidth);
                 }
-
                 $(GRID_CELL_SETTINGS).style.left = left + 'px';
             } else {
                 $(GRID_CELL_SETTINGS).hide();
@@ -284,7 +274,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
 
         gridCellEditFetchFields:function(queueName) {
-
             var self = this;
 
             if (queueName != '-1') {
@@ -295,16 +284,16 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 this.API.core.AJAXGetJSON(url, function(data) {
                     if (typeof(data.queue.response.queueElements.entry) != 'undefined') {
 
+                        //get value and type
                         var value = data.queue.response.queueElements.entry.val;
                         var valueType = self._detectType(value);
-                        //console.log(value,valueType);
 
                         // IF OBJECT
                         if (valueType == 'object') {
                             var fields = self.getComplexData(data.queue, 'queueElements');
-                            console.log(fields);
                             var HTML = 'Field <select id="cellSettings-field">';
 
+                            //iterate and create drop down menu
                             $H(fields[0]).each(function(field) {
                                 HTML += '<option value="' + field[0] + '">' + field[0] + '</option>';
                             });
@@ -422,7 +411,7 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 var objectInstance = self.objectRegister.activeObjects[index][3];
                 var queueOptions = self.objectRegister.activeObjects[index][4];
 
-                this.fetchSize = 500;
+                this.fetchSize = DEFAULT_FETCH_SIZE;
 
                 this.updateSingleObject(field, queue, objectInstance, queueOptions);
                 //console.log(this.gridContainerWidth);
@@ -430,7 +419,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 if (index >= this.objectRegister.activeObjects.length) {
                     index = 0;
                 }
-
 
                 //calculate and apply timeout
                 timeout = defaultObjectRefreshRate / this.objectRegister.activeObjects.length;
