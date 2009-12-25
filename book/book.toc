@@ -6,46 +6,54 @@
 \contentsline {section}{\numberline {2.2}Data Streams}{3}
 \contentsline {chapter}{\numberline {3}The challenges of real-time information processing}{5}
 \contentsline {section}{\numberline {3.1}Problem description}{5}
-\contentsline {chapter}{\numberline {4}Fundamental Algorithms in Data Analytics and IR}{7}
-\contentsline {section}{\numberline {4.1}Statistical analysis framework}{7}
-\contentsline {subsection}{\numberline {4.1.1}Regression analysis}{7}
-\contentsline {subsection}{\numberline {4.1.2}Forecasting}{7}
-\contentsline {subsection}{\numberline {4.1.3}Parameter estimation}{7}
-\contentsline {subsection}{\numberline {4.1.4}Non-parametric methods}{7}
-\contentsline {chapter}{\numberline {5}Advanced Algorithms}{9}
-\contentsline {section}{\numberline {5.1}Online learning algorithms}{9}
-\contentsline {section}{\numberline {5.2}Kernel Methods}{9}
-\contentsline {chapter}{\numberline {6}Software toolkits for large-scale data analysis}{11}
-\contentsline {section}{\numberline {6.1}Hadoop}{11}
-\contentsline {section}{\numberline {6.2}Mahout}{11}
-\contentsline {section}{\numberline {6.3}voidbase}{11}
-\contentsline {chapter}{\numberline {7}Large-scale IR Cookbook}{13}
-\contentsline {section}{\numberline {7.1}Building AVMs on vertical data}{13}
-\contentsline {section}{\numberline {7.2}Model selection in the real world}{13}
-\contentsline {chapter}{\numberline {8}Moving from batch to real-time}{15}
-\contentsline {section}{\numberline {8.1}Paradigm shift}{15}
-\contentsline {chapter}{\numberline {9}Real-world real-time applications}{17}
-\contentsline {section}{\numberline {9.1}Web Analytics}{17}
-\contentsline {section}{\numberline {9.2}Media analysis}{17}
-\contentsline {section}{\numberline {9.3}Econometrics}{17}
-\contentsline {section}{\numberline {9.4}Quantitive Finance}{18}
-\contentsline {section}{\numberline {9.5}Online collaboration}{19}
-\contentsline {chapter}{\numberline {10}Algorithms and Data Structure in support of large-scale real-time framework}{21}
-\contentsline {section}{\numberline {10.1}Convolutional procedures}{21}
-\contentsline {subsection}{\numberline {10.1.1}Example : Viterbi algorithm}{21}
-\contentsline {section}{\numberline {10.2}Convolutional representation of fundamental algebraic operations}{21}
-\contentsline {subsection}{\numberline {10.2.1}Average,Mean,Median,Variance}{21}
-\contentsline {subsection}{\numberline {10.2.2}Matrix operations}{21}
-\contentsline {section}{\numberline {10.3}Randomized Algorithms}{21}
-\contentsline {subsection}{\numberline {10.3.1}Fast vs. Convolutional}{21}
-\contentsline {section}{\numberline {10.4}Queue-based structures}{21}
-\contentsline {chapter}{\numberline {11}voidbase : queue-based computing framework}{23}
-\contentsline {section}{\numberline {11.1}Overview}{23}
-\contentsline {section}{\numberline {11.2}Paradigms}{23}
-\contentsline {chapter}{\numberline {12}voidbase cookbook}{25}
-\contentsline {section}{\numberline {12.1}Zero-development dynamic resource monitoring framework}{25}
-\contentsline {section}{\numberline {12.2}Automatic trend detection toolkit}{25}
-\contentsline {section}{\numberline {12.3}Building automated news-based algorithmic trading app}{25}
-\contentsline {chapter}{\numberline {13}Future challenges in Real-Time Large-Scale analytical processing}{27}
-\contentsline {section}{\numberline {13.1}Representation problem}{27}
-\contentsline {section}{\numberline {13.2}Fundamental limits}{27}
+\contentsline {chapter}{\numberline {4}The nature of real-time data}{7}
+\contentsline {section}{\numberline {4.1}Stochastic processes}{7}
+\contentsline {section}{\numberline {4.2}Discrete-time}{7}
+\contentsline {section}{\numberline {4.3}Continuous-time}{7}
+\contentsline {chapter}{\numberline {5}Fundamental Algorithms in Data Analytics and IR}{9}
+\contentsline {section}{\numberline {5.1}Statistical analysis framework}{9}
+\contentsline {subsection}{\numberline {5.1.1}Regression analysis}{9}
+\contentsline {subsection}{\numberline {5.1.2}Forecasting}{9}
+\contentsline {subsection}{\numberline {5.1.3}Parameter estimation}{9}
+\contentsline {subsection}{\numberline {5.1.4}Non-parametric methods}{9}
+\contentsline {chapter}{\numberline {6}Advanced Algorithms}{11}
+\contentsline {section}{\numberline {6.1}Online learning algorithms}{11}
+\contentsline {section}{\numberline {6.2}Kernel Methods}{11}
+\contentsline {chapter}{\numberline {7}Software toolkits for large-scale data analysis}{13}
+\contentsline {section}{\numberline {7.1}Hadoop}{13}
+\contentsline {section}{\numberline {7.2}Mahout}{13}
+\contentsline {section}{\numberline {7.3}voidbase}{13}
+\contentsline {chapter}{\numberline {8}Large-scale IR Cookbook}{15}
+\contentsline {section}{\numberline {8.1}Building AVMs on vertical data}{15}
+\contentsline {section}{\numberline {8.2}Model selection in the real world}{15}
+\contentsline {chapter}{\numberline {9}Moving from batch to real-time}{17}
+\contentsline {section}{\numberline {9.1}Paradigm shift}{17}
+\contentsline {chapter}{\numberline {10}Concurrency : a new frontier}{19}
+\contentsline {section}{\numberline {10.1}New challenges}{19}
+\contentsline {chapter}{\numberline {11}Real-world real-time applications}{21}
+\contentsline {section}{\numberline {11.1}Web Analytics}{21}
+\contentsline {section}{\numberline {11.2}Media analysis}{21}
+\contentsline {section}{\numberline {11.3}Econometrics}{21}
+\contentsline {section}{\numberline {11.4}Quantitive Finance}{22}
+\contentsline {section}{\numberline {11.5}Online collaboration}{23}
+\contentsline {chapter}{\numberline {12}Algorithms and Data Structure in support of large-scale real-time framework}{25}
+\contentsline {section}{\numberline {12.1}Convolutional procedures}{25}
+\contentsline {subsection}{\numberline {12.1.1}Example : Viterbi algorithm}{25}
+\contentsline {section}{\numberline {12.2}Convolutional representation of fundamental algebraic operations}{25}
+\contentsline {subsection}{\numberline {12.2.1}Average,Mean,Median,Variance}{25}
+\contentsline {subsection}{\numberline {12.2.2}Matrix operations}{25}
+\contentsline {section}{\numberline {12.3}Randomized Algorithms}{25}
+\contentsline {subsection}{\numberline {12.3.1}Fast vs. Convolutional}{25}
+\contentsline {section}{\numberline {12.4}Queue-based structures}{25}
+\contentsline {chapter}{\numberline {13}voidbase : queue-based computing framework}{27}
+\contentsline {section}{\numberline {13.1}Overview}{27}
+\contentsline {section}{\numberline {13.2}Paradigms}{27}
+\contentsline {chapter}{\numberline {14}voidbase cookbook}{29}
+\contentsline {section}{\numberline {14.1}Simple Markov process tracking}{29}
+\contentsline {section}{\numberline {14.2}Monte Carlo simulation}{29}
+\contentsline {section}{\numberline {14.3}Zero-development dynamic resource monitoring framework}{29}
+\contentsline {section}{\numberline {14.4}Automatic trend detection toolkit}{29}
+\contentsline {section}{\numberline {14.5}Building automated news-based algorithmic trading app}{29}
+\contentsline {chapter}{\numberline {15}Future challenges in Real-Time Large-Scale analytical processing}{31}
+\contentsline {section}{\numberline {15.1}Representation problem}{31}
+\contentsline {section}{\numberline {15.2}Fundamental limits}{31}
