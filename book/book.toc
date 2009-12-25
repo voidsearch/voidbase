@@ -29,7 +29,9 @@
 \contentsline {chapter}{\numberline {9}Moving from batch to real-time}{17}
 \contentsline {section}{\numberline {9.1}Paradigm shift}{17}
 \contentsline {chapter}{\numberline {10}Concurrency : a new frontier}{19}
-\contentsline {section}{\numberline {10.1}New challenges}{19}
+\contentsline {section}{\numberline {10.1}Problem Description}{19}
+\contentsline {section}{\numberline {10.2}Data Structures}{19}
+\contentsline {section}{\numberline {10.3}Algorithms}{19}
 \contentsline {chapter}{\numberline {11}Real-world real-time applications}{21}
 \contentsline {section}{\numberline {11.1}Web Analytics}{21}
 \contentsline {section}{\numberline {11.2}Media analysis}{21}
