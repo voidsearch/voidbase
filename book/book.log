@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:43
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:49
 entering extended mode
 \write18 enabled.
  %&-line parsing enabled.
@@ -73,18 +73,17 @@ File: umsb.fd 2002/01/19 v2.2g AMS font definitions
 
 {/usr/local/texlive/2007/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
 
-] (./book.toc)
+] (./book.toc
+[1
+
+])
 \tf@toc=\write3
 \openout3 = `book.toc'.
 
-
-[1
-
-] [2
-
-]
+ [2]
 Chapter 1.
 [1
+
 
 ] [2
 
@@ -134,11 +133,21 @@ IN SUPPORT OF LARGE-SCALE REAL-TIME FRAMEWORK
 Chapter 11.
 [21] [22
 
+]
+Chapter 12.
+
+Overfull \hbox (1.83444pt too wide) in paragraph at lines 74--74
+[]\OT1/cmr/bx/n/14.4 Building au-to-mated news-based al-go-rith-mic trad-ing ap
+p 
+ []
+
+[23] [24
+
 ] (./book.aux) ) 
 Here is how much of TeX's memory you used:
  663 strings out of 94073
  7113 string characters out of 1162984
- 52108 words of memory out of 1500000
+ 53108 words of memory out of 1500000
  3988 multiletter control sequences out of 10000+50000
  13077 words of font info for 50 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
@@ -149,9 +158,9 @@ usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr10.pfb></usr/local/
 texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr12.pfb></usr/local/texlive/20
 07/texmf-dist/fonts/type1/bluesky/cm/cmr17.pfb></usr/local/texlive/2007/texmf-d
 ist/fonts/type1/bluesky/cm/cmsl10.pfb>
-Output written on book.pdf (26 pages, 71009 bytes).
+Output written on book.pdf (28 pages, 73459 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
+ 116 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

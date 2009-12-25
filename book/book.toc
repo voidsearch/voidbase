@@ -9,6 +9,7 @@
 \contentsline {subsection}{\numberline {4.1.1}Regression analysis}{7}
 \contentsline {subsection}{\numberline {4.1.2}Forecasting}{7}
 \contentsline {subsection}{\numberline {4.1.3}Parameter estimation}{7}
+\contentsline {subsection}{\numberline {4.1.4}Non-parametric methods}{7}
 \contentsline {chapter}{\numberline {5}Advanced Algorithms}{9}
 \contentsline {section}{\numberline {5.1}Online learning algorithms}{9}
 \contentsline {section}{\numberline {5.2}Kernel Methods}{9}
@@ -16,6 +17,8 @@
 \contentsline {section}{\numberline {6.1}Hadoop}{11}
 \contentsline {section}{\numberline {6.2}Mahout}{11}
 \contentsline {chapter}{\numberline {7}Large-scale IR Cookbook}{13}
+\contentsline {section}{\numberline {7.1}Building AVMs on vertical data}{13}
+\contentsline {section}{\numberline {7.2}Model selection in the real world}{13}
 \contentsline {chapter}{\numberline {8}Moving from batch to real-time}{15}
 \contentsline {chapter}{\numberline {9}Real-world real-time applications}{17}
 \contentsline {section}{\numberline {9.1}Web Analytics}{17}
@@ -27,4 +30,8 @@
 \contentsline {section}{\numberline {10.2}Queue-based structures}{19}
 \contentsline {chapter}{\numberline {11}VoidBase : queue-based computing framework}{21}
 \contentsline {section}{\numberline {11.1}Overview}{21}
-\contentsline {section}{\numberline {11.2}Cookbook}{21}
+\contentsline {section}{\numberline {11.2}Paradigms}{21}
+\contentsline {chapter}{\numberline {12}VoidBase cookbook}{23}
+\contentsline {section}{\numberline {12.1}Zero-development dynamic resource monitoring framework}{23}
+\contentsline {section}{\numberline {12.2}Automatic trend detection toolkit}{23}
+\contentsline {section}{\numberline {12.3}Building automated news-based algorithmic trading app}{23}
