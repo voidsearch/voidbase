@@ -1,0 +1,26 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Enter the real time}{1}
+\contentsline {section}{\numberline {1.2}Fundamental issues}{1}
+\contentsline {chapter}{\numberline {2}The nature of large-scale data}{3}
+\contentsline {chapter}{\numberline {3}The challenges of real-time information processing}{5}
+\contentsline {section}{\numberline {3.1}Problem description}{5}
+\contentsline {chapter}{\numberline {4}Software toolkits for large-scale data analysis}{7}
+\contentsline {section}{\numberline {4.1}Hadoop}{7}
+\contentsline {section}{\numberline {4.2}Mahout}{7}
+\contentsline {chapter}{\numberline {5}Fundamental Algorithms in Data Analytics and IR}{9}
+\contentsline {section}{\numberline {5.1}Basic statistical framework}{9}
+\contentsline {chapter}{\numberline {6}Advanced Algorithms}{11}
+\contentsline {chapter}{\numberline {7}Online learning algorithms}{13}
+\contentsline {chapter}{\numberline {8}Large-scale IR Cookbook}{15}
+\contentsline {chapter}{\numberline {9}Moving from batch to real-time}{17}
+\contentsline {chapter}{\numberline {10}Real-world real-time applications}{19}
+\contentsline {section}{\numberline {10.1}Web Analytics}{19}
+\contentsline {section}{\numberline {10.2}Media analysis}{19}
+\contentsline {section}{\numberline {10.3}Finance}{19}
+\contentsline {section}{\numberline {10.4}Online collaboration}{19}
+\contentsline {chapter}{\numberline {11}Algorithms and Data Structure in support of large-scale real-time framework}{21}
+\contentsline {section}{\numberline {11.1}Randomized Algorithms}{21}
+\contentsline {section}{\numberline {11.2}Queue-based structures}{21}
+\contentsline {chapter}{\numberline {12}VoidBase : queue-based computing framework}{23}
+\contentsline {section}{\numberline {12.1}Overview}{23}
+\contentsline {section}{\numberline {12.2}Cookbook}{23}

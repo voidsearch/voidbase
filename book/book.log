@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  24 DEC 2009 19:34
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:32
 entering extended mode
 \write18 enabled.
  %&-line parsing enabled.
@@ -29,52 +29,137 @@ File: bk10.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
+)
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/local/texlive/2007/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 ) (./preamble.tex
 \c@theorem=\count88
-)
-(./book.aux (./titlepage.aux) (./preface.aux))
+) (./book.aux)
 \openout1 = `book.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-\openout2 = `titlepage.aux'.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Try loading font information for U+msa on input line 14.
+ (/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 
- (./titlepage.tex) [1{/usr/local/texlive/2007/texmf-var/fonts/map/pdftex/updmap
-/pdftex.map}
+(/usr/local/texlive/2007/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+) [1
 
 
+{/usr/local/texlive/2007/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+] (./book.toc)
+\tf@toc=\write3
+\openout3 = `book.toc'.
+
+
+[1
+
+] [2
 
 ]
-\openout2 = `preface.aux'.
+Chapter 1.
+[1
 
- (./preface.tex)
-[2
+] [2
 
+]
+Chapter 2.
+[3] [4
 
-] (./book.aux (./titlepage.aux) (./preface.aux)) ) 
+]
+Chapter 3.
+[5] [6
+
+]
+Chapter 4.
+[7] [8
+
+]
+Chapter 5.
+[9] [10
+
+]
+Chapter 6.
+[11] [12
+
+]
+Chapter 7.
+[13] [14
+
+]
+Chapter 8.
+[15] [16
+
+]
+Chapter 9.
+[17] [18
+
+]
+Chapter 10.
+[19] [20
+
+]
+Chapter 11.
+[21]
+Overfull \hbox (126.0006pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/10 22 \OT1/cmr/m/sl/10 CHAPTER 11.  ALGORITHMS AND DATA STRUCTURE 
+IN SUPPORT OF LARGE-SCALE REAL-TIME FRAMEWORK
+ []
+
+[22
+
+]
+Chapter 12.
+[23] [24
+
+] (./book.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 323 strings out of 94073
- 3213 string characters out of 1162984
- 48866 words of memory out of 1500000
- 3678 multiletter control sequences out of 10000+50000
- 3993 words of font info for 15 fonts, out of 1200000 for 2000
+ 662 strings out of 94073
+ 7098 string characters out of 1162984
+ 52108 words of memory out of 1500000
+ 3987 multiletter control sequences out of 10000+50000
+ 12770 words of font info for 49 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
- 23i,4n,17p,181b,141s stack positions out of 5000i,500n,6000p,200000b,5000s
-</usr/local/texlive/2007/texm
-f-dist/fonts/type1/bluesky/cm/cmr10.pfb>
-Output written on book.pdf (2 pages, 10348 bytes).
+ 23i,6n,24p,200b,188s stack positions out of 5000i,500n,6000p,200000b,5000s
+</usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmbx10.pfb></usr/l
+ocal/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmbx12.pfb></usr/local/texl
+ive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr10.pfb></usr/local/texlive/2007/t
+exmf-dist/fonts/type1/bluesky/cm/cmr12.pfb></usr/local/texlive/2007/texmf-dist/
+fonts/type1/bluesky/cm/cmr17.pfb></usr/local/texlive/2007/texmf-dist/fonts/type
+1/bluesky/cm/cmsl10.pfb>
+Output written on book.pdf (28 pages, 71360 bytes).
 PDF statistics:
- 13 PDF objects out of 1000 (max. 8388607)
+ 116 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

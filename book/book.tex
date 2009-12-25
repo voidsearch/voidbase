@@ -1,29 +1,81 @@
 \documentclass[]{book}    % list options between brackets
 \usepackage{}             % list packages between braces
+\usepackage{amssymb} 
+\usepackage{makeidx} 
 
 \input {preamble}          % input user-defined commands
 
 \begin{document}
 
-  \frontmatter
-  
-   \include{titlepage}       % include title page
-   \include{preface}       % include preface
+\author{Aleksandar Bradic, Igor Bogicevic}
+\title{Real-Time Large-Scale Data Analytics and Information Retrieval in Practice}
+\date{2009}
+
+\maketitle 
+
+  \frontmatter 
+  \tableofcontents 
+
+ %   \include{titlepage}       % include title page
+ % \include{preface}       % include preface
+%   \include{toc}       % include preface
+
+\mainmatter 
+
+\chapter{Introduction}
+\label{altrings} % So I can \ref{altrings} later.
+
+\section{Enter the real time}
+\section{Fundamental issues}
+
+\chapter{The nature of large-scale data}
+
+\chapter{The challenges of real-time information processing}
+\section{Problem description}
+
+\chapter{Software toolkits for large-scale data analysis}
+\section{Hadoop}
+\section{Mahout}
+
+\chapter{Fundamental Algorithms in Data Analytics and IR}
+\section{Basic statistical framework}
+
+\chapter{Advanced Algorithms}
+\chapter{Online learning algorithms}
+
+\chapter{Large-scale IR Cookbook}
+
+\chapter{Moving from batch to real-time}
+
+\chapter{Real-world real-time applications}
+\section{Web Analytics}
+\section{Media analysis}
+\section{Finance}
+\section{Online collaboration}
+
+\chapter{Algorithms and Data Structure in support of large-scale real-time framework}
+\section{Randomized Algorithms}
+\section{Queue-based structures}
+
+\chapter{VoidBase : queue-based computing framework}
+\section{Overview}
+\section{Cookbook}
+
+
     %\include{other}         % include other frontmatter
-  
  %   \mainmatter
-  
   %  \include{latex}         % include first chapter
    % \include{amslatex}      % include second chapter
    % \include{tools}         % include third chapter, etc.
-
     %\appendix
     %\include{history}       % include first appendix
     %\include{tables}        % include second appendix, etc.
-  
     %\backmatter
 
   %  \include{bibliography}  % include bibliography
    % \include{index}         % include index
+
+\backmatter 
+
 
 \end{document}
