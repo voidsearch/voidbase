@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:32
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:43
 entering extended mode
 \write18 enabled.
  %&-line parsing enabled.
@@ -122,44 +122,36 @@ Chapter 9.
 
 ]
 Chapter 10.
-[19] [20
-
-]
-Chapter 11.
-[21]
+[19]
 Overfull \hbox (126.0006pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/10 22 \OT1/cmr/m/sl/10 CHAPTER 11.  ALGORITHMS AND DATA STRUCTURE 
+\OT1/cmr/m/n/10 20 \OT1/cmr/m/sl/10 CHAPTER 10.  ALGORITHMS AND DATA STRUCTURE 
 IN SUPPORT OF LARGE-SCALE REAL-TIME FRAMEWORK
  []
 
-[22
+[20
 
 ]
-Chapter 12.
-[23] [24
+Chapter 11.
+[21] [22
 
-] (./book.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./book.aux) ) 
 Here is how much of TeX's memory you used:
- 662 strings out of 94073
- 7098 string characters out of 1162984
+ 663 strings out of 94073
+ 7113 string characters out of 1162984
  52108 words of memory out of 1500000
- 3987 multiletter control sequences out of 10000+50000
- 12770 words of font info for 49 fonts, out of 1200000 for 2000
+ 3988 multiletter control sequences out of 10000+50000
+ 13077 words of font info for 50 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
  23i,6n,24p,200b,188s stack positions out of 5000i,500n,6000p,200000b,5000s
-</usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmbx10.pfb></usr/l
-ocal/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmbx12.pfb></usr/local/texl
-ive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr10.pfb></usr/local/texlive/2007/t
-exmf-dist/fonts/type1/bluesky/cm/cmr12.pfb></usr/local/texlive/2007/texmf-dist/
-fonts/type1/bluesky/cm/cmr17.pfb></usr/local/texlive/2007/texmf-dist/fonts/type
-1/bluesky/cm/cmsl10.pfb>
-Output written on book.pdf (28 pages, 71360 bytes).
+</usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmbx
+10.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmbx12.pfb></
+usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr10.pfb></usr/local/
+texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr12.pfb></usr/local/texlive/20
+07/texmf-dist/fonts/type1/bluesky/cm/cmr17.pfb></usr/local/texlive/2007/texmf-d
+ist/fonts/type1/bluesky/cm/cmsl10.pfb>
+Output written on book.pdf (26 pages, 71009 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
+ 110 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
