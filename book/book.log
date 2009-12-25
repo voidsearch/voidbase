@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:55
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  25 DEC 2009 03:59
 entering extended mode
 \write18 enabled.
  %&-line parsing enabled.
@@ -136,12 +136,22 @@ Chapter 11.
 ]
 Chapter 12.
 
-Overfull \hbox (1.83444pt too wide) in paragraph at lines 79--79
+Overfull \hbox (1.83444pt too wide) in paragraph at lines 81--81
 []\OT1/cmr/bx/n/14.4 Building au-to-mated news-based al-go-rith-mic trad-ing ap
 p 
  []
 
 [23] [24
+
+]
+Chapter 13.
+[25]
+Overfull \hbox (47.87881pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/10 26 \OT1/cmr/m/sl/10 CHAPTER 13.  FUTURE CHALLENGES IN REAL-TIME
+ LARGE-SCALE ANALYTICAL PROCESSING
+ []
+
+[26
 
 ] (./book.aux) ) 
 Here is how much of TeX's memory you used:
@@ -158,9 +168,9 @@ usr/local/texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr10.pfb></usr/local/
 texlive/2007/texmf-dist/fonts/type1/bluesky/cm/cmr12.pfb></usr/local/texlive/20
 07/texmf-dist/fonts/type1/bluesky/cm/cmr17.pfb></usr/local/texlive/2007/texmf-d
 ist/fonts/type1/bluesky/cm/cmsl10.pfb>
-Output written on book.pdf (28 pages, 74975 bytes).
+Output written on book.pdf (30 pages, 76433 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
+ 122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
