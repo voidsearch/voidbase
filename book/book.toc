@@ -30,11 +30,13 @@
 \contentsline {section}{\numberline {9.4}Online collaboration}{17}
 \contentsline {chapter}{\numberline {10}Algorithms and Data Structure in support of large-scale real-time framework}{19}
 \contentsline {section}{\numberline {10.1}Convolutional procedures}{19}
-\contentsline {subsection}{\numberline {10.1.1}Convolutional representation of fundamental algebraic operations}{19}
-\contentsline {subsection}{\numberline {10.1.2}Example : Viterbi algorithm}{19}
-\contentsline {section}{\numberline {10.2}Randomized Algorithms}{19}
-\contentsline {subsection}{\numberline {10.2.1}Fast vs. Convolutional}{19}
-\contentsline {section}{\numberline {10.3}Queue-based structures}{19}
+\contentsline {subsection}{\numberline {10.1.1}Example : Viterbi algorithm}{19}
+\contentsline {section}{\numberline {10.2}Convolutional representation of fundamental algebraic operations}{19}
+\contentsline {subsection}{\numberline {10.2.1}Average,Mean,Median,Variance}{19}
+\contentsline {subsection}{\numberline {10.2.2}Matrix operations}{19}
+\contentsline {section}{\numberline {10.3}Randomized Algorithms}{19}
+\contentsline {subsection}{\numberline {10.3.1}Fast vs. Convolutional}{19}
+\contentsline {section}{\numberline {10.4}Queue-based structures}{19}
 \contentsline {chapter}{\numberline {11}VoidBase : queue-based computing framework}{21}
 \contentsline {section}{\numberline {11.1}Overview}{21}
 \contentsline {section}{\numberline {11.2}Paradigms}{21}
