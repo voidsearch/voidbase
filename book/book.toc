@@ -26,8 +26,9 @@
 \contentsline {chapter}{\numberline {9}Real-world real-time applications}{17}
 \contentsline {section}{\numberline {9.1}Web Analytics}{17}
 \contentsline {section}{\numberline {9.2}Media analysis}{17}
-\contentsline {section}{\numberline {9.3}Finance}{17}
-\contentsline {section}{\numberline {9.4}Online collaboration}{17}
+\contentsline {section}{\numberline {9.3}Econometrics}{17}
+\contentsline {section}{\numberline {9.4}Finance}{17}
+\contentsline {section}{\numberline {9.5}Online collaboration}{17}
 \contentsline {chapter}{\numberline {10}Algorithms and Data Structure in support of large-scale real-time framework}{19}
 \contentsline {section}{\numberline {10.1}Convolutional procedures}{19}
 \contentsline {subsection}{\numberline {10.1.1}Example : Viterbi algorithm}{19}
