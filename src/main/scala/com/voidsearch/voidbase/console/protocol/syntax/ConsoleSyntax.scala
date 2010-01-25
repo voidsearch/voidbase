@@ -27,6 +27,7 @@ object ConsoleSyntax {
   val EXIT                  = """exit|EXIT""".r
   val QUIT                  = """quit|QUIT""".r
   val HELP                  = """help|HELP""".r
+  val ALIAS                 = """alias|ALIAS""".r 
 
   // console  functions
   val RESTORE_SESSION       = """session.restore\(\"(.*)\"\)""".r

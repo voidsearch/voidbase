@@ -21,7 +21,7 @@ import com.voidsearch.voidbase.client.SimpleHttpClient;
 
 public class HttpLoadTime extends NumericalSequence implements SequenceGenerator {
 
-    static SimpleHttpClient client;
+    SimpleHttpClient client;
     String url;
 
     public HttpLoadTime(String requestURL) {

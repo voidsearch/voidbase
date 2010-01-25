@@ -28,6 +28,7 @@ case class HelpCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleC
     println()
     println("List of all voidbase commands: ")
     println()
+    println("alias    : display alias list")
     println("domain   : domain to use (QUEUE|CACHE|BROKER)")
     println("symtable : list contents of symbol table")
     println("list     : list all entries within given DOMAIN")

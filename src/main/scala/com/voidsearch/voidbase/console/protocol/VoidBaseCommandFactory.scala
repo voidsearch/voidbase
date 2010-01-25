@@ -69,6 +69,8 @@ object VoidBaseCommandFactory {
       => HelpCommand(session)
       case ConsoleSyntax.SYMBOL_TABLE()
         => DumpSymbolTableCommand(session)
+      case ConsoleSyntax.ALIAS()
+        => AliasCommand(session)
       case _ => throw new Exception()
     }
   }

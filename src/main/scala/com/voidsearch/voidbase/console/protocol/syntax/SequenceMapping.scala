@@ -35,6 +35,7 @@ object SequenceMapping {
 
     "http.load"         -> "quant.feed.HttpLoadTime",
     "http.bytes"        -> "quant.feed.HttpByteCount",
+    "http.regex"        -> "quant.feed.HttpRegexElement",  
     "simplexml.element" -> "quant.feed.SimpleXMLFeedElement" 
 
     )
