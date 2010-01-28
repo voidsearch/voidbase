@@ -38,7 +38,11 @@ object SequenceMapping {
     "http.regex"        -> "quant.feed.HttpRegexElement",  
     "simplexml.element" -> "quant.feed.SimpleXMLFeedElement",
     "file.size"         -> "quant.feed.FileSize",
-    "sql.exec"          -> "quant.feed.SqlExecElement"
+    "sql.exec"          -> "quant.feed.SqlExecElement",
+
+    // queue high-order operations
+
+    "queue.delta"       -> "quant.queue.QueueDelta"
 
     )
 
