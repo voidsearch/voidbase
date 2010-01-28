@@ -35,7 +35,18 @@ case class InsertToQueueCommand (session: VoidBaseConsoleSession, queue: String,
         try {
           var cmd = NextSequenceValueCommand(session,variable)
           var value = cmd.getNextValue()
-          client.put(queue,getQueueEntry(value))
+
+          if (QueueConfig.isTemporaryQueue(queue)) {
+            // for temporary queue, create is always attempted before insert
+            
+            client.create(queue,QueueConfig.getDefaultQueueSize)
+            client.put(queue,getQueueEntry(value))
+
+          } else {
+
+            client.put(queue,getQueueEntry(value))
+            
+          }
         } catch {
           case e => println("insert to queue " + queue + " failed")
         }
@@ -56,7 +67,6 @@ case class InsertToQueueCommand (session: VoidBaseConsoleSession, queue: String,
     //return "<entry>" + value + "</entry>"
     return value.toString();
   }
-
 
 
 }

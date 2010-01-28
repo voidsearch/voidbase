@@ -42,6 +42,7 @@ public class VoidBaseOperationType implements Comparable {
     public static final VoidBaseOperationType RESIZE;
     public static final VoidBaseOperationType STAT;
     public static final VoidBaseOperationType UNKNOWN;
+    public static final VoidBaseOperationType EXISTS;
 
     static {
         PUT     = new VoidBaseOperationType("PUT");
@@ -53,6 +54,7 @@ public class VoidBaseOperationType implements Comparable {
         RESIZE  = new VoidBaseOperationType("RESIZE");
         STAT    = new VoidBaseOperationType("STAT");
         UNKNOWN = new VoidBaseOperationType("UNKNOWN");
+        EXISTS  = new VoidBaseOperationType("EXISTS");
     }
 
     public static VoidBaseOperationType deserialize(String code) {

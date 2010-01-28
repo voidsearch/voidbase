@@ -58,6 +58,7 @@ public class QueueTreeProtocol extends VoidBaseProtocol {
         requiredParams.put(VoidBaseOperationType.DELETE,  new String[] {QUEUE});
         requiredParams.put(VoidBaseOperationType.FLUSH,   new String[] {QUEUE});
         requiredParams.put(VoidBaseOperationType.LIST,    new String[] {});
+        requiredParams.put(VoidBaseOperationType.EXISTS,  new String[] {QUEUE});
     }
 
     public static String[] getRequiredParams(VoidBaseOperationType operation) throws UnsupportedOperationException {
@@ -77,6 +78,7 @@ public class QueueTreeProtocol extends VoidBaseProtocol {
     public static String FLUSHED                = "QueueFlushed";
     public static String ENQUEUED               = "ValueEnqueued";
     public static String INVALID_REQUEST        = "InvalidRequest";
+    public static String VALID_QUEUE            = "ValidQueue";
     public static String INVALID_QUEUE          = "InvalidQueue";
     public static String UNSUPPORTED_OPERATION  = "UnsupportedOperation";
     public static String QUEUE_ALREADY_EXISTS   = "QueueAlreadyExists";

@@ -215,6 +215,19 @@ public class QueueTreeModule implements VoidBaseModule {
 
             } // flushAll all queues
 
+            else if (operation == VoidBaseOperationType.EXISTS) {
+
+                if (req.containsParams(QueueTreeProtocol.getRequiredParams(VoidBaseOperationType.FLUSH))) {
+                    String queue = req.getParam(QueueTreeProtocol.QUEUE);
+                    if (qTree.queueExists(queue)) {
+                        response.setResponse(QueueTreeProtocol.VALID_QUEUE);
+                    } else {
+                        response.setResponse(QueueTreeProtocol.INVALID_QUEUE);
+                    }
+                }
+
+            }
+
             else {
                 throw new InvalidRequestException();
             }
