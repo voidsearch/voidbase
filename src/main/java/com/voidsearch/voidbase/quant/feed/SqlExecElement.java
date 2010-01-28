@@ -27,13 +27,24 @@ public class SqlExecElement implements SequenceGenerator {
 
     private static Connection connection = null;
     private String query = null;
+    private String field = null;
 
     public SqlExecElement(String hostname, String username, String password, String database, String query) {
+        this.query = query;
+        init(hostname,username,password,database);
+    }
+
+    public SqlExecElement(String hostname, String username, String password, String database, String query, String field) {
+        this.query = query;
+        this.field = field;
+        init(hostname,username,password,database);
+    }
+
+    public void init(String hostname, String username, String password, String database) {
         try {
             String mysqlUri = "jdbc:mysql://"+hostname+"/"+database+"?user="+username+"&password="+password;
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(mysqlUri);
-            this.query = query;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +55,11 @@ public class SqlExecElement implements SequenceGenerator {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             result.first();
-            return result.getDouble(1);
+            if (field == null) {
+                return result.getDouble(1);
+            } else {
+                return result.getDouble(field);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
