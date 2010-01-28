@@ -18,10 +18,36 @@ package com.voidsearch.voidbase.quant.feed;
 
 import com.voidsearch.voidbase.quant.timeseries.SequenceGenerator;
 
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
 public class SqlExecElement implements SequenceGenerator {
 
-    public double next() {
-        return 0.0;
+    private static Connection connection = null;
+    private String query = null;
 
+    public SqlExecElement(String hostname, String username, String password, String database, String query) {
+        try {
+            String mysqlUri = "jdbc:mysql://"+hostname+"/"+database+"?user="+username+"&password="+password;
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(mysqlUri);
+            this.query = query;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double next() {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            result.first();
+            return result.getDouble(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

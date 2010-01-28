@@ -108,7 +108,7 @@ case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: 
 
   def getClassParams(_classText: String) : ListBuffer[String] = {
     var result = new ListBuffer[String]()
-    var content = _classText.substring(_classText.indexOf("(") + 1,_classText.indexOf(")"))
+    var content = _classText.substring(_classText.indexOf("(") + 1,_classText.lastIndexOf(")"))
     if (content.length > 0) {
       var parts = content.split(",")
       for (part:String <- parts) {
