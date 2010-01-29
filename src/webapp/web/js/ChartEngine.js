@@ -291,7 +291,7 @@ var ChartEngine = Class.create({
                 xNext = self.scaleX(index+1) + 0.5;
                 yNext = self.scaleY(data[index+1]);
 
-                self.canvas.line(x,y,xNext,yNext , '#acac66', 0.6 );
+                self.canvas.line(x,y,xNext,yNext , self.options.color, 0.6 );
             }
         });
     
@@ -323,7 +323,7 @@ var ChartEngine = Class.create({
 
             //console.log(x);
             //self.canvas.line(x, y, x, yZero, '#7878cc', 0.8);
-            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], '#acca66', 0.7  );
+            self.canvas.poly2d([[x,y],[x+barWidth,y],[x+barWidth,yZero],[x,yZero]], self.options.color, 0.7  );
 
         });
 

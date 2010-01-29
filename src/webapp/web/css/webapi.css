@@ -196,16 +196,23 @@ div#padder{
     margin: 0px 0 0 0;
     background: #fff;
     height: 60px;
-    padding: 20px 0 0 0;
+    padding: 24px 0 0 0;
 }
 
 #header h1 {
-    margin: 12px 0 0 0;
+    margin: -25px 0 0 0;
     font-size: 18px;
     width: 200px;
+    height:85px;
+    background: url('/files/img/voidbase-logo-transparent-small.png') no-repeat;
     float: right;
     display: inline;
 }
+
+#header h1 span{
+    display:none;
+}
+
 
 #qtCanvas {
     padding-top: 20px;
@@ -599,7 +606,7 @@ div.gridCell:hover div.editGridCellButton{
     -webkit-border-radius:4px;
     -moz-box-shadow: 0px 0px 10px #ccc;
     -webkit-box-shadow: 0px 0px 10px #ccc;
-    height:290px;
+    height:340px;
     width:300px;
     position:absolute;
     z-index:10;
