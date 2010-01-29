@@ -228,14 +228,11 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
             id = id[1];
             this.cellSettingsId = id;
 
-            
             self.cellEditInstance = self.getActiveCellInstance(this.cellSettingsId);
-
 
             this.API.core.AJAXGetJSON('/webapi/queuetree/?method=LIST', function(data) {
                 var qs = self.getComplexData(data.queue, 'queueList',true);
                 var HTML = '<select id="cellSettings-queueName">';
-
 
                 HTML += '<option value="-1">-- choose queue --</option>';
 
@@ -248,8 +245,6 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                         }
                     }
                     HTML += '<option value="'+queueName+'" '+ selected+'>'+queueName+'</option>';
-
-
                 });
                 HTML += '</select >';
 
@@ -269,6 +264,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
                 });
 
             });
+
+            self.cellSettingsAutoSelect(self.cellEditInstance);
 
             $(GRID_CELL_SETTINGS_SOURCE_QUEUE).update('Loading...');
 
@@ -292,6 +289,15 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queuetree = function() {
 
         },
 
+        cellSettingsAutoSelect:function(instanceObject){
+            if(instanceObject){
+
+               $('cellSettings-chartType-'+instanceObject.instance.options.type).selected='selected';
+               $('cellSettings-lineWidth-'+instanceObject.instance.options.lineWidth).selected='selected';
+               $('cellSettings-color-'+instanceObject.instance.options.color.replace('#','')).selected='selected'; 
+
+            }
+        },
 
         gridCellEditFetchFields:function(queueName,instance) {
             var self = this;
