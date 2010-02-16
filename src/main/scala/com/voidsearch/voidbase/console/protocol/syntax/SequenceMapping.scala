@@ -42,7 +42,10 @@ object SequenceMapping {
 
     // queue high-order operations
 
-    "queue.delta"       -> "quant.queue.QueueDelta"
+    "queue.delta"       -> "quant.queue.QueueDelta",
+
+    // misc
+    "token.freq"        -> "quant.feed.TokenFrequency"
 
     )
 
