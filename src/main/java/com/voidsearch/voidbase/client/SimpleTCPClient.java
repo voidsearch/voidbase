@@ -49,6 +49,7 @@ public class SimpleTCPClient {
     StringBuilder sb = new StringBuilder();
 
     os.print(command.trim() + "\r\n");
+    os.println("\r\n");
 
     String response = is.readLine();
 
@@ -57,9 +58,7 @@ public class SimpleTCPClient {
     while ((response != null) && (response.length() > 0)) {
       System.out.println("APPEND : " + response);
       sb.append(response).append("\n");
-      System.out.println(">????");
       response = is.readLine();
-      System.out.println("<<<<<<<<");
     }
 
     System.out.println("OUTIE !");
