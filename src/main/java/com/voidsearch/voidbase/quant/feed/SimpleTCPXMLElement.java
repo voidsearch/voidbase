@@ -36,23 +36,16 @@ import java.io.ByteArrayInputStream;
 public class SimpleTCPXMLElement implements SequenceGenerator {
 
   String host;
-  String port;
+  int port;
   String command;
   String xmlPath;
 
   public SimpleTCPXMLElement(String host, String port, String command, String elementPath) {
 
-    System.out.println("CREEATE!");
-
     this.host = host;
-    System.out.println("HOST / PORT : " + port);
-    this.port = port;
-    System.out.println("PORT");
+    this.port = Integer.parseInt(port.trim());
     this.command = command;
-    System.out.println("CMD");
     this.xmlPath = elementPath;
-
-    System.out.println("CREATED!");
     
   }
 
