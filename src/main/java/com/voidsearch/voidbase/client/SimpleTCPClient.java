@@ -43,36 +43,25 @@ public class SimpleTCPClient {
     DataInputStream is = new DataInputStream(socket.getInputStream());
     PrintStream os = new PrintStream(socket.getOutputStream());
 
-    System.out.println("CONNECT");
-    System.out.println("SEND : " + command);
-
     StringBuilder sb = new StringBuilder();
 
     os.print(command.trim() + "\r\n");
     os.println("\r\n");
 
     String response = is.readLine();
-
-    System.out.println("RESPONSE : " + response);
-    
     while ((response != null) && (response.length() > 0)) {
-      System.out.println("APPEND : " + response);
       sb.append(response).append("\n");
       response = is.readLine();
     }
 
-    System.out.println("OUTIE !");
-    
     os.println("\r\n");
     is.readLine();
 
-    System.out.println("CLOSING !");
     is.close();
     os.close();
 
-    System.out.println("RESULT : " + sb);
-
     return sb.toString().getBytes();
+
   }
 
 
