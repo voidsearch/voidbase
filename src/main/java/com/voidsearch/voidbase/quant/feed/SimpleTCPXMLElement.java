@@ -40,12 +40,16 @@ public class SimpleTCPXMLElement implements SequenceGenerator {
   String command;
   String xmlPath;
 
-  public SimpleTCPXMLElement(String host, int port, String command, String elementPath) {
+  public SimpleTCPXMLElement(String host, String port, String command, String elementPath) {
+
+    System.out.println("CREEATE!");
 
     this.host = host;
-    this.port = port;
+    this.port = Integer.parseInt(port);
     this.command = command;
     this.xmlPath = elementPath;
+
+    System.out.println("CREATED!");
     
   }
 
