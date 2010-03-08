@@ -36,7 +36,7 @@ import java.io.ByteArrayInputStream;
 public class SimpleTCPXMLElement implements SequenceGenerator {
 
   String host;
-  int port;
+  String port;
   String command;
   String xmlPath;
 
@@ -46,7 +46,7 @@ public class SimpleTCPXMLElement implements SequenceGenerator {
 
     this.host = host;
     System.out.println("HOST / PORT : " + port);
-    this.port = Integer.parseInt(port);
+    this.port = port;
     System.out.println("PORT");
     this.command = command;
     System.out.println("CMD");

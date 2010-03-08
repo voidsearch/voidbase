@@ -25,9 +25,9 @@ public class SimpleTCPClient {
   private String hostname;
   private int port;
 
-  public SimpleTCPClient(String hostname, int port) {
+  public SimpleTCPClient(String hostname, String port) {
     this.hostname = hostname;
-    this.port = port;
+    this.port = Integer.parseInt(port);
   }
 
   /**
