@@ -60,8 +60,12 @@ public class SimpleTCPClient {
       response = is.readLine();
     }
 
+    System.out.println("OUTIE !");
+    
     os.println("\r\n");
+    is.readLine();
 
+    System.out.println("CLOSING !");
     is.close();
     os.close();
 
