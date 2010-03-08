@@ -22,9 +22,15 @@ import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient;
 
 import java.util.LinkedList;
 
+/**
+ * return delta on given queue
+ */
+
 public class QueueDelta extends NumericalSequence implements SequenceGenerator {
 
-    String queue = null;
+    private String queue = null;
+    private int delta = 2;
+
     private static QueueTreeClient client = null;
 
     public QueueDelta(String queueName) {
@@ -32,15 +38,26 @@ public class QueueDelta extends NumericalSequence implements SequenceGenerator {
         this.queue = queueName;
     }
 
+    public QueueDelta(String queueName, String delta) {
+        client = new QueueTreeClient();
+        this.queue = queueName;
+        this.delta = Integer.parseInt(delta);
+    }
+
     public double next() {
         try {
-            String response = client.get(queue,2);
+            String response = client.get(queue,delta);
             LinkedList<String> values = client.getResultList(response);
 
-            if (values.size() == 2) {
-                double val1 = Double.parseDouble(values.get(0));
-                double val2 = Double.parseDouble(values.get(1));
-                return val1 - val2;
+            if (values.size() == delta) {
+
+                double sum = 0;
+
+                for (int i=0; i<values.size()-1; i++) {
+                    sum += (Double.parseDouble(values.get(i)) - Double.parseDouble(values.get(i+1)));
+                }
+
+                return sum/(delta - 1);
             }
 
         } catch (Exception e) {

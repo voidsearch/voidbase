@@ -33,12 +33,13 @@ object SequenceMapping {
 
     // feed processing
 
-    "http.load"         -> "quant.feed.HttpLoadTime",
-    "http.bytes"        -> "quant.feed.HttpByteCount",
-    "http.regex"        -> "quant.feed.HttpRegexElement",  
-    "simplexml.element" -> "quant.feed.SimpleXMLFeedElement",
-    "file.size"         -> "quant.feed.FileSize",
-    "sql.exec"          -> "quant.feed.SqlExecElement",
+    "http.load"             -> "quant.feed.HttpLoadTime",
+    "http.bytes"            -> "quant.feed.HttpByteCount",
+    "http.regex"            -> "quant.feed.HttpRegexElement",
+    "simplexml.element"     -> "quant.feed.SimpleXMLFeedElement",
+    "simple.tcp.xml.element"-> "quant.feed.SimpleTCPXMLElement",  
+    "file.size"             -> "quant.feed.FileSize",
+    "sql.exec"              -> "quant.feed.SqlExecElement",
 
     // queue high-order operations
 

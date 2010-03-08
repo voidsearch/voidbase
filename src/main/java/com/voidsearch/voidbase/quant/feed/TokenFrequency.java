@@ -198,7 +198,8 @@ public class TokenFrequency extends NumericalSequence implements SequenceGenerat
      */
     private boolean isValidToken(String token) {
         // filter empty strings
-        if (token.isEmpty()) {
+        //if (token.isEmpty()) {
+        if ((token == null) || (token.length() == 0)) {
             return false;
         }
         // filter html tags
