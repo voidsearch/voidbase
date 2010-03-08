@@ -48,7 +48,7 @@ public class SimpleTCPClient {
 
     StringBuilder sb = new StringBuilder();
 
-    os.print(command + "\r\n");
+    os.print(command.trim() + "\r\n");
 
     String response = is.readLine();
 
