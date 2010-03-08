@@ -55,7 +55,9 @@ public class SimpleTCPClient {
     System.out.println("RESPONSE : " + response);
     
     while ((response != null) && (response.length() > 0)) {
+      System.out.println("APPEND : " + response);
       sb.append(response).append("\n");
+      response = is.readLine();
     }
 
     os.println("\r\n");
