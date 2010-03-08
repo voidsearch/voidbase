@@ -45,7 +45,7 @@ public class SimpleTCPXMLElement implements SequenceGenerator {
     System.out.println("CREEATE!");
 
     this.host = host;
-    System.out.println("HOST");
+    System.out.println("HOST / PORT : " + port);
     this.port = Integer.parseInt(port);
     System.out.println("PORT");
     this.command = command;
