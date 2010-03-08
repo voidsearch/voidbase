@@ -42,11 +42,14 @@ public class SimpleTCPClient {
     Socket socket = new Socket(hostname, port);
     DataInputStream is = new DataInputStream(socket.getInputStream());
     PrintStream os = new PrintStream(socket.getOutputStream());
-    String response = is.readLine();
 
-    os.print(command);
+    System.out.println("CONNECT");
+    os.print(command + "\r\n");
+
+    System.out.println("PRINT");
     StringBuilder sb = new StringBuilder();
 
+    String response = is.readLine();
     while ((response != null) && (response.length() > 0)) {
       sb.append(response).append("\n");
     }
