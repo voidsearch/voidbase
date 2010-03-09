@@ -17,6 +17,8 @@
 package com.voidsearch.voidbase.client;
 
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.InetSocketAddress;
 import java.io.DataInputStream;
 import java.io.PrintStream;
 
@@ -39,9 +41,10 @@ public class SimpleTCPClient {
    */
   public byte[] get(String command) throws Exception {
 
-    System.out.println("|||| OPENING SOCKET");
-    Socket socket = new Socket(hostname, port);
-    System.out.println("|||| OPENED SOCKET");
+    Socket socket = new Socket();
+    socket.bind(null);
+    socket.setSoTimeout(500);
+    socket.connect(new InetSocketAddress(hostname, port), 500);
 
     DataInputStream is = new DataInputStream(socket.getInputStream());
     PrintStream os = new PrintStream(socket.getOutputStream());
