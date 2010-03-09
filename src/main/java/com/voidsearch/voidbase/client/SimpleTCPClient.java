@@ -24,6 +24,8 @@ import java.io.PrintStream;
 
 public class SimpleTCPClient {
 
+  private static int DEFAULT_TIMEOUT = 500;
+
   private String hostname;
   private int port;
 
@@ -44,7 +46,7 @@ public class SimpleTCPClient {
     Socket socket = new Socket();
     socket.bind(null);
     socket.setSoTimeout(500);
-    socket.connect(new InetSocketAddress(hostname, port), 500);
+    socket.connect(new InetSocketAddress(hostname, port), DEFAULT_TIMEOUT);
 
     DataInputStream is = new DataInputStream(socket.getInputStream());
     PrintStream os = new PrintStream(socket.getOutputStream());
