@@ -39,7 +39,10 @@ public class SimpleTCPClient {
    */
   public byte[] get(String command) throws Exception {
 
+    System.out.println("|||| OPENING SOCKET");
     Socket socket = new Socket(hostname, port);
+    System.out.println("|||| OPENED SOCKET");
+
     DataInputStream is = new DataInputStream(socket.getInputStream());
     PrintStream os = new PrintStream(socket.getOutputStream());
 
