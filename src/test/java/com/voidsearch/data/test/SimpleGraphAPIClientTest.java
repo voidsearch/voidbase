@@ -26,10 +26,10 @@ import java.util.LinkedList;
 
 public class SimpleGraphAPIClientTest {
 
-    // sample token - expires every hour, obtained from links at :
+    // sample token - expires every hour, obtained from liks at :
     // http://developers.facebook.com/docs/api
     //
-    // (for testing only - you should obtain a proper access token)
+    // for testing only - you should obtain a proper access token
     //
 
     public String fbToken = "2227470867|2.7lsiCQ8_bWloy2L94B8vnA__.3600.1272232800-736212683|-bThDZvFpVP2SefvOibwP3hQ2es.";
