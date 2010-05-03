@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.voidsearch.data.test;
+package com.voidsearch.data.provider.facebook;
 
 import com.voidsearch.data.provider.facebook.SimpleGraphAPIClient;
 import com.voidsearch.data.provider.facebook.objects.*;

@@ -1,0 +1,10 @@
+ {
+      "namespace": "com.voidsearch.data.avro.simple",
+      "name": "FacebookUser",
+      "type": "record",
+      "fields": [
+          {"name": "name", "type": ["string", "null"]},
+          {"name": "num_likes", "type": "int"},
+          {"name": "num_photos", "type": "int"},
+          {"name": "num_groups", "type": "int"} ]
+}
