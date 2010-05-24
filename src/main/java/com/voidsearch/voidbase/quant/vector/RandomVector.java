@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 VoidSearch.com
+ * Copyright 2010 VoidSearch.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,9 +14,25 @@
  * the License.
  */
 
-package com.voidsearch.voidbase.broker;
+package com.voidsearch.voidbase.quant.vector;
 
-public class VoidBaseMessageBroker {
+import java.util.Random;
+
+public class RandomVector extends ArrayVector {
+
+    Random rnd = new Random();
+
+    public RandomVector(int size) {
+        super(size);
+        init();
+    }
+
+    private void init() {
+        for (int i=0; i<vector.length; i++) {
+            vector[i] = rnd.nextDouble();
+        }
+    }
+
 
     
 }
