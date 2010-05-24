@@ -32,6 +32,8 @@ import syntax.ConsoleSyntax
 
 object VoidBaseConsole {
 
+  var DEFAULT_HOST = "localhost:8080";
+
   def main(args: Array[String]) {
 
     var reader = new ConsoleReader();
@@ -42,7 +44,9 @@ object VoidBaseConsole {
     var out = new PrintWriter(System.out);
     ConsoleProtocol.printHeader(out)
 
-    var session = new VoidBaseConsoleSession("localhost:8080",reader);
+    var hostname = DEFAULT_HOST;
+    
+    var session = new VoidBaseConsoleSession(hostname,reader);
     var cmd = session.getCommand();
 
     while (!(cmd.isInstanceOf[ExitCommand])) {

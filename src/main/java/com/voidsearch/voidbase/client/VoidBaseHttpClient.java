@@ -50,7 +50,6 @@ public abstract class VoidBaseHttpClient implements VoidBaseClient {
 
     public byte[] get(String query) throws Exception {
 
-        System.out.println("QUERY : " + query);
         GetMethod method = new GetMethod(query);
         method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,new DefaultHttpMethodRetryHandler(3, false));
 

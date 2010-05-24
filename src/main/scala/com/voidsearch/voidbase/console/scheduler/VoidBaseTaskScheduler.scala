@@ -19,7 +19,7 @@ package com.voidsearch.voidbase.console.scheduler
 
 import actors.Actor
 import collection.mutable.{ListBuffer, HashMap}
-import protocol.commands.VoidBaseConsoleCommand
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
 class VoidBaseTaskScheduler extends Actor {
 

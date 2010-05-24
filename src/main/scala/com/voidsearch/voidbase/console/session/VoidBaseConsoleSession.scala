@@ -22,6 +22,7 @@ import jline.ConsoleReader
 import protocol.commands.VoidBaseConsoleCommand
 import protocol.{ConsoleProtocol, VoidBaseCommandFactory}
 import scheduler.VoidBaseTaskScheduler
+
 class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
 
   // session-level variables
