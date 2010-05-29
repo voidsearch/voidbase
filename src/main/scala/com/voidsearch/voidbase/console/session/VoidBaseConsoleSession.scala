@@ -20,9 +20,8 @@ package com.voidsearch.voidbase.console.session
 import collection.mutable.{HashMap, ListBuffer}
 import jline.ConsoleReader
 import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
-import com.voidsearch.voidbase.console.protocol.{ConsoleProtocol, VoidBaseCommandFactory}
 import com.voidsearch.voidbase.console.scheduler.VoidBaseTaskScheduler
-import com.voidsearch.voidbase.console.protocol.{VoidBaseCommandFactory, VoidBaseCommandFactory, VoidBaseCommandFactory}
+import com.voidsearch.voidbase.console.protocol.{ConsoleProtocol, VoidBaseCommandFactory}
 
 class VoidBaseConsoleSession(_hostname: String, reader: ConsoleReader) {
 
