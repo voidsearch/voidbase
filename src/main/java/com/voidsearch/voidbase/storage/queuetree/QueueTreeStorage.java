@@ -17,6 +17,8 @@
 package com.voidsearch.voidbase.storage.queuetree;
 
 
+import com.voidsearch.voidbase.storage.queuetree.persistence.QueuePersistence;
+import com.voidsearch.voidbase.storage.queuetree.persistence.QueuePersistenceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +42,11 @@ public class QueueTreeStorage implements SupervisedStorage {
     private ConcurrentHashMap<String, ArrayBlockingQueue> queueTree =
             new ConcurrentHashMap<String, ArrayBlockingQueue>();
 
-
     private ConcurrentHashMap<String, QueueMetadata> queueMedatada =
             new ConcurrentHashMap<String, QueueMetadata>();
+
+    private ConcurrentHashMap<String, QueuePersistence> queuePersistence =
+            new ConcurrentHashMap<String, QueuePersistence>();
 
     // maintenance support
     private HashSet<StorageOperation> opLocks = new HashSet<StorageOperation>();
@@ -67,8 +71,27 @@ public class QueueTreeStorage implements SupervisedStorage {
       return singleton;
     }
 
-    // create a new queue
+    /**
+     * create persisted queue
+     *
+     * @param queueName
+     * @param size
+     * @throws QueueAlreadyExistsException
+     * @throws SupervisionException
+     */
     public void createQueue(String queueName, int size) throws QueueAlreadyExistsException, SupervisionException {
+        createQueue(queueName, size, true);
+    }
+
+    /**
+     * create queue with defined persistence
+     *
+     * @param queueName
+     * @param size
+     * @throws QueueAlreadyExistsException
+     * @throws SupervisionException
+     */
+    public void createQueue(String queueName, int size, boolean persisted) throws QueueAlreadyExistsException, SupervisionException {
 
         updateQueryCounters(StorageOperation.CREATE);
 
@@ -78,6 +101,7 @@ public class QueueTreeStorage implements SupervisedStorage {
         if (!queueTree.containsKey(queueName)) {
             queueTree.put(queueName,new ArrayBlockingQueue(size));
             queueMedatada.put(queueName,new QueueMetadata(queueName,size));
+            queuePersistence.put(queueName, QueuePersistenceFactory.getPersistence(queueName));
         }
         else {
             throw new QueueAlreadyExistsException();

@@ -260,15 +260,50 @@ public class QueueTreeModule implements VoidBaseModule {
 
     }
 
+    /**
+     * create default persisted queue
+     *
+     * @param queue
+     * @param size
+     * @throws QueueAlreadyExistsException
+     * @throws SupervisionException
+     */
     public void createQueue(String queue, int size) throws QueueAlreadyExistsException, SupervisionException {
+        createQueue(queue, size, true);
+    }
+
+    /**
+     * create queue with defined persistence
+     *
+     * @param queue
+     * @param size
+     * @param persistence
+     * @throws QueueAlreadyExistsException
+     * @throws SupervisionException
+     */
+    public void createQueue(String queue, int size, boolean persistence) throws QueueAlreadyExistsException, SupervisionException {
         qTree.createQueue(queue, size);
     }
 
+    /**
+     * insert entry into queue
+     *
+     * @param queue
+     * @param value
+     * @throws InvalidQueueException
+     * @throws SupervisionException
+     */
     public void insertToQueue(String queue, String value) throws InvalidQueueException, SupervisionException {
         qTree.putFIFO(queue, value);
     }
 
-
+    /**
+     * check whether queue exists
+     *
+     * @param queue
+     * @return
+     * @throws SupervisionException
+     */
     public boolean queueExists(String queue) throws SupervisionException {
         return qTree.queueExists(queue); 
     }
