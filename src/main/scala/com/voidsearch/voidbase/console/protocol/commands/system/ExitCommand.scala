@@ -17,7 +17,9 @@
 package com.voidsearch.voidbase.console.protocol.commands.system
 
 import scala.util.matching.Regex
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+
 
 case class ExitCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

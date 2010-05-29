@@ -16,8 +16,9 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.common
 
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
-import session.VoidBaseConsoleSession
 
 case class KillProcessCommand(session: VoidBaseConsoleSession, pid: Int) extends VoidBaseConsoleCommand {
 

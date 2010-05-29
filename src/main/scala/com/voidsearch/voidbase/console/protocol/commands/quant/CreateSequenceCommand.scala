@@ -17,11 +17,12 @@
 package com.voidsearch.voidbase.console.protocol.commands.quant
 
 import collection.mutable.ListBuffer
-import console.syntax.SequenceMapping
 import java.util.ArrayList
-import session.{SessionObject, VoidBaseConsoleSession}
-import voidbase.quant.timeseries.DirectSequence
-import voidbase.util.GenericUtil
+import com.voidsearch.voidbase.console.session.{SessionObject, VoidBaseConsoleSession}
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
+import com.voidsearch.voidbase.util.GenericUtil
+import com.voidsearch.voidbase.console.syntax.SequenceMapping
+import com.voidsearch.voidbase.quant.timeseries.DirectSequence
 
 case class CreateSequenceCommand(session: VoidBaseConsoleSession, variableName: String, sequenceString : String) extends VoidBaseConsoleCommand {
 

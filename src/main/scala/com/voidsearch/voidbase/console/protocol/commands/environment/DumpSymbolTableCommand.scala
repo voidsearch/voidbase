@@ -16,7 +16,8 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.environment
 
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
 case class DumpSymbolTableCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

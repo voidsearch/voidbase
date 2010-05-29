@@ -18,8 +18,8 @@ package com.voidsearch.voidbase.console.protocol.commands
 
 import collection.mutable.HashMap
 import scala.util.matching.Regex
-import session.VoidBaseConsoleSession
-import voidbase.quant.timeseries.GaussianSequence
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.quant.timeseries.GaussianSequence
 
 case class TestCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

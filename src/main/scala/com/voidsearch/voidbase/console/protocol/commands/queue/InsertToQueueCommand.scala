@@ -16,11 +16,12 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.queue
 
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.quant.NextSequenceValueCommand
+import com.voidsearch.voidbase.console.syntax.ConsoleSyntax
+import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
-import apps.queuetree.client.QueueTreeClient
-import console.syntax.ConsoleSyntax
-import quant.NextSequenceValueCommand
-import session.{SessionObject, VoidBaseConsoleSession}
 
 case class InsertToQueueCommand (session: VoidBaseConsoleSession, queue: String, content : String) extends VoidBaseConsoleCommand {
 

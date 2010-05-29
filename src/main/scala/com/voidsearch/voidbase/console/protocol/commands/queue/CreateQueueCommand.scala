@@ -16,8 +16,9 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.queue
 
-import apps.queuetree.client.QueueTreeClient
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.apps.queuetree.client.QueueTreeClient
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
 case class CreateQueueCommand (session: VoidBaseConsoleSession, name: String, size : String) extends VoidBaseConsoleCommand {
 

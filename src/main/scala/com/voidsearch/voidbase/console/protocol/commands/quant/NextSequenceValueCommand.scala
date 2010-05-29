@@ -18,9 +18,8 @@ package com.voidsearch.voidbase.console.protocol.commands.quant
 
 
 import com.voidsearch.voidbase.quant.timeseries.SequenceGenerator
-import session.{SessionObject, VoidBaseConsoleSession}
-import voidbase.quant.timeseries.SequenceGenerator
-
+import com.voidsearch.voidbase.console.session.{SessionObject, VoidBaseConsoleSession}
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 case class NextSequenceValueCommand(session: VoidBaseConsoleSession, variable: String) extends VoidBaseConsoleCommand {
 
   def exec() = {

@@ -16,8 +16,8 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.system
 
-
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
 case class HelpCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

@@ -16,9 +16,10 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.environment
 
-import console.syntax.ConsoleSyntax
 import java.io.{BufferedWriter, FileWriter}
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.syntax.ConsoleSyntax
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
 
 case class SaveSessionCommand(session: VoidBaseConsoleSession, outFile : String) extends VoidBaseConsoleCommand {
   

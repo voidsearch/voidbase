@@ -18,7 +18,7 @@ package com.voidsearch.voidbase.console.protocol.commands.environment
 
 import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
-import console.syntax.SequenceMapping
+import com.voidsearch.voidbase.console.syntax.SequenceMapping
 
 case class AliasCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

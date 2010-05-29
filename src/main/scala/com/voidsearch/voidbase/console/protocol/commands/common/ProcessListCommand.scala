@@ -16,8 +16,8 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.common
 
-
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
 case class ProcessListCommand(session: VoidBaseConsoleSession) extends VoidBaseConsoleCommand {
 

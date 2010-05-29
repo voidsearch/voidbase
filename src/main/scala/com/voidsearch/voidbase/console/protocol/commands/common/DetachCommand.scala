@@ -16,10 +16,10 @@
 
 package com.voidsearch.voidbase.console.protocol.commands.common
 
-
-import console.syntax.ConsoleSyntax
-import queue.InsertToQueueCommand
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.protocol.commands.queue.InsertToQueueCommand
+import com.voidsearch.voidbase.console.syntax.ConsoleSyntax
+import com.voidsearch.voidbase.console.protocol.commands.VoidBaseConsoleCommand
 
 case class DetachCommand(session: VoidBaseConsoleSession, process: String, interval: Int) extends VoidBaseConsoleCommand {
 

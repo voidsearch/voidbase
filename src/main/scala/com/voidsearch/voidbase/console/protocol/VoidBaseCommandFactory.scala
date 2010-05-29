@@ -24,12 +24,12 @@ import queue.{DeleteQueueCommand, InsertToQueueCommand, CreateQueueCommand}
 import system.{ExitCommand, HelpCommand}
 
 import environment._
-import console.syntax.ConsoleSyntax
+import com.voidsearch.voidbase.console.syntax.ConsoleSyntax
 
 
 
 import scala.util.matching.Regex
-import session.VoidBaseConsoleSession
+import com.voidsearch.voidbase.console.session.VoidBaseConsoleSession
 
 /**
  * note - chunked structure due to the workaround of scala bug :
