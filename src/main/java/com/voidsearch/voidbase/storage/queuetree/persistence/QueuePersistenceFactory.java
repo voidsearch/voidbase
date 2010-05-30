@@ -19,7 +19,7 @@ package com.voidsearch.voidbase.storage.queuetree.persistence;
 public class QueuePersistenceFactory {
 
     public static QueuePersistence getPersistence(String queueName) {
-        return new FilesystemQueuePersistence();
+        return new FilesystemQueuePersistence(queueName);
     }
     
 }

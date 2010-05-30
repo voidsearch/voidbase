@@ -21,8 +21,11 @@ public interface QueuePersistence {
     /**
      * add data to persistence stream
      * 
-     * @param data
+     * @param queueName
+     * @param queueEntry
+     * @param metadataEntry
+     *
      */
-    public void add(String data) throws Exception;
+    public void add(String queueName, Object queueEntry, Object metadataEntry) throws Exception;
     
 }
