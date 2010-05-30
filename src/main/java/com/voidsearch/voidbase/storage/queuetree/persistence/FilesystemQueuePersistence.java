@@ -16,6 +16,8 @@
 
 package com.voidsearch.voidbase.storage.queuetree.persistence;
 
+import com.voidsearch.voidbase.storage.queuetree.QueueEntry;
+import com.voidsearch.voidbase.storage.queuetree.QueueMetadata;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumWriter;
@@ -31,7 +33,7 @@ public class FilesystemQueuePersistence implements QueuePersistence {
 
     private static String PERSISTENCE_PATH = "data/queue/persistence/";
 
-    String schemaDescription =
+    private static String schemaDescription =
             " {    \n" +
                     " \"name\": \"QueueEntry\", \n" +
                     " \"type\": \"record\",\n" +
@@ -62,7 +64,11 @@ public class FilesystemQueuePersistence implements QueuePersistence {
 
     }
 
-    public void add(String queueName, Object queueEntry, Object metadataEntry) throws Exception {
+    public static String getSchema() {
+        return schemaDescription;
+    }
+
+    public void add(String queueName, QueueEntry queueEntry, QueueMetadata metadataEntry) throws Exception {
 
         GenericRecord r = new GenericData.Record(s);
 
@@ -75,4 +81,6 @@ public class FilesystemQueuePersistence implements QueuePersistence {
         e.flush();
         
     }
+
+
 }

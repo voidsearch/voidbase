@@ -16,6 +16,8 @@
 
 package com.voidsearch.voidbase.storage.queuetree.persistence;
 
+import com.voidsearch.voidbase.storage.queuetree.QueueEntry;
+import com.voidsearch.voidbase.storage.queuetree.QueueMetadata;
 import org.testng.annotations.Test;
 
 public class FilesystemQueuePersistenceTest {
@@ -28,14 +30,10 @@ public class FilesystemQueuePersistenceTest {
             QueuePersistence persistenceEngine1 = QueuePersistenceFactory.getPersistence("testqueue1");
             QueuePersistence persistenceEngine2 = QueuePersistenceFactory.getPersistence("testqueue2");
 
-            persistenceEngine1.add("testqueue1", new Object(), new Object());
-            persistenceEngine1.add("testqueue1", new Object(), new Object());
-            persistenceEngine2.add("testqueue2", new Object(), new Object());
-            persistenceEngine1.add("testqueue1", new Object(), new Object());
-            persistenceEngine2.add("testqueue2", new Object(), new Object());
-            persistenceEngine2.add("testqueue2", new Object(), new Object());
-            persistenceEngine1.add("testqueue1", new Object(), new Object());
-            persistenceEngine2.add("testqueue2", new Object(), new Object());
+            persistenceEngine1.add("testqueue1", new QueueEntry("1"), new QueueMetadata("testqueue1",100));
+            persistenceEngine1.add("testqueue1", new QueueEntry("2"), new QueueMetadata("testqueue1",100));
+            persistenceEngine2.add("testqueue2", new QueueEntry("1"), new QueueMetadata("testqueue2",100));
+            persistenceEngine1.add("testqueue1", new QueueEntry("3"), new QueueMetadata("testqueue1",100));
 
         } catch (Exception e) {
             e.printStackTrace();

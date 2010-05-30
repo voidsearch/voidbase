@@ -17,6 +17,7 @@
 package com.voidsearch.voidbase.storage.queuetree;
 
 
+import com.voidsearch.voidbase.storage.queuetree.persistence.FilesystemQueuePersistence;
 import com.voidsearch.voidbase.storage.queuetree.persistence.QueuePersistence;
 import com.voidsearch.voidbase.storage.queuetree.persistence.QueuePersistenceFactory;
 import org.slf4j.Logger;
@@ -280,6 +281,16 @@ public class QueueTreeStorage implements SupervisedStorage {
 
                     // a bit of controlled recursion
                 putFIFO(queueName + "_metadata", new QueueMetadata(queueMedatada.get(queueName)));
+
+                // persist update
+                if (true) {
+                    try {
+                        QueuePersistence persistenceEngine = queuePersistence.get(queueName);
+                        persistenceEngine.add(queueName, new QueueEntry(value), new QueueMetadata(queueMedatada.get(queueName)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
             }
 

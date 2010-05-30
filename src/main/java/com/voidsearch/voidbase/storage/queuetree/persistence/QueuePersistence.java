@@ -16,6 +16,9 @@
 
 package com.voidsearch.voidbase.storage.queuetree.persistence;
 
+import com.voidsearch.voidbase.storage.queuetree.QueueEntry;
+import com.voidsearch.voidbase.storage.queuetree.QueueMetadata;
+
 public interface QueuePersistence {
 
     /**
@@ -26,6 +29,6 @@ public interface QueuePersistence {
      * @param metadataEntry
      *
      */
-    public void add(String queueName, Object queueEntry, Object metadataEntry) throws Exception;
+    public void add(String queueName, QueueEntry queueEntry, QueueMetadata metadataEntry) throws Exception;
     
 }
