@@ -59,6 +59,8 @@ object VoidBaseCommandFactory {
    */
   def matchSystemCommand(commandText: String, session: VoidBaseConsoleSession): VoidBaseConsoleCommand = {
     return commandText match {
+      case ConsoleSyntax.NULL()
+        => NullCommand(session)
       case ConsoleSyntax.COMMENT()
         => NullCommand(session)
       case ConsoleSyntax.TEST()

@@ -28,6 +28,7 @@ object ConsoleSyntax {
   val QUIT                  = """quit|QUIT""".r
   val HELP                  = """help|HELP""".r
   val ALIAS                 = """alias|ALIAS""".r
+  val NULL                  = """""".r
   val COMMENT               = """^# [^#]*""".r
 
   // console  functions
