@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class SimpleFeedqLoaderTest {
 
-    private int QUEUE_SIZE = 100;
+    private int QUEUE_SIZE = 1000;
     private String TEST_QUEUE = "xml_test";
     Random rnd = new Random();
 

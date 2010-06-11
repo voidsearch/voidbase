@@ -49,7 +49,7 @@ VOIDSEARCH.VoidBase.WebAPI=function(){
             // QUEUE TREE MODULE EVENTS
             this.addObserver('queueTree:fetchQueueList',function(){
                 self.core.AJAXGetJSON('/webapi/queuetree/?method=LIST', function(data) {
-                    VOIDSEARCH.VoidBase.WebAPI.modules.queuetree.listHandler(data);
+                    VOIDSEARCH.VoidBase.WebAPI.modules.queueTree.listHandler(data);
                 });
             });
         },
