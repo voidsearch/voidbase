@@ -513,8 +513,8 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queueTree = function() {
 
             var self = this;
             var timeout = 1000;
-
             if (self.objectRegister.activeObjects.length > 0) {
+                
                 // fetch field, queue and chart instance from active objects array
                 var field = self.objectRegister.activeObjects[index][0];
                 var queue = self.objectRegister.activeObjects[index][1];
@@ -533,11 +533,12 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queueTree = function() {
                 //calculate and apply timeout
                 timeout = defaultObjectRefreshRate / this.objectRegister.activeObjects.length;
             }
-
+            console.log(index);
             var timeoutFunc = function () {
                 self.gridUpdater(index);
             };
             this.API.timers.multipleObjectRefresh = setTimeout(timeoutFunc, timeout);
+
 
         },
 
@@ -628,13 +629,12 @@ VOIDSEARCH.VoidBase.WebAPI.modules.queueTree = function() {
 
 
         registerNewObject:function(field, queue, container, queueOptions) {
-            console.log(queueOptions);
+            console.log(container);
             if (typeof(this.objectRegister.activeContainers[queueOptions.cellId]) == 'undefined') {
-
 
                 var canvasId = 'graph-canvas-' + container;
                 $(container).innerHTML = '<canvas id="' + canvasId + '" width="250" height="150"></canvas>';
-
+                //console.log("start");
                 queueOptions.canvasId = canvasId;
                 var instance = new ChartEngine({
                     'canvasID':canvasId,

@@ -52,8 +52,11 @@ VOIDSEARCH.VoidBase.Views=function(){
 
             var percentage=Math.round(this.templatesLoaded/this.totalTemplates*100);
             var percengageHTML='<h5>loaded '+percentage+' %</h5>';
-
-            $(VOIDSEARCH.VoidBase.WebAPI.baseNode).update(percengageHTML);
+            try{
+                $(VOIDSEARCH.VoidBase.WebAPI.baseNode).update(percengageHTML);
+            }catch(e){
+                //console.log("");    
+            }
             if(this.templatesLoaded==this.totalTemplates){
                 this.app.onAllLoaded();
             }
